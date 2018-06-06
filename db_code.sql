@@ -64,24 +64,25 @@ CREATE TABLE Utenti_Liste(
 );
 
 CREATE TABLE Prodotti(
+    ID integer not null auto_increment,
     Nome varchar(80) not null,
     Note varchar(200),
     Logo varchar(80) not null,
     Fotografia varchar(150) not null,
     Categoria varchar(80) not null,
     Owner varchar(100) not null, -- se admin allora lo vedono tutti, altrimenti guardo in tabella Utenti_Prodotti
-    primary key(Nome, Categoria),
+    primary key(ID),
     foreign key(Categoria) references Prodotti_categorie(Nome),
     foreign key(Owner) references Utenti(Email)
 );
 
 CREATE TABLE Liste_Prodotti(
-    ID integer not null,
-    Nome_prodotto varchar(80) not null,
+    ID_lista integer not null,
+    ID_prodotto varchar(80) not null,
     Data_acquisto date, -- se null ancora da acquistare
-    primary key(ID, Nome_prodotto),
-    foreign key(ID) references Liste(ID),
-    foreign key(Nome_prodotto) references Prodotti(Nome)
+    primary key(ID_lista, ID_prodotto),
+    foreign key(ID_lista) references Liste(ID),
+    foreign key(ID_prodotto) references Prodotti(ID)
 );
 
 CREATE TABLE Chat(
@@ -96,8 +97,8 @@ CREATE TABLE Chat(
 -- prodotti non creati da admin che possono essere visti da determinati utenti
 CREATE TABLE Utenti_Prodotti(
     Email varchar(100) not null,
-    Nome_prodotto varchar(80) not null,
-    primary key(Email, Nome_prodotto),
+    ID_prodotto varchar(80) not null,
+    primary key(Email, ID_prodotto),
     foreign key(Email) references Utenti(Email),
-    foreign key(Nome_prodotto) references Prodotti(Nome)
+    foreign key(ID_prodotto) references Prodotti(ID)
 );
