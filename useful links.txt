@@ -1,0 +1,9 @@
+Come prendere i negozi vicini con google maps:
+
+- https://stackoverflow.com/questions/12460471/how-to-send-a-google-places-search-request-with-java?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+- https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
+
+
+Come prendere posizione utente: (tramite js e ogni tot mando posizione al server)
+
+- https://developers.google.com/maps/documentation/javascript/geolocation
