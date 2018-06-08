@@ -7,3 +7,7 @@ Come prendere i negozi vicini con google maps:
 Come prendere posizione utente: (tramite js e ogni tot mando posizione al server)
 
 - https://developers.google.com/maps/documentation/javascript/geolocation
+
+
+Google Maps API KEY:
+AIzaSyBgZR3Tv4DRUOj0C-f88JudvtS8HnpPsXE
