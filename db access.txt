@@ -1,0 +1,5 @@
+Server: sql2.freemysqlhosting.net
+Name: sql2241988
+Username: sql2241988
+Password: uZ9%zJ5%
+Port number: 3306
