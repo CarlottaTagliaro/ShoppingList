@@ -78,7 +78,7 @@ CREATE TABLE Prodotti(
 
 CREATE TABLE Liste_Prodotti(
     ID_lista integer not null,
-    ID_prodotto varchar(80) not null,
+    ID_prodotto integer not null,
     Data_acquisto date, -- se null ancora da acquistare
     primary key(ID_lista, ID_prodotto),
     foreign key(ID_lista) references Liste(ID),
@@ -97,7 +97,7 @@ CREATE TABLE Chat(
 -- prodotti non creati da admin che possono essere visti da determinati utenti
 CREATE TABLE Utenti_Prodotti(
     Email varchar(100) not null,
-    ID_prodotto varchar(80) not null,
+    ID_prodotto integer not null,
     primary key(Email, ID_prodotto),
     foreign key(Email) references Utenti(Email),
     foreign key(ID_prodotto) references Prodotti(ID)
