@@ -42,7 +42,7 @@ public class DBManager {
 			throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
 		}
 // JDBC: 2 – Connection
-        CON = DriverManager.getConnection(dbUrl);
+        CON = DriverManager.getConnection(dbUrl, "sql2241988", "uZ9%zJ5%");
 	}
 	
 	public static void shutdown() {

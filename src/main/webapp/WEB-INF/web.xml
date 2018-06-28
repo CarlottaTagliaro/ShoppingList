@@ -3,7 +3,7 @@
     <context-param>
         <param-name>dburl</param-name>
         <param-value>
-			jdbc:mysql://sql2.freemysqlhosting.net:3306/Web_Project_ShoppingList
+			jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2241988
 			<!--in Services creare connessione in Drivers con MySQL(Connector/J driver)-->
         </param-value>
     </context-param>
