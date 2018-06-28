@@ -34,12 +34,11 @@ public class DBManager {
     public DBManager(String dbUrl) throws SQLException {
 // JDBC: 1 – Load the driver
 		try {
-			// The newInstance() call is a work around for some
-			// broken Java implementations
+			
 			Class.forName("com.mysql.jdbc.Driver");
-// aggiungere dipendenza per 
+
 		} catch (ClassNotFoundException cnfe) {
-			//System.out.println("mic check_err#####################################################################");
+
 			throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
 		}
 // JDBC: 2 – Connection
