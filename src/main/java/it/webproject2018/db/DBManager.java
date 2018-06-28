@@ -8,7 +8,6 @@ package it.webproject2018.db;
 /*import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;*/
-import it.webproject2018.listeners.WebAppContextListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,14 +23,7 @@ public class DBManager {
 // var CON non deve essere serializzata
 	private final transient Connection CON;
 	
-	/**
-	 * URL format is jdbc:sub-protocol:sub-name
-	 * sub-protocol is used by DriverManager to locate the driver
-	 * sub-name		is used by the driver to identify which database to connect to
-	 * @param dbUrl
-	 * @throws SQLException 
-	 */
-    public DBManager(String dbUrl) throws SQLException {
+    public DBManager(String dbUrl, String dbName, String dbPsw) throws SQLException {
 // JDBC: 1 – Load the driver
 		try {
 			
@@ -42,19 +34,15 @@ public class DBManager {
 			throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
 		}
 // JDBC: 2 – Connection
-        CON = DriverManager.getConnection(dbUrl, "sql2241988", "uZ9%zJ5%");
+        CON = DriverManager.getConnection(dbUrl, dbName, dbPsw);
 	}
 	
 	public static void shutdown() {
 		try {
 			DriverManager.getConnection("jdbc:mysql:;shutdown=true");
+			System.out.println("mic check_close#####################################################################");
 		} catch (SQLException sqle) {
 			Logger.getLogger(DBManager.class.getName()).info(sqle.getMessage());
 		}
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("mic check1");
-		System.out.println("mic check2");
 	}
 }

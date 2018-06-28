@@ -24,10 +24,12 @@ public class WebAppContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		
 		String dburl = sce.getServletContext().getInitParameter("dburl");
+		String dbname = sce.getServletContext().getInitParameter("dbname");
+		String dbpsw = sce.getServletContext().getInitParameter("dbpsw");
 		
         try {
 			
-			DBManager manager = new DBManager(dburl);
+			DBManager manager = new DBManager(dburl, dbname, dbpsw);
 			sce.getServletContext().setAttribute("dbmanager", manager);
 			System.out.println("mic check_yo#####################################################################");
 			
