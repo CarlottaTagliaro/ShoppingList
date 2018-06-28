@@ -1,0 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package it.webproject2018.listeners;
+
+import it.webproject2018.db.DBManager;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
+/**
+ * Web application lifecycle listener.
+ *
+ * @author Max
+ * 
+ * ancora da testare
+ */
+public class WebAppContextListener implements ServletContextListener {
+
+	@Override
+	public void contextInitialized(ServletContextEvent sce) {
+		
+		String dburl = sce.getServletContext().getInitParameter("dburl");
+		
+        try {
+			
+			DBManager manager = new DBManager(dburl);
+			sce.getServletContext().setAttribute("dbmanager", manager);
+			System.out.println("mic check_yo#####################################################################");
+			
+		} catch (SQLException ex) {
+
+			System.out.println("mic check_err#####################################################################");
+			Logger.getLogger(getClass().getName()).severe(ex.toString());
+			throw new RuntimeException(ex);
+			
+		}
+	}
+
+	@Override
+	public void contextDestroyed(ServletContextEvent sce) {
+		DBManager.shutdown();
+	}
+}

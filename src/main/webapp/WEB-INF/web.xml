@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>dburl</param-name>
+        <param-value>
+			jdbc:mysql://sql2.freemysqlhosting.net:3306/Web_Project_ShoppingList
+			<!--in Services creare connessione in Drivers con MySQL(Connector/J driver)-->
+        </param-value>
+    </context-param>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>it.webproject2018.listeners.WebAppContextListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>ShoppingListsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShoppingListsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShoppingListsServlet</servlet-name>
+        <url-pattern>/ShoppingListsServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
