@@ -31,11 +31,9 @@ public class WebAppContextListener implements ServletContextListener {
 			
 			DBManager manager = new DBManager(dburl, dbname, dbpsw);
 			sce.getServletContext().setAttribute("dbmanager", manager);
-			System.out.println("mic check_yo#####################################################################");
 			
 		} catch (SQLException ex) {
 
-			System.out.println("mic check_err#####################################################################");
 			Logger.getLogger(getClass().getName()).severe(ex.toString());
 			throw new RuntimeException(ex);
 			

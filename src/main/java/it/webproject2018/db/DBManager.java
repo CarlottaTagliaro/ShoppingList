@@ -10,6 +10,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;*/
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 /**
@@ -39,10 +41,45 @@ public class DBManager {
 	
 	public static void shutdown() {
 		try {
+			
 			DriverManager.getConnection("jdbc:mysql:;shutdown=true");
-			System.out.println("mic check_close#####################################################################");
+		
 		} catch (SQLException sqle) {
+		
 			Logger.getLogger(DBManager.class.getName()).info(sqle.getMessage());
+			
 		}
 	}
+	// Da sistemare
+	public Utente getUser(String userEmail) throws SQLException {
+		if (userEmail == null) {
+			throw new SQLException("userEmail is null");
+		}
+		
+		try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? ")) {
+			stm.setString(1, userEmail);
+			try (ResultSet rs = stm.executeQuery()) {
+				
+				rs.next();
+                Utente user = new Utente();
+                user.setName(rs.getString("nome"));
+                user.setSurname(rs.getString("cognome"));
+                user.setEmail(rs.getString("email"));
+                user.setPicture(rs.getString("immagine"));
+                user.setPassword(rs.getString("password"));
+                user.setIsAdmin(rs.getBoolean("isAdmin"));
+
+				try (PreparedStatement slstm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? ")) {
+					slstm.setString(1, user.getEmail());
+                    try (ResultSet slrs = slstm.executeQuery()) {
+                        slrs.next();
+                        //user.setShoppingListsCount(slrs.getInt(1));
+                    }
+                }
+                return user;
+            }
+        }
+		//Utente user = new Utente();
+		//return user;
+    }
 }
