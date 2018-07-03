@@ -20,28 +20,28 @@ import javax.servlet.ServletContextListener;
  */
 public class WebAppContextListener implements ServletContextListener {
 
-	@Override
-	public void contextInitialized(ServletContextEvent sce) {
-		
-		String dburl = sce.getServletContext().getInitParameter("dburl");
-		String dbname = sce.getServletContext().getInitParameter("dbname");
-		String dbpsw = sce.getServletContext().getInitParameter("dbpsw");
-		
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+
+        String dburl = sce.getServletContext().getInitParameter("dburl");
+        String dbname = sce.getServletContext().getInitParameter("dbname");
+        String dbpsw = sce.getServletContext().getInitParameter("dbpsw");
+
         try {
-			
-			DBManager manager = new DBManager(dburl, dbname, dbpsw);
-			sce.getServletContext().setAttribute("dbmanager", manager);
-			
-		} catch (SQLException ex) {
 
-			Logger.getLogger(getClass().getName()).severe(ex.toString());
-			throw new RuntimeException(ex);
-			
-		}
-	}
+            DBManager manager = new DBManager(dburl, dbname, dbpsw);
+            sce.getServletContext().setAttribute("dbmanager", manager);
 
-	@Override
-	public void contextDestroyed(ServletContextEvent sce) {
-		DBManager.shutdown();
-	}
+        } catch (SQLException ex) {
+
+            Logger.getLogger(getClass().getName()).severe(ex.toString());
+            throw new RuntimeException(ex);
+
+        }
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        DBManager.shutdown();
+    }
 }

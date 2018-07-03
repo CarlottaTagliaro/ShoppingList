@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : weatherly
 */
 
-@media (min-width: 768px) {
+@media (min-width: 990px) {
     .selectChat {
         padding-right: 0px !important;
         height: 100%;

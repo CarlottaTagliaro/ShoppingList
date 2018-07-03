@@ -21,48 +21,47 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShoppingListsServlet extends HttpServlet {
 
-	private DBManager dbManager;
-	
-	@Override
+    private DBManager dbManager;
+
+    @Override
     public void init() throws ServletException {
         dbManager = (DBManager) super.getServletContext().getAttribute("dbmanager");
     }
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		//String userEmail = String.valueOf(request.getParameter("Email"));
-		String userEmail = "y@lo";
-		try {
-			Utente user = dbManager.getUser(userEmail);
-			System.out.println("##############" + user.getEmail() + "################");
-			out.println(
-					"<!DOCTYPE html>\n"
-				+ "<html>\n"
-				+ "	<head>\n"
-                + "		<title>Access Counter example</title>\n"
-                + "	</head>\n"
-                + "	<body>\n"
-                + "		<h1 align=\"center\">" + "Heading" + "</h1>\n"
-                + "		<h2>Information on your session:</h2>\n"
-                + "		<table>\n"
-                + "			<tr><th>Informazioni utente:</th><th></th></tr>\n"
-                + "			<tr><td>ID: </td><td>" + user.getEmail() + "</td></tr>\n"
-                + "			<tr><td>Nome: </td><td>" + user.getName() + "</td></tr>\n"
-                + "			<tr><td>Cognome: </td><td>" + user.getSurname() + "</td></tr>\n"
-                + "			<tr><td>Immagine: </td><td>" + user.getPicture() + "</td></tr>\n"
-                + "			<tr><td>Password: </td><td>" + user.getPassword() + "</td></tr>\n"
-                + "			<tr><td>IsAdmin: </td><td>" + user.getIsAdmin() + "</td></tr>\n"
-                + "		</table>\n"
-                + "	</body>\n"
-                + "</html>"
-			);
-		}
-		catch (SQLException ex) {
-			System.out.println("##############################catch SQLException");
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        //String userEmail = String.valueOf(request.getParameter("Email"));
+        String userEmail = "y@lo";
+        try {
+            Utente user = dbManager.getUser(userEmail);
+            System.out.println("##############" + user.getEmail() + "################");
+            out.println(
+                    "<!DOCTYPE html>\n"
+                    + "<html>\n"
+                    + "	<head>\n"
+                    + "		<title>Access Counter example</title>\n"
+                    + "	</head>\n"
+                    + "	<body>\n"
+                    + "		<h1 align=\"center\">" + "Heading" + "</h1>\n"
+                    + "		<h2>Information on your session:</h2>\n"
+                    + "		<table>\n"
+                    + "			<tr><th>Informazioni utente:</th><th></th></tr>\n"
+                    + "			<tr><td>ID: </td><td>" + user.getEmail() + "</td></tr>\n"
+                    + "			<tr><td>Nome: </td><td>" + user.getName() + "</td></tr>\n"
+                    + "			<tr><td>Cognome: </td><td>" + user.getSurname() + "</td></tr>\n"
+                    + "			<tr><td>Immagine: </td><td>" + user.getPicture() + "</td></tr>\n"
+                    + "			<tr><td>Password: </td><td>" + user.getPassword() + "</td></tr>\n"
+                    + "			<tr><td>IsAdmin: </td><td>" + user.getIsAdmin() + "</td></tr>\n"
+                    + "		</table>\n"
+                    + "	</body>\n"
+                    + "</html>"
+            );
+        } catch (SQLException ex) {
+            System.out.println("##############################catch SQLException");
             out.println(
                     "<!DOCTYPE html>\n"
                     + "<html>\n"
@@ -93,5 +92,5 @@ public class ShoppingListsServlet extends HttpServlet {
                     + "</html>"
             );
         }
-	}
+    }
 }
