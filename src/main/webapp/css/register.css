@@ -1,0 +1,57 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 1-lug-2018, 11.31.38
+    Author     : weatherly
+*/
+
+.main {
+    padding-top: 20px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 350px;
+    margin: auto;
+    text-align: center;
+    padding: 8px;
+    margin-top: 15px;
+}
+
+.titles {
+    text-align: left !important;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.form-group > input {
+  padding-left: 5px;
+}
+
+button {
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 5px !important;
+    margin-top: 5px !important;
+    color: white !important ;
+    margin-bottom: 10px;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    background-color: #222;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+
+button:hover {
+    opacity: 0.7;
+}
