@@ -14,6 +14,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("home"); 
+            });   
+        </script>
+
         <div class="main">
             <div class="row search-form">
                 <div class="col-sm-7">

@@ -14,6 +14,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("register"); 
+            });   
+        </script>
+        
         <div class="main">
             <div class="card">
                 <img class="logo spacing" src="http://www.settenews.net/wp-content/uploads/2016/08/tmp_25920-Screenshot_2016-08-16-07-03-43-1-564085934.png" alt="Insert sth" width="128" height="128">

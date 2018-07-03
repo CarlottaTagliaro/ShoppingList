@@ -14,6 +14,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("messages"); 
+            });   
+        </script>
+        
         <script src="JS/messages.js" type="text/javascript"></script>
         <div class="main">
             <div class="row">

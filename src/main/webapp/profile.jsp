@@ -15,6 +15,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("profile"); 
+            });   
+        </script>
+        
         <div class="main">
             <div class="card">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/John_Travolta_Deauville_2013_2.jpg/220px-John_Travolta_Deauville_2013_2.jpg" alt="John">

@@ -14,6 +14,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("myProducts"); 
+            });   
+        </script>
+        
         <div class="main">
             <div class="row create">
                 <label style="font-size: 20px;"> Create new product: </label>

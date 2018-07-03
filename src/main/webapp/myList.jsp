@@ -13,6 +13,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        
+        <script>
+            $(document).ready(function() {
+                selectMenuEl("myList"); 
+            });   
+        </script>
+        
         <div class="main">
         </div>
     </body>
