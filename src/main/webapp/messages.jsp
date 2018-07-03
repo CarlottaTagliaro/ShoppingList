@@ -14,8 +14,7 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-        <script src="JS/autocomplete-lib.js" type="text/javascript"></script>
-        <script src="JS/autocomplete.js" type="text/javascript"></script>
+        <script src="JS/messages.js" type="text/javascript"></script>
         <div class="main">
             <div class="row">
                 <div class="col-md-4 selectChat">
@@ -113,10 +112,20 @@
                             </div>
                             <div class="panel-footer">
                                 <div class="input-group">
-                                    <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                                    <div class="input-group-btn dropup">
+                                         <button class="btn btn-default dropdown-toggle" type="button" id="suggestions-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Preset messages
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" id="suggestions-btns" aria-labelledby="suggestions-drop">
+
+                                        </ul>
+                                    </div>
+                                    <input id="btn-input" type="text" class="form-control" placeholder="Type your message here..." />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning btn-sm" id="btn-chat">
-                                            Send</button>
+                                        <button class="btn btn-warning" id="btn-chat">
+                                            Send
+                                        </button>
                                     </span>
                                 </div>
                             </div>
