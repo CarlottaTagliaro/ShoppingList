@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
-	<!--I seguenti tre parametri servono per connettersi al database mysql-->
-	<context-param>
+    <!--I seguenti tre parametri servono per connettersi al database mysql-->
+    <context-param>
         <param-name>dburl</param-name>
         <param-value>jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2241988</param-value>
-			<!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
+        <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
 				ma anche no, funziona uguale-->
     </context-param>
-	<context-param>
-		<param-name>dbname</param-name>
-		<param-value>sql2241988</param-value>
-	</context-param>
-	<context-param>	
-		<param-name>dbpsw</param-name>
-		<param-value>uZ9%zJ5%</param-value>
-	</context-param>
-	
+    <context-param>
+        <param-name>dbname</param-name>
+        <param-value>sql2241988</param-value>
+    </context-param>
+    <context-param>
+        <param-name>dbpsw</param-name>
+        <param-value>uZ9%zJ5%</param-value>
+    </context-param>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>it.webproject2018.listeners.WebAppContextListener</listener-class>
+    </listener>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>job_scheduler.JobScheduler</listener-class>
     </listener>
     <servlet>
         <servlet-name>ShoppingListsServlet</servlet-name>
