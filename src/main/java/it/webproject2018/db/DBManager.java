@@ -99,9 +99,17 @@ public class DBManager {
                 Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
                 Boolean perm_del = rs.getBoolean("perm_del");
                 Boolean accettato = rs.getBoolean("accettato");
-                Lista lista = new Lista(perm_edit, perm_add_rem, perm_del, accettato);
                 
+                Integer id = rs.getInt("ID");
+                String nome = rs.getString("Nome");
+                String descrizione = rs.getString("Descrizione");
+                String immagine = rs.getString("Immagine");
+                CategoriaListe categoria = getListCategory(rs.getString("Categoria"));
+                String owner = rs.getString("Owner");
+
+                Lista lista = new Lista(perm_edit, perm_add_rem, perm_del, accettato, id, nome, descrizione, immagine, categoria, owner);
                 
+                lista.addAll(getListProducts(id));
                 
                 liste.add(lista);
             }
@@ -117,14 +125,13 @@ public class DBManager {
 
         ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
         
-        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ? ")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Liste join Liste_Prodotti on Liste.ID = Liste_Prodotti.ID_lista where Liste.ID = ? ")) {
             stm.setInt(1, listID);
             try (ResultSet rs = stm.executeQuery()) {
 
                 rs.next();
                 
                 Integer id_prodotto = rs.getInt("ID_prodotto");
-                
                 prodotti.add(getProduct(id_prodotto));
             }
         }
@@ -148,12 +155,57 @@ public class DBManager {
                 String note = rs.getString("Note");;
                 String logo = rs.getString("Logo");
                 String fotografia = rs.getString("Fotografia");
-                //categoria
+                CategoriaProdotti categoria = getProductCategory(rs.getString("Categoria"));
                 
-                Prodotto product = new Prodotto(); //= new Prodotto(id, nome, note, logo, fotografia, categoria);
+                Prodotto product = new Prodotto(id, nome, note, logo, fotografia, categoria);
                                
                 
                 return product;
+            }
+        }
+    }
+    
+    public CategoriaProdotti getProductCategory(String catNome) throws SQLException {
+        if (catNome == null) {
+            throw new SQLException("catNome is null");
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti_categorie where Nome = ? ")) {
+            stm.setString(1, catNome);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                rs.next();
+
+                String nome = rs.getString("Nome");
+                String descrizione = rs.getString("Descrizione");;
+                String logo = rs.getString("Logo");
+                CategoriaListe categoria = getListCategory(rs.getString("Nome_liste_cat"));
+                
+                CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              
+                
+                return cat;
+            }
+        }
+    }
+    
+    public CategoriaListe getListCategory(String catNome) throws SQLException {
+        if (catNome == null) {
+            throw new SQLException("catNome is null");
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Liste_categorie where Nome = ? ")) {
+            stm.setString(1, catNome);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                rs.next();
+
+                String nome = rs.getString("Nome");
+                String descrizione = rs.getString("Descrizione");;
+                String immagine = rs.getString("Immagine");
+                
+                CategoriaListe cat = new CategoriaListe(nome, descrizione, immagine);              
+                
+                return cat;
             }
         }
     }

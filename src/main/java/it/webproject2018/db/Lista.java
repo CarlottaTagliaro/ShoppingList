@@ -16,12 +16,26 @@ public class Lista extends ArrayList<Prodotto> {
     private Boolean perm_add_rem; // permesso di aggiungere o rimuovere prodotti dalla lista
     private Boolean perm_del; // permesso di eliminare la lista
     private Boolean accettato;
+    
+    private Integer id;
+    private String nome;
+    private String descrizione;
+    private String immagine;
+    private CategoriaListe categoria;
+    private String owner;
 
-    public Lista(Boolean perm_edit, Boolean perm_add_rem, Boolean perm_del, Boolean accettato){
+    public Lista(Boolean perm_edit, Boolean perm_add_rem, Boolean perm_del, Boolean accettato, Integer id, String nome, String descrizione, String immagine, CategoriaListe categoria, String owner){
         this.perm_edit = perm_edit;
         this.perm_del = perm_del;
         this.perm_add_rem = perm_add_rem;
         this.accettato = accettato;
+        
+        this.id = id;
+        this.nome = nome;
+        this.descrizione = descrizione; 
+        this.immagine = immagine; 
+        this.categoria = categoria; 
+        this.owner = owner;
     }
     
     /**
@@ -78,5 +92,75 @@ public class Lista extends ArrayList<Prodotto> {
      */
     public void setAccettato(Boolean accettato) {
         this.accettato = accettato;
+    }
+
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the descrizione
+     */
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    /**
+     * @param descrizione the descrizione to set
+     */
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    /**
+     * @return the immagine
+     */
+    public String getImmagine() {
+        return immagine;
+    }
+
+    /**
+     * @param immagine the immagine to set
+     */
+    public void setImmagine(String immagine) {
+        this.immagine = immagine;
+    }
+
+    /**
+     * @return the categoria
+     */
+    public CategoriaListe getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * @param categoria the categoria to set
+     */
+    public void setCategoria(CategoriaListe categoria) {
+        this.categoria = categoria;
+    }
+
+    /**
+     * @return the owner
+     */
+    public String getOwner() {
+        return owner;
     }
 }

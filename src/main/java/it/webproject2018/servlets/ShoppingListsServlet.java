@@ -35,10 +35,22 @@ public class ShoppingListsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //String userEmail = String.valueOf(request.getParameter("Email"));
-        String userEmail = "y@lo";
+        String userEmail = "cucci@lo";
         try {
             Utente user = dbManager.getUser(userEmail);
             System.out.println("##############" + user.getEmail() + "################");
+            
+            String lista = "";
+            for(int i = 0; i < user.Liste.size(); i++){
+                lista += "<tr><td>Lista: </td><td><b>" + user.Liste.get(i).getNome() + "</b></td></tr><tr><td colspan='2'><ul>";
+                
+                for(int j = 0; j < user.Liste.get(i).size(); j++){
+                    lista += "<li>" + user.Liste.get(i).get(j).getNome() + "<br/>" + user.Liste.get(i).get(j).getNote() + "<br/>" + user.Liste.get(i).get(j).getFotografia() + "<br/>" + user.Liste.get(i).get(j).getCategoria().getNome() + "</li>\n";
+                }
+                
+                lista += "</ul></td></tr>\n";;
+            }
+            
             out.println(
                     "<!DOCTYPE html>\n"
                     + "<html>\n"
@@ -54,8 +66,8 @@ public class ShoppingListsServlet extends HttpServlet {
                     + "			<tr><td>Nome: </td><td>" + user.getName() + "</td></tr>\n"
                     + "			<tr><td>Cognome: </td><td>" + user.getSurname() + "</td></tr>\n"
                     + "			<tr><td>Immagine: </td><td>" + user.getPicture() + "</td></tr>\n"
-                    + "			<tr><td>Password: </td><td>" + user.getPassword() + "</td></tr>\n"
                     + "			<tr><td>IsAdmin: </td><td>" + user.getIsAdmin() + "</td></tr>\n"
+                            + lista
                     + "		</table>\n"
                     + "	</body>\n"
                     + "</html>"
