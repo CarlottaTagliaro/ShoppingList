@@ -25,7 +25,7 @@ public class AdviceSender implements Runnable {
     @Override
     public void run() {
         /* qui c'e' solo codice esempio che ho usato per testare, va.*/
-        String dest_mail;
+        String dest_mail = "";
         if (this.run) {
             System.out.println("porco dio!");
             mail = "web2018unitn@gmail.com";
