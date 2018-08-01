@@ -36,4 +36,12 @@
             30
         </session-timeout>
     </session-config>
+    
+    <jsp-config>
+  <taglib>
+  	<taglib-uri>/tlds/productCard</taglib-uri>
+  	<taglib-location>/tlds/productCard.tld</taglib-location>
+  </taglib>
+  </jsp-config>
+
 </web-app>
