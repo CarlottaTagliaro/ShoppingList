@@ -25,9 +25,17 @@ CREATE TABLE Utenti(
 CREATE TABLE Liste_categorie(
     Nome varchar(80) not null,
     Descrizione varchar(150),
-    Immagine varchar(150) not null,
     primary key(Nome)
 );
+
+
+CREATE TABLE Liste_categorie_immagini(
+    Nome varchar(80) not null,
+    Immagine varchar(150) not null,
+    primary key(Nome, Immagine),
+    foreign key(Nome) references Liste_categorie(Nome)    
+);
+
 
 CREATE TABLE Prodotti_categorie(
     Nome varchar(80) not null,
@@ -76,13 +84,31 @@ CREATE TABLE Prodotti(
     foreign key(Owner) references Utenti(Email)
 );
 
+CREATE TABLE Prodotti_immagini(
+    ID integer not null,
+    Fotografia varchar(150) not null,
+    primary key(ID, Fotografia),
+    foreign key(ID) references Prodotti(ID)
+);
+
 CREATE TABLE Liste_Prodotti(
     ID_lista integer not null,
     ID_prodotto integer not null,
-    Data_acquisto date, -- se null ancora da acquistare
     primary key(ID_lista, ID_prodotto),
     foreign key(ID_lista) references Liste(ID),
     foreign key(ID_prodotto) references Prodotti(ID)
+);
+
+
+CREATE TABLE Liste_Prodotti_Acquistati(
+    ID_lista integer not null,
+    ID_prodotto integer not null,
+    Data_acquisto date not null,
+    Quantita integer not null, 
+    primary key(ID_lista, ID_prodotto, Data_acquisto),
+    foreign key(ID_lista) references Liste(ID),
+    foreign key(ID_prodotto) references Prodotti(ID),
+    foreign key(ID_lista, ID_prodotto) references Liste_Prodotti(ID_lista, ID_prodotto)
 );
 
 CREATE TABLE Chat(

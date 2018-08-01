@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
+        
+        <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
@@ -62,6 +64,8 @@
                     </div>
                 </div>
             </div>
+            
+            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
         </div>
     </body>
 </html>
