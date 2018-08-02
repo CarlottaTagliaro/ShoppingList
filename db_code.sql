@@ -76,7 +76,6 @@ CREATE TABLE Prodotti(
     Nome varchar(80) not null,
     Note varchar(200),
     Logo varchar(80) not null,
-    Fotografia varchar(150) not null,
     Categoria varchar(80) not null,
     Owner varchar(100) not null, -- se admin allora lo vedono tutti, altrimenti guardo in tabella Utenti_Prodotti
     primary key(ID),

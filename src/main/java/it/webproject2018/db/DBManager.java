@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -64,22 +64,24 @@ public class DBManager {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
-                Utente user = new Utente();
-                user.setName(rs.getString("nome"));
-                user.setSurname(rs.getString("cognome"));
-                user.setEmail(rs.getString("email"));
-                user.setPicture(rs.getString("immagine"));;
-                user.setIsAdmin(rs.getBoolean("isAdmin"));
+                if(rs.next()){
+                    Utente user = new Utente();
+                    user.setName(rs.getString("nome"));
+                    user.setSurname(rs.getString("cognome"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPicture(rs.getString("immagine"));;
+                    user.setIsAdmin(rs.getBoolean("isAdmin"));
 
-                
-                user.Liste = getUserLists(user.getEmail());
-                
-                return user;
+
+                    user.Liste = getUserLists(user.getEmail());
+
+                    return user;
+                }
             }
         }
         //Utente user = new Utente();
         //return user;
+        return null;
     }
     
     public ArrayList<Lista> getUserLists(String userEmail) throws SQLException {
@@ -93,25 +95,26 @@ public class DBManager {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
+                while(rs.next()){
 
-                Boolean perm_edit = rs.getBoolean("perm_edit");
-                Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
-                Boolean perm_del = rs.getBoolean("perm_del");
-                Boolean accettato = rs.getBoolean("accettato");
-                
-                Integer id = rs.getInt("ID");
-                String nome = rs.getString("Nome");
-                String descrizione = rs.getString("Descrizione");
-                String immagine = rs.getString("Immagine");
-                CategoriaListe categoria = getListCategory(rs.getString("Categoria"));
-                String owner = rs.getString("Owner");
+                    Boolean perm_edit = rs.getBoolean("perm_edit");
+                    Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
+                    Boolean perm_del = rs.getBoolean("perm_del");
+                    Boolean accettato = rs.getBoolean("accettato");
 
-                Lista lista = new Lista(perm_edit, perm_add_rem, perm_del, accettato, id, nome, descrizione, immagine, categoria, owner);
-                
-                lista.addAll(getListProducts(id));
-                
-                liste.add(lista);
+                    Integer id = rs.getInt("ID");
+                    String nome = rs.getString("Nome");
+                    String descrizione = rs.getString("Descrizione");
+                    String immagine = rs.getString("Immagine");
+                    CategoriaListe categoria = getListCategory(rs.getString("Categoria"));
+                    String owner = rs.getString("Owner");
+
+                    Lista lista = new Lista(perm_edit, perm_add_rem, perm_del, accettato, id, nome, descrizione, immagine, categoria, owner);
+
+                    lista.addAll(getListProducts(id));
+
+                    liste.add(lista);
+                }
             }
         }
         
@@ -125,18 +128,49 @@ public class DBManager {
 
         ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
         
-        try (PreparedStatement stm = CON.prepareStatement("select * from Liste join Liste_Prodotti on Liste.ID = Liste_Prodotti.ID_lista where Liste.ID = ? ")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Liste_Prodotti where ID_lista = ? ")) {
             stm.setInt(1, listID);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
+                while(rs.next()){
                 
-                Integer id_prodotto = rs.getInt("ID_prodotto");
-                prodotti.add(getProduct(id_prodotto));
+                    Integer id_prodotto = rs.getInt("ID_prodotto");
+                    Prodotto pro = getProduct(id_prodotto);
+                    pro.Acquisti.addAll(getListProductsBuyInfo(listID, id_prodotto));
+                    prodotti.add(pro);
+                }
             }
         }
         
         return prodotti;
+    }
+    
+    
+    public ArrayList<InformazioniAcquisto> getListProductsBuyInfo(Integer listID, Integer productID) throws SQLException {
+        if (listID == null) {
+            throw new SQLException("listID is null");
+        }
+        if (productID == null) {
+            throw new SQLException("productID is null");
+        }
+
+        ArrayList<InformazioniAcquisto> info = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Liste_Prodotti_Acquistati where ID_lista = ? and ID_prodotto = ? ")) {
+            stm.setInt(1, listID);
+            stm.setInt(2, productID);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){
+                
+                    Date data_acq = rs.getDate("Data_acquisto");
+                    Integer quantità = rs.getInt("Quantita");
+                    info.add(new InformazioniAcquisto(data_acq, quantità));
+                }
+            }
+        }
+        
+        return info;
     }
     
     public Prodotto getProduct(Integer productID) throws SQLException {
@@ -148,21 +182,46 @@ public class DBManager {
             stm.setInt(1, productID);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
+                if(rs.next()){
 
-                Integer id = rs.getInt("ID");
-                String nome = rs.getString("Nome");
-                String note = rs.getString("Note");;
-                String logo = rs.getString("Logo");
-                String fotografia = rs.getString("Fotografia");
-                CategoriaProdotti categoria = getProductCategory(rs.getString("Categoria"));
-                
-                Prodotto product = new Prodotto(id, nome, note, logo, fotografia, categoria);
-                               
-                
-                return product;
+                    Integer id = rs.getInt("ID");
+                    String nome = rs.getString("Nome");
+                    String note = rs.getString("Note");
+                    String logo = rs.getString("Logo");
+                    ArrayList<String> fotografie = getProductImages(productID);
+                    CategoriaProdotti categoria = getProductCategory(rs.getString("Categoria"));
+
+                    Prodotto product = new Prodotto(id, nome, note, logo, fotografie, categoria);
+                    
+                    return product;
+                }
             }
         }
+        
+        return null;
+    }
+    
+    
+    public ArrayList<String> getProductImages(Integer productID) throws SQLException {
+        if (productID == null) {
+            throw new SQLException("productID is null");
+        }
+        
+        ArrayList<String> foto = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti_immagini where ID = ? ")) {
+            stm.setInt(1, productID);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){
+
+                    String fotografia = rs.getString("Fotografia");
+                    foto.add(fotografia);
+                }
+            }
+        }
+        
+        return foto;
     }
     
     public CategoriaProdotti getProductCategory(String catNome) throws SQLException {
@@ -174,18 +233,20 @@ public class DBManager {
             stm.setString(1, catNome);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
+                if(rs.next()){
 
-                String nome = rs.getString("Nome");
-                String descrizione = rs.getString("Descrizione");;
-                String logo = rs.getString("Logo");
-                CategoriaListe categoria = getListCategory(rs.getString("Nome_liste_cat"));
-                
-                CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              
-                
-                return cat;
+                    String nome = rs.getString("Nome");
+                    String descrizione = rs.getString("Descrizione");;
+                    String logo = rs.getString("Logo");
+                    CategoriaListe categoria = getListCategory(rs.getString("Nome_liste_cat"));
+
+                    CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              
+
+                    return cat;
+                }
             }
         }
+        return null;
     }
     
     public CategoriaListe getListCategory(String catNome) throws SQLException {
@@ -197,16 +258,39 @@ public class DBManager {
             stm.setString(1, catNome);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
+                if(rs.next()){
+                    String nome = rs.getString("Nome");
+                    String descrizione = rs.getString("Descrizione");
+                    ArrayList<String> immagini = getListCategoryImages(catNome);
 
-                String nome = rs.getString("Nome");
-                String descrizione = rs.getString("Descrizione");;
-                String immagine = rs.getString("Immagine");
-                
-                CategoriaListe cat = new CategoriaListe(nome, descrizione, immagine);              
-                
-                return cat;
+                    CategoriaListe cat = new CategoriaListe(nome, descrizione, immagini);              
+
+                    return cat;
+                }
             }
         }
+        
+        return null;
+    }
+    
+    public ArrayList<String> getListCategoryImages(String catNome) throws SQLException {
+        if (catNome == null) {
+            throw new SQLException("catNome is null");
+        }
+        
+        ArrayList<String> immagini = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Liste_categorie_immagini where Nome = ? ")) {
+            stm.setString(1, catNome);
+            try (ResultSet rs = stm.executeQuery()) {
+                while(rs.next()){
+                    String immagine = rs.getString("Immagine");
+                
+                    immagini.add(immagine);
+                }
+            }
+        }
+        
+        return immagini;
     }
 }

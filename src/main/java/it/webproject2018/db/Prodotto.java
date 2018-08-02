@@ -5,6 +5,8 @@
  */
 package it.webproject2018.db;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author davide
@@ -14,18 +16,20 @@ public class Prodotto {
     private String nome;
     private String note;
     private String logo;
-    private String fotografia;
     private CategoriaProdotti categoria;
+    public ArrayList<String> Fotografie;
+    public ArrayList<InformazioniAcquisto> Acquisti;
     
     public Prodotto(){}
     
-    public Prodotto(Integer id, String nome, String note, String logo, String fotografia, CategoriaProdotti categoria){
+    public Prodotto(Integer id, String nome, String note, String logo, ArrayList<String> fotografie, CategoriaProdotti categoria){
         this.id = id;
         this.nome = nome;
         this.note = note;
         this.logo = logo;
-        this.fotografia = fotografia;
+        this.Fotografie = fotografie;
         this.categoria = categoria;
+        this.Acquisti = new ArrayList<>();
     }
 
     /**
@@ -75,20 +79,6 @@ public class Prodotto {
      */
     public void setLogo(String logo) {
         this.logo = logo;
-    }
-
-    /**
-     * @return the fotografia
-     */
-    public String getFotografia() {
-        return fotografia;
-    }
-
-    /**
-     * @param fotografia the fotografia to set
-     */
-    public void setFotografia(String fotografia) {
-        this.fotografia = fotografia;
     }
 
     /**

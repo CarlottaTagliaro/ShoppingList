@@ -21,7 +21,7 @@
     </listener>
     <listener>
         <description>ServletContextListener</description>
-        <listener-class>job_scheduler.JobScheduler</listener-class>
+        <listener-class>it.webproject2018.job_scheduler.JobScheduler</listener-class>
     </listener>
     <servlet>
         <servlet-name>ShoppingListsServlet</servlet-name>
@@ -36,12 +36,10 @@
             30
         </session-timeout>
     </session-config>
-    
     <jsp-config>
-  <taglib>
-  	<taglib-uri>/tlds/productCard</taglib-uri>
-  	<taglib-location>/tlds/productCard.tld</taglib-location>
-  </taglib>
-  </jsp-config>
-
+        <taglib>
+            <taglib-uri>/tlds/productCard</taglib-uri>
+            <taglib-location>/tlds/productCard.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 </web-app>

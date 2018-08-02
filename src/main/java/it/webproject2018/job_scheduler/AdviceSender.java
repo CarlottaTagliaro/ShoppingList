@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package job_scheduler;
+package it.webproject2018.job_scheduler;
 
 import it.webproject2018.db.CategoriaProdotti;
 import it.webproject2018.db.Prodotto;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import job_scheduler.MailSender;
+import it.webproject2018.job_scheduler.MailSender;
 /**
  *
  * @author caramellaio
@@ -31,8 +31,9 @@ public class AdviceSender implements Runnable {
             mail = "web2018unitn@gmail.com";
             password = "shoppinglist18";
             ArrayList<Prodotto> products = new ArrayList<>();
+            ArrayList<String> images = new ArrayList<>();
             products.add(new Prodotto(Integer.SIZE, "rastrello", "rastrella", 
-                                      "a", "a", new CategoriaProdotti("cose", "", "", null) ));
+                                      "a", images, new CategoriaProdotti("cose", "", "", null) ));
             this.sendMailTo(new Utente("pippo","aaa", dest_mail, "lalala", false), products);
         }
         this.run = false;

@@ -5,6 +5,8 @@
  */
 package it.webproject2018.db;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author davide
@@ -12,12 +14,12 @@ package it.webproject2018.db;
 public class CategoriaListe {
     private String nome;
     private String descrizione;
-    private String immagine;
+    public ArrayList<String> Immagini;
     
-    public CategoriaListe(String nome, String descrizione, String immagine){
+    public CategoriaListe(String nome, String descrizione, ArrayList<String> immagini){
         this.nome = nome;
         this.descrizione = descrizione;
-        this.immagine = immagine;
+        this.Immagini = immagini;
     }
 
     /**
@@ -46,19 +48,5 @@ public class CategoriaListe {
      */
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
-    }
-
-    /**
-     * @return the immagine
-     */
-    public String getImmagine() {
-        return immagine;
-    }
-
-    /**
-     * @param immagine the immagine to set
-     */
-    public void setImmagine(String immagine) {
-        this.immagine = immagine;
     }
 }

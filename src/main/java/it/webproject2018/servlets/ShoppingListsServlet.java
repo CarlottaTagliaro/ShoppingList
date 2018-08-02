@@ -45,7 +45,11 @@ public class ShoppingListsServlet extends HttpServlet {
                 lista += "<tr><td>Lista: </td><td><b>" + user.Liste.get(i).getNome() + "</b></td></tr><tr><td colspan='2'><ul>";
                 
                 for(int j = 0; j < user.Liste.get(i).size(); j++){
-                    lista += "<li>" + user.Liste.get(i).get(j).getNome() + "<br/>" + user.Liste.get(i).get(j).getNote() + "<br/>" + user.Liste.get(i).get(j).getFotografia() + "<br/>" + user.Liste.get(i).get(j).getCategoria().getNome() + "</li>\n";
+                    lista += "<li>" + user.Liste.get(i).get(j).getNome() + "<br/>" + user.Liste.get(i).get(j).getNote() + 
+                            "<br/>num foto: " + user.Liste.get(i).get(j).Fotografie.size() + 
+                            "<br/>" + user.Liste.get(i).get(j).getCategoria().getNome() + 
+                            "<br/>num volte acquistato: " + user.Liste.get(i).get(j).Acquisti.size() +
+                            "</li>\n";
                 }
                 
                 lista += "</ul></td></tr>\n";;
