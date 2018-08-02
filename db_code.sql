@@ -106,8 +106,7 @@ CREATE TABLE Liste_Prodotti_Acquistati(
     Quantita integer not null, 
     primary key(ID_lista, ID_prodotto, Data_acquisto),
     foreign key(ID_lista) references Liste(ID),
-    foreign key(ID_prodotto) references Prodotti(ID),
-    foreign key(ID_lista, ID_prodotto) references Liste_Prodotti(ID_lista, ID_prodotto)
+    foreign key(ID_prodotto) references Prodotti(ID)
 );
 
 CREATE TABLE Chat(
