@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Max Gestore per la connessione al database
+ * @description Gestore per la connessione al database
  */
 public class DBManager {
 // transient: uso di serializzazione, quando convertiamo un oggetto in uno 
@@ -60,17 +60,17 @@ public class DBManager {
             throw new SQLException("userEmail is null");
         }
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? ")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ?")) {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
                 if(rs.next()){
                     Utente user = new Utente();
-                    user.setName(rs.getString("nome"));
-                    user.setSurname(rs.getString("cognome"));
-                    user.setEmail(rs.getString("email"));
-                    user.setPicture(rs.getString("immagine"));;
-                    user.setIsAdmin(rs.getBoolean("isAdmin"));
+                    user.setName(rs.getString("Nome"));
+                    user.setSurname(rs.getString("Cognome"));
+                    user.setEmail(rs.getString("Email"));
+                    user.setPicture(rs.getString("Immagine"));;
+                    user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
 
                     user.Liste = getUserLists(user.getEmail());
@@ -83,17 +83,51 @@ public class DBManager {
         //return user;
         return null;
     }
+
+    public Utente getUserAuthentication(String userEmail, String password) throws SQLException {
+        if (userEmail == null || password == null) {
+            throw new SQLException("userEmail or password is null");
+        }
+        
+        PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = ? ");
+        stm.setString(1, userEmail);
+        stm.setString(2, password);
+        ResultSet rs = stm.executeQuery();
+        
+        Utente user = null;
+
+        if(rs.next())
+        {
+            user = new Utente();
+            
+            user.setName(rs.getString("Nome"));
+            user.setSurname(rs.getString("Cognome"));
+            user.setEmail(rs.getString("Email"));
+            user.setPicture(rs.getString("Immagine"));
+            user.setIsAdmin(rs.getBoolean("IsAdmin"));
+            /*user.setName(rs.getString(1));
+            user.setSurname(rs.getString(2));
+            user.setEmail(rs.getString(3));
+            user.setPicture(rs.getString(4));
+            user.setIsAdmin(rs.getBoolean(5));*/
+            user.Liste = getUserLists(user.getEmail());
+        }
+        
+        return user;
+    }
     
     public ArrayList<Lista> getUserLists(String userEmail) throws SQLException {
         if (userEmail == null) {
             throw new SQLException("userEmail is null");
         }
 
-        ArrayList<Lista> liste = new ArrayList<Lista>();
+        ArrayList<Lista> liste = null;
         
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ? ")) {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
+
+                liste = new ArrayList<Lista>();
 
                 while(rs.next()){
 
@@ -101,7 +135,6 @@ public class DBManager {
                     Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
                     Boolean perm_del = rs.getBoolean("perm_del");
                     Boolean accettato = rs.getBoolean("accettato");
-
                     Integer id = rs.getInt("ID");
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");
