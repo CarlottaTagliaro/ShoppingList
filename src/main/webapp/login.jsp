@@ -18,6 +18,15 @@
             $(document).ready(function() {
                 selectMenuEl("login");
             });
+            
+            
+            function goBack() {
+                window.history.back();
+            }
+
+            function reset() {
+                alert("New password sent!")
+            }
         </script>
 
         <div class="main">
@@ -37,18 +46,10 @@
                     </div>
                     <button type="submit">Sign in</button>
                     <button onclick="goBack()">Cancel</button>
-                    <script>
-                        function goBack() {
-                            window.history.back();
-                        }
-                    </script>
                     <label> You don't have an account? </label> <a href="register.jsp"> <b>Register</b></a>
-                    <label> You forgot your password? </label> <a onClick="a();" style="cursor: pointer; cursor: hand;"> <b>Reset Password</b></a>
-                    <script> function a() {
-                            alert("New password sent!")
-                        }</script>
-                </div>
-            </form>
+                    <label> You forgot your password? </label> <a onClick="reset();" style="cursor: pointer; cursor: hand;"> <b>Reset Password</b></a>
+                </form>
+            </div>
         </div>
     </body>
 </html>

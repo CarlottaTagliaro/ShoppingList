@@ -83,7 +83,7 @@ public class DBManager {
             throw new SQLException("userEmail or password is null");
         }
         
-        PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = ? ");
+        PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = SHA2(?, 256)");
         stm.setString(1, userEmail);
         stm.setString(2, password);
         ResultSet rs = stm.executeQuery();
@@ -99,11 +99,7 @@ public class DBManager {
             user.setEmail(rs.getString("Email"));
             user.setPicture(rs.getString("Immagine"));
             user.setIsAdmin(rs.getBoolean("IsAdmin"));
-            /*user.setName(rs.getString(1));
-            user.setSurname(rs.getString(2));
-            user.setEmail(rs.getString(3));
-            user.setPicture(rs.getString(4));
-            user.setIsAdmin(rs.getBoolean(5));*/
+            
             user.Liste = getUserLists(user.getEmail());
         }
         
@@ -319,5 +315,44 @@ public class DBManager {
         }
         
         return immagini;
+    }
+
+
+
+    public ArrayList<Prodotto> getAllProducts(String orderBy) throws SQLException {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti order by ?")) {
+            stm.setString(1, orderBy);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getProduct(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        
+        return prodotti;
+    }
+
+    public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws SQLException {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Nome like '%?%' order by ?")) {
+            stm.setString(1, filter);
+            stm.setString(2, orderBy);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getProduct(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        
+        return prodotti;
     }
 }
