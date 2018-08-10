@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 
 /**
  *
+ * @author Max
+ * 
  * @description Gestore per la connessione al database
  */
 public class DBManager {
@@ -31,11 +33,8 @@ public class DBManager {
     public DBManager(String dbUrl, String dbName, String dbPsw) throws SQLException {
 // JDBC: 1 – Load the driver
         try {
-
             Class.forName("com.mysql.jdbc.Driver");
-
         } catch (ClassNotFoundException cnfe) {
-
             throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
         }
 // JDBC: 2 – Connection
@@ -44,16 +43,11 @@ public class DBManager {
 
     public static void shutdown() {
         try {
-
             DriverManager.getConnection("jdbc:mysql:;shutdown=true");
-
         } catch (SQLException sqle) {
-
             Logger.getLogger(DBManager.class.getName()).info(sqle.getMessage());
-
         }
     }
-    // Da sistemare
 
     public Utente getUser(String userEmail) throws SQLException {
         if (userEmail == null) {

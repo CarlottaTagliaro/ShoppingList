@@ -28,6 +28,7 @@ public class ShoppingListsServlet extends HttpServlet {
         dbManager = (DBManager) super.getServletContext().getAttribute("dbmanager");
     }
 
+	// forse meglio in post
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -41,9 +42,11 @@ public class ShoppingListsServlet extends HttpServlet {
             System.out.println("##############" + user.getEmail() + "################");
             
             String lista = "";
-            for(int i = 0; i < user.Liste.size(); i++){
+			System.out.println("####### " + user.Liste.size() + " liste per Richard");
+            
+			for(int i = 0; i < user.Liste.size(); i++){
                 lista += "<tr><td>Lista: </td><td><b>" + user.Liste.get(i).getNome() + "</b></td></tr><tr><td colspan='2'><ul>";
-                
+				
                 for(int j = 0; j < user.Liste.get(i).size(); j++){
                     lista += "<li>" + user.Liste.get(i).get(j).getNome() + "<br/>" + user.Liste.get(i).get(j).getNote() + 
                             "<br/>num foto: " + user.Liste.get(i).get(j).Fotografie.size() + 
