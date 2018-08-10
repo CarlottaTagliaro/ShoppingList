@@ -105,11 +105,7 @@ public class DBManager {
             user.setEmail(rs.getString("Email"));
             user.setPicture(rs.getString("Immagine"));
             user.setIsAdmin(rs.getBoolean("IsAdmin"));
-            /*user.setName(rs.getString(1));
-            user.setSurname(rs.getString(2));
-            user.setEmail(rs.getString(3));
-            user.setPicture(rs.getString(4));
-            user.setIsAdmin(rs.getBoolean(5));*/
+            
             user.Liste = getUserLists(user.getEmail());
         }
         

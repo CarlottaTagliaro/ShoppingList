@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
         try {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
+            
             Utente user = dbManager.getUserAuthentication(username, password);
             if (user == null || !user.getEmail().equals(username)) {
                 request.getSession().removeAttribute("User");
