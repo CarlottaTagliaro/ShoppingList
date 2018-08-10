@@ -47,6 +47,7 @@
                         <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
                         <li data="profile"><a href="profile.jsp">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
                         <li data="login"><a href="login.jsp">Sign In<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+                        <li data="login"><a href="#">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
                     </ul>
                 </div>
             </div>

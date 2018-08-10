@@ -322,4 +322,43 @@ public class DBManager {
         
         return immagini;
     }
+
+
+
+    public ArrayList<Prodotto> getAllProducts(String orderBy) throws SQLException {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti order by ?")) {
+            stm.setString(1, orderBy);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getProduct(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        
+        return prodotti;
+    }
+
+    public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws SQLException {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Nome like '%?%' order by ?")) {
+            stm.setString(1, filter);
+            stm.setString(2, orderBy);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getProduct(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        
+        return prodotti;
+    }
 }
