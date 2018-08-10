@@ -89,7 +89,7 @@ public class DBManager {
             throw new SQLException("userEmail or password is null");
         }
         
-        PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = ? ");
+        PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = SHA2(?, 256)");
         stm.setString(1, userEmail);
         stm.setString(2, password);
         ResultSet rs = stm.executeQuery();
