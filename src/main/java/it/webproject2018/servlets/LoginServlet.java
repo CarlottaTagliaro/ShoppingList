@@ -31,10 +31,11 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
             Utente user = dbManager.getUserAuthentication(username, password);
             if (user == null || !user.getEmail().equals(username)) {
+                request.getSession().removeAttribute("User");
                 response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login page.
             }
             else {
-                request.getSession().setAttribute("IsAdmin", user.getIsAdmin());
+                request.getSession().setAttribute("User", user);
                 response.sendRedirect(request.getContextPath() + "/home.jsp");
                 // Logged-in user found, so just continue request.
             }
