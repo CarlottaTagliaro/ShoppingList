@@ -18,7 +18,8 @@ and open the template in the editor.
     margin: auto;
     text-align: center;
     padding: 8px;
-    margin-top: 15px;
+    margin-top: 10px;
+    margin-bottom: 6px;
 }
 
 .titles {
