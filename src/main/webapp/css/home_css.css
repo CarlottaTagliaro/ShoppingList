@@ -21,6 +21,7 @@ and open the template in the editor.
 .card{
     border: 1px solid #CCC;
     border-radius: 8px 8px;
+    margin-bottom: 10px !important;
 }
 
 .search-form{
