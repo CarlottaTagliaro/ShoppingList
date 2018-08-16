@@ -27,6 +27,10 @@
         </script>
 
         <div class="main">
+            <div class="row create">
+                <label style="font-size: 20px;"> Create new List: </label>
+                <button class="myButton" > + </button>
+            </div>
             <div class="carousel slide newLista" id="myCarousel">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
