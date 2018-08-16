@@ -59,3 +59,22 @@ and open the template in the editor.
     max-width: 40px;
     font-size: 20px;
 }
+
+.btn-primary{
+    background-color: #222 !important;
+    border: none !important;
+    outline: 0;
+}
+
+.btn-secondary {
+    border: none !important;
+    outline: 0;
+}
+
+.btn-primary:hover {
+    opacity: 0.7;
+}
+
+.btn-secondary:hover {
+    opacity: 0.7;
+}
