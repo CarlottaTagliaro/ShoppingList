@@ -9,8 +9,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/lists.css" rel="stylesheet" type="text/css"/>
-        <script src="JS/carousel.js" type="text/javascript"></script>
         <title>JSP Page</title>
     </head>
     <body>

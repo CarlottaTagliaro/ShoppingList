@@ -27,7 +27,8 @@ public class ProductCard extends SimpleTagSupport {
     
     @Override
     public void doTag() throws JspException, IOException {
-        String html = String.format("<div class=\"row card\">\n"
+        String html = String.format("\n"
+                + "<div class=\"row card\">\n"
                 + "                <div class=\"col-xs-3\">\n"
                 + "                    <img class=\"imageList img-responsive\" src=\"%s\"/>\n"
                 + "                </div>\n"
@@ -40,16 +41,35 @@ public class ProductCard extends SimpleTagSupport {
                 + "                <div class=\"col-xs-3 myColumn\">\n"
                 + "                    <div>\n"
                 + "                        <label> Add to list: </label>\n"
-                + "                        <button class=\"myButton\" text=\"+\">+</button>\n"
-                + "                    </div>\n"
-                + "                    <div>\n"
-                + "                        <input type=\"checkbox\" value=\"true\" disabled=\"true\"> Already in a list\n"
+                + "                        <button class=\"myButton\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\">+</button>\n"
+                + "\n"
+                + "                        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                + "                            <div class=\"modal-dialog\" role=\"document\">\n"
+                + "                                <div class=\"modal-content\">\n"
+                + "                                    <div class=\"modal-header\">\n"
+                + "                                        <h3 class=\"modal-title\" id=\"exampleModalLabel\">Choose the list</h3>\n"
+                + "                                    </div>\n"
+                + "                                    <div class=\"modal-body\">\n"
+                + "                                        <select class=\"form-control\" id=\"search-select\">\n"
+                + "                                            <option value=\"Pet shop\">Pet shop</option>\n"
+                + "                                            <option value=\"Super Market\">Super Market</option>\n"
+                + "                                        </select>\n"
+                + "                                    </div>\n"
+                + "                                    <div class=\"modal-footer\">\n"
+                + "                                        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n"
+                + "                                        <button type=\"button\" class=\"btn btn-primary\">Add</button>\n"
+                + "                                    </div>\n"
+                + "                                </div>\n"
+                + "                            </div>\n"
+                + "                        </div>\n"
+                + "                        <div>\n"
+                + "                            <input type=\"checkbox\" value=\"true\" disabled=\"true\"> Already in a list\n"
+                + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
                 + "            </div>", immagine, nome, categoria, descrizione);
         getJspContext().getOut().write(html);
     }
-
     /**
      * @return the nome
      */
