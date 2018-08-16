@@ -9,12 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>-->
-        <script src="JQUERY/jquery.min.js" type="text/javascript"></script>
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" crossorigin="anonymous">-->
-        <link href="Bootsrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
-        <script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!--<script src="JQUERY/jquery.min.js" type="text/javascript"></script>-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <!--<link href="Bootsrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
         <title>JSP Page</title>
@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li data="home"><a href="home.jsp">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-                        <li data="shops"><a href="#">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
+                        <li data="shops"><a href="shops.jsp">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
                         <li data="myList"><a href="myList.jsp">My Lists<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
                         <li data="myProducts"><a href="myProducts.jsp">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
                         <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
