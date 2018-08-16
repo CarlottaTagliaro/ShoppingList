@@ -36,7 +36,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" aria-label="..." placeholder="Search product">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default">
+                            <button type="button" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>
                             </button>
                         </div>

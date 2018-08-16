@@ -24,12 +24,21 @@ and open the template in the editor.
     margin-bottom: 10px !important;
 }
 
+
 .search-form{
     margin-bottom: 10px !important ;
 }
 
 .myColumn{
     margin-top: 20px;
+}
+
+.form-control{
+    margin-top: 10px;
+}
+
+.bottone-cerca {
+    margin-top: 10px;
 }
 
 .search{
