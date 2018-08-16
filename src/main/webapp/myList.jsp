@@ -9,9 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/shops.css" rel="stylesheet" type="text/css"/>
-        
+        <link href="css/lists.css" rel="stylesheet" type="text/css"/>
         <script src="JS/carousel.js" type="text/javascript"></script>
+        
+        <%@ taglib uri="/tlds/newList" prefix="newList"%>
+        
+        
         <title>JSP Page</title>
     </head>
     <body>
@@ -24,7 +27,7 @@
         </script>
 
         <div class="main">
-            <div class="carousel slide" id="myCarousel">
+            <div class="carousel slide newLista" id="myCarousel">
                 <!-- Carousel items -->
                 <div class="carousel-inner">
                     <div class="active item" data-slide-number="0">
@@ -58,6 +61,8 @@
                     <span class="sr-only">Next</span>
                 </a>                                 
             </div>
+            <!-- da capire come fare a mettere più di una foto in un mio tag (ex mettere massimo di foto caricabili e non mettere il required a true)-->
+            <newList:newList nome="nuova lista" immagine="http://placehold.it/770x300&text=one" categoria="null" />
         </div>
     </body>
 </html>
