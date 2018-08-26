@@ -29,14 +29,16 @@
 
         <div class="main">
             <div class="row create addList">
-                <label style="font-size: 20px;"> Create new List: </label>
-                <button class="myButton" > + </button>
+                <div class="crea-lista">
+                    <label class="lista1" style="font-size: 20px;"> Create new List: </label>
+                    <button class="myButton" > <b> + </b> </button>
+                </div>
             </div>
 
             <!-- da capire come fare a mettere più di una foto in un mio tag (ex mettere massimo di foto caricabili e non mettere il required a true)-->
             <!--newList:newList nome="nuova lista" immagine="http://placehold.it/770x300&text=one" categoria="null" />-->
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 liste">
                     <div class="row">
                         <div class="carousel slide newLista" id="myCarousel1">
                             <!-- Carousel items -->

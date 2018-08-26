@@ -26,15 +26,17 @@
         <div class="main">
             <div class="row search-form">
                 <div class="col-sm-7">
-                    <label class="search"> Order by: </label>
-                    <select class="form-control" id="search-select">
-                        <option value="byName">name</option>
-                        <option value="byShop">shop</option>
-                    </select>
+                    <div class="ordering-form">
+                        <label class="search"> Order by: </label>
+                        <select class="form-control selezione" id="search-select">
+                            <option value="byName">name</option>
+                            <option value="byShop">shop</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="input-group">
-                        <input type="text" class="form-control" aria-label="..." placeholder="Search product">
+                        <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
                         <div class="input-group-btn">
                             <button type="button" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>

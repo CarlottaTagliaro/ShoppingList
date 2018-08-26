@@ -24,8 +24,10 @@
         
         <div class="main">
             <div class="row create">
-                <label style="font-size: 20px;"> Create new product: </label>
-                <button class="myButton2" onclick="location.href='newProduct.jsp'"> + </button>
+                <div class="crea-prodotto">
+                    <label class="crea" style="font-size: 20px;"> Create new product: </label>
+                    <button class="myButton2" onclick="location.href='newProduct.jsp'"> <b> + </b> </button>
+                </div>
             </div>
             <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
         </div>

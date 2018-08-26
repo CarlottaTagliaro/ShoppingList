@@ -20,6 +20,18 @@ and open the template in the editor.
     border-radius: 8px 8px;
 }
 
+.crea {
+    margin-left: 6px;
+    margin-bottom: 0;
+}
+
+.crea-prodotto {
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    width: 236px;
+    margin-top: 10px;
+}
+
 .myColumn{
     margin-top: 20px;
 }
@@ -47,7 +59,8 @@ and open the template in the editor.
 }
 
 .myButton2 {
-    border-radius: 5px;
+    
+    border-radius: 0 4px 4px 0 !important;
     border: none;
     color: white;
     outline: 0;
