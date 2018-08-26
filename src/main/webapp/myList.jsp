@@ -10,8 +10,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
-        <script src="JS/carousel.js" type="text/javascript"></script>
-        
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
         
 
@@ -19,7 +17,10 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-
+        
+        <script src="JS/carousel.js" type="text/javascript"></script>
+        <script src="JS/changeCollapseButton.js" type="text/javascript"></script>
+        
         <script>
             $(document).ready(function() {
                 selectMenuEl("myList"); 
@@ -74,20 +75,20 @@
                             <div class="panel-heading" id="accordion">
                                 <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b>
                                 <div class="btn-group pull-right">
-                                    <a type="button " title="Share list" class="btn btn-default btn-xs small">
+                                    <a type="button1 " title="Share list" class="btn btn-default btn-xs small">
                                         <span class="glyphicon glyphicon-share-alt"></span>
                                     </a>
-                                    <a type="button " title="Delete list" class="btn btn-default btn-xs small">
+                                    <a type="button1 " title="Delete list" class="btn btn-default btn-xs small">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </a>
-                                    <a type="button" title="Show list" id="collapse-btn" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                        <span class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>
+                                    <button type="button" title="Show list" id="prova" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        <span class=" scendi glyphicon glyphicon-chevron-down"></span>
+                                    </button>
                                 </div>
                             </div>
-                            <!-- fare in modo che il pannello inizialmente sia su-->
+                            
                             <!-- controllare se devo aggiungere anche la categoria della lista, in più vedere se necessaria la foto dell'oggetto e mettere la spunta per dire che è stato comprato-->
-                            <div class="panel-collapse in" id="collapseOne">
+                            <div class="collapse" id="collapseOne">
                                 <div class="panel-body">
                                     <ul class="lista">
                                         <li class="left clearfix"><span class="list-img pull-left">
@@ -105,6 +106,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>   
+        </div>
     </body>
 </html>
