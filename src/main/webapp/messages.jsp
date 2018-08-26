@@ -27,7 +27,7 @@
                 <div class="col-md-4 selectChat">
                     <div class="panel panel-primary">
                         <div class="panel-heading" id="accordion">
-                            <span class="glyphicon glyphicon-user"></span> Select chat
+                            <span class="glyphicon glyphicon-user"></span> <b>Select chat</b>
                             <div class="btn-group pull-right">
                                 <a type="button" id="collapse-btn" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                     <span class="glyphicon glyphicon-chevron-up"></span>
@@ -54,7 +54,7 @@
                 <div class="col-md-8 chat">
                     <div class="panel panel-primary">
                         <div class="panel-heading" id="accordion">
-                            <span class="glyphicon glyphicon-comment"></span> Chat
+                            <span class="glyphicon glyphicon-comment"></span> <b>Chat</b>
                         </div>
                         <div class="panel-collapse" id="collapseOne">
                             <div class="panel-body">
@@ -121,7 +121,7 @@
                                 <div class="input-group">
                                     <div class="input-group-btn dropup">
                                          <button class="btn btn-default dropdown-toggle" type="button" id="suggestions-drop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Preset messages
+                                             <b>Preset messages</b>
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" id="suggestions-btns" aria-labelledby="suggestions-drop">
@@ -131,7 +131,7 @@
                                     <input id="btn-input" type="text" class="form-control" placeholder="Type your message here..." />
                                     <span class="input-group-btn">
                                         <button class="btn btn-warning" id="btn-chat">
-                                            Send
+                                            <b> Send </b>
                                         </button>
                                     </span>
                                 </div>

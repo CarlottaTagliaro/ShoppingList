@@ -27,7 +27,7 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/John_Travolta_Deauville_2013_2.jpg/220px-John_Travolta_Deauville_2013_2.jpg" alt="John">
                 <h1>John Doe</h1>
                 <p class="titleNew">Email: John.Doe@gmail.com </p>
-                <p><button >Change profile pic</button></p>
+                <p><button > <b> Change profile pic </b> </button></p>
             </div>
         </div>
     </body>

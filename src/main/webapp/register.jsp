@@ -43,8 +43,8 @@
                 <div class="spacing">
                     <input type="checkbox" name="Privacy" value="true"> <b>I accept the privacy normatives</b>
                 </div>
-                <button type="submit" >Register</button>
-                <button type="submit"  onclick="goBack()">Annulla</button>
+                <button type="submit" > <b> Register </b> </button>
+                <button type="submit"  onclick="goBack()"> <b> Cancel </b> </button>
                 <script>
                     function goBack() {
                         window.history.back();

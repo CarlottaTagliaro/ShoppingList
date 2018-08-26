@@ -44,9 +44,9 @@
                     <div class="spacing">
                         <input type="checkbox" name="rememberMe" value="true"> <b>Remember me</b>
                     </div>
-                    <button type="submit">Sign in</button>
-                    <button onclick="goBack()">Cancel</button>
-                    <label> You don't have an account? </label> <a href="register.jsp"> <b>Register</b></a>
+                    <button type="submit"> <b> Sign in </b> </button>
+                    <button onclick="goBack()"> <b> Cancel </b> </button>
+                    <label> You don't have an account? </label> <a href="register.jsp"> <b> Register</b></a>
                     <label> You forgot your password? </label> <a onClick="reset();" style="cursor: pointer; cursor: hand;"> <b>Reset Password</b></a>
                 </form>
             </div>

@@ -45,7 +45,7 @@ and open the template in the editor.
         height: calc(100% - 41px);
     }
     .chat .panel-body {
-        height: calc(100% - 51px);
+        height: calc(100% - 55px);
     }
     
     .selectChat .panel-heading {
@@ -81,6 +81,12 @@ and open the template in the editor.
 
 .container {
     width: inherit !important;
+}
+
+.btn-warning {
+    background-color: #222 !important;
+    border: 0 !important;
+    height: 33px;
 }
 
 .chat

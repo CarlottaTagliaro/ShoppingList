@@ -72,7 +72,7 @@
                     <div class="row">
                         <div class="panel panel-primary">
                             <div class="panel-heading" id="accordion">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Nome lista
+                                <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b>
                                 <div class="btn-group pull-right">
                                     <a type="button " title="Share list" class="btn btn-default btn-xs small">
                                         <span class="glyphicon glyphicon-share-alt"></span>
