@@ -6,9 +6,10 @@
 package it.webproject2018.db.exceptions;
 
 /**
- *
+ * The exception thrown when something goes wrong in dao factoring.
+ * 
  * @author Max
  */
-public class DAOFactoryException {
+public class DAOFactoryException extends Exception{
 	
 }
