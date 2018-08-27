@@ -54,7 +54,7 @@ and open the template in the editor.
 	/* Add gap to nav and right windows.*/
 	.main{
 		padding: 10px 10px 0 10px;
-                overflow-y: scroll;
+                overflow-y: auto;
 	}
 
 	/* .....NavBar: Icon only with coloring/layout.....*/
