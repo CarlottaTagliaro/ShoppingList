@@ -18,6 +18,15 @@
         <script>
             $(document).ready(function() {
                 selectMenuEl("messages"); 
+                
+                $("#prova").click(function () {
+                if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
+                    $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                } else {
+                    $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                }
+            }); 
+                
             });   
         </script>
         
@@ -29,13 +38,13 @@
                         <div class="panel-heading" id="accordion">
                             <span class="glyphicon glyphicon-user"></span> <b>Select chat</b>
                             <div class="btn-group pull-right">
-                                <a type="button" id="collapse-btn" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    <span class="glyphicon glyphicon-chevron-up"></span>
+                                <a id="prova" type="button" id="collapse-btn" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <span class="scendi glyphicon glyphicon-chevron-up"></span>
                                 </a>
                             </div>
                         </div>
                         <div class="panel-collapse in" id="collapseOne">
-                            <div class="panel-body">
+                            <div class="panel-body pannello-utenti">
                                 <ul class="chat">
                                     <li class="left clearfix"><span class="chat-img pull-left">
                                             <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />

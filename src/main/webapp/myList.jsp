@@ -19,7 +19,16 @@
         <jsp:include page="menu.jsp"/>
         
         <script src="JS/carousel.js" type="text/javascript"></script>
-        <script src="JS/changeCollapseButton.js" type="text/javascript"></script>
+        <script> 
+            $(document).ready(function () {
+                $("#prova").click(function () {
+                if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
+                    $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                } else {
+                    $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                }
+            }); 
+        });</script>
         
         <script>
             $(document).ready(function() {
@@ -31,7 +40,7 @@
             <div class="row create addList">
                 <div class="crea-lista">
                     <label class="lista1" style="font-size: 20px;"> Create new List: </label>
-                    <button class="myButton" > <b> + </b> </button>
+                    <button class="myButton" onclick="location.href='newList.jsp'"> <b> + </b> </button>
                 </div>
             </div>
 
@@ -40,42 +49,15 @@
             <div class="row">
                 <div class="col-md-4 liste">
                     <div class="row">
-                        <div class="carousel slide newLista" id="myCarousel1">
-                            <!-- Carousel items -->
-                            <div class="carousel-inner">
-                                <div class="active item" data-slide-number="0">
-                                    <img src="http://placehold.it/770x300&text=one">
-                                </div>
-
-                                <div class="item" data-slide-number="1">
-                                    <img src="http://placehold.it/770x300&text=two"></div>
-
-                                <div class="item" data-slide-number="2">
-                                    <img src="http://placehold.it/770x300&text=three"></div>
-
-                                <div class="item" data-slide-number="3">
-                                    <img src="http://placehold.it/770x300&text=four"></div>
-
-                                <div class="item" data-slide-number="4">
-                                    <img src="http://placehold.it/770x300&text=five"></div>
-
-                                <div class="item" data-slide-number="5">
-                                    <img src="http://placehold.it/770x300&text=six"></div>
-                            </div><!-- Carousel nav -->
-                            <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>  
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#myCarousel1" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                                <span class="sr-only">Next</span>
-                            </a>                                 
+                        <div class="img_wrapper">
+                            <img class="immagine_liste" src="http://placehold.it/770x300&text=three">
+                            <div class="img_description"> <p class="descrizione" > Qui ci andrà la descrizione dell'immagine. </p> </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="panel panel-primary">
                             <div class="panel-heading" id="accordion">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b>
+                                <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b> (categoria)
                                 <div class="btn-group pull-right">
                                     <a type="button1 " title="Share list" class="btn btn-default btn-xs small">
                                         <span class="glyphicon glyphicon-share-alt"></span>

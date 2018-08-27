@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newProduct
-    Created on : 1-lug-2018, 18.16.43
+    Document   : newList
+    Created on : 27-ago-2018, 17.04.53
     Author     : weatherly
 --%>
 
@@ -19,13 +19,13 @@
                 <img class="logo" alt="Qui ci sarà la feature di caricamento" width="128" height="128">
                 <div class="form-group elemento">
                     <label> Name: </label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter product name" required autofocus>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter list name" required autofocus>
                 </div>
                 <div class="form-group elemento">
                     <label> Category: </label>
                     <select class="form-control" id="category-select">
-                        <option value="byName">name</option>
-                        <option value="byShop">shop</option>
+                        <option value="byName">supermarket</option>
+                        <option value="byShop">pet shop</option>
                     </select>
                 </div>   
                 <div class="form-group">
@@ -33,7 +33,7 @@
                     <textarea id="description" name="description" cols="40" rows="5" class="form-control descrizione" placeholder="Enter product description" required></textarea>
                 </div>
                 <button class="button1" type="submit" >Create</button>
-                <button class = "button1" type="submit"  onclick="goBack()">Annulla</button>
+                <button class = "button1"type="submit"  onclick="goBack()">Annulla</button>
                 <script>
                     function goBack() {
                         window.history.back();
@@ -43,3 +43,4 @@
         </div>
     </body>
 </html>
+
