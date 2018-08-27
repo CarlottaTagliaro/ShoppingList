@@ -5,8 +5,8 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.DBManager;
-import it.webproject2018.db.Utente;
+import it.webproject2018.entities.DBManager;
+import it.webproject2018.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -38,7 +38,7 @@ public class ShoppingListsServlet extends HttpServlet {
         //String userEmail = String.valueOf(request.getParameter("Email"));
         String userEmail = "cucci@lo";
         try {
-            Utente user = dbManager.getUser(userEmail);
+            Utente user = dbManager.getUserByEmail(userEmail);
             System.out.println("##############" + user.getEmail() + "################");
             
             String lista = "";

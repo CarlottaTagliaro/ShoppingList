@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.webproject2018.db;
+package it.webproject2018.entities;
 
 /*import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -49,7 +49,7 @@ public class DBManager {
         }
     }
 
-    public Utente getUser(String userEmail) throws SQLException {
+    public Utente getUserByEmail(String userEmail) throws SQLException {
         if (userEmail == null) {
             throw new SQLException("userEmail is null");
         }
