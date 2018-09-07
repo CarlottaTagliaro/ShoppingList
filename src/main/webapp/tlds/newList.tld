@@ -26,12 +26,16 @@
 	<name>newList</name>
 	<tag-class>it.webproject2018.customtags.NewList</tag-class>
 	<body-content>empty</body-content>
-	<attribute>
-            <name>nome</name>
+        <attribute>
+            <name>immagine</name>
             <required>true</required>
 	</attribute>
 	<attribute>
-            <name>immagine</name>
+            <name>descrizione</name>
+            <required>true</required>
+	</attribute>
+	<attribute>
+            <name>nome</name>
             <required>true</required>
 	</attribute>
 	<attribute>

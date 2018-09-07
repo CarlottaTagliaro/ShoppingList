@@ -33,7 +33,7 @@
                     <textarea id="description" name="description" cols="40" rows="5" class="form-control descrizione" placeholder="Enter product description" required></textarea>
                 </div>
                 <button class="button1" type="submit" >Create</button>
-                <button class = "button1" type="submit"  onclick="goBack()">Annulla</button>
+                <button class = "button1"type="submit"  onclick="goBack()">Annulla</button>
                 <script>
                     function goBack() {
                         window.history.back();
