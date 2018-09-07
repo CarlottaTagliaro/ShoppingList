@@ -19,7 +19,7 @@
             $(document).ready(function() {
                 selectMenuEl("messages"); 
                 
-                $("#prova").click(function () {
+               $("#collapse-btn").click(function () {
                 if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
                     $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
                 } else {
@@ -38,7 +38,7 @@
                         <div class="panel-heading" id="accordion">
                             <span class="glyphicon glyphicon-user"></span> <b>Select chat</b>
                             <div class="btn-group pull-right">
-                                <a id="prova" type="button" id="collapse-btn" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <a type="button" id="collapse-btn" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                                     <span class="scendi glyphicon glyphicon-chevron-up"></span>
                                 </a>
                             </div>

@@ -20,7 +20,7 @@ and open the template in the editor.
     }
     
     #collapse-btn {
-        display: none;
+        display: none !important;
     }
     
     .selectChat .panel {
