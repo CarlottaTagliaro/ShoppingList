@@ -5,7 +5,7 @@
  */
 package it.webproject2018.listeners;
 
-import it.webproject2018.entities.DBManager;
+import it.webproject2018.db.entities.DBManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;

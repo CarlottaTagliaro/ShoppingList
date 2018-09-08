@@ -7,7 +7,7 @@ package it.webproject2018.db.daos.jdbc;
 
 import it.webproject2018.db.daos.UtenteDAO;
 import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.entities.Utente;
+import it.webproject2018.db.entities.Utente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,10 +88,15 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         catch(SQLException ex) {
             throw new DAOException("Error while authenticating User", ex);
         }
-        
         return user;   
     }
     
+	@Override
+	public Utente update(Utente user) throws DAOException{
+		// da sistemare
+		return user;
+	}
+	
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {

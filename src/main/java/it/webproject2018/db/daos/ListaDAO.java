@@ -6,8 +6,8 @@
 package it.webproject2018.db.daos;
 
 import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.entities.Lista;
-import it.webproject2018.entities.Prodotto;
+import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.Prodotto;
 import java.util.ArrayList;
 
 /**

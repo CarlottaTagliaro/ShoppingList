@@ -7,8 +7,8 @@ package it.webproject2018.db.daos.jdbc;
 
 import it.webproject2018.db.daos.CategoriaProdottiDAO;
 import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.entities.CategoriaListe;
-import it.webproject2018.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.CategoriaListe;
+import it.webproject2018.db.entities.CategoriaProdotti;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -5,8 +5,8 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.entities.DBManager;
-import it.webproject2018.entities.Utente;
+import it.webproject2018.db.entities.DBManager;
+import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;

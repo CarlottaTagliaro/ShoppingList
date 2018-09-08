@@ -5,9 +5,9 @@
  */
 package it.webproject2018.job_scheduler;
 
-import it.webproject2018.entities.CategoriaProdotti;
-import it.webproject2018.entities.Prodotto;
-import it.webproject2018.entities.Utente;
+import it.webproject2018.db.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -6,7 +6,7 @@
 package it.webproject2018.db.daos;
 
 import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.entities.InformazioniAcquisto;
+import it.webproject2018.db.entities.InformazioniAcquisto;
 import java.util.ArrayList;
 
 /**

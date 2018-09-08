@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.webproject2018.entities;
+package it.webproject2018.db.entities;
 
 /**
  *

@@ -5,7 +5,7 @@
  */
 package it.webproject2018.db.daos;
 
-import it.webproject2018.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.CategoriaProdotti;
 
 /**
  *

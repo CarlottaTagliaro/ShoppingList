@@ -7,7 +7,7 @@ package it.webproject2018.db.daos.jdbc;
 
 import it.webproject2018.db.daos.InfomazioniAcquistoDAO;
 import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.entities.InformazioniAcquisto;
+import it.webproject2018.db.entities.InformazioniAcquisto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

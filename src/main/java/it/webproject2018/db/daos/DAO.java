@@ -10,7 +10,6 @@ import it.webproject2018.db.exceptions.DAOFactoryException;
 import java.util.List;
 
 /**
- * 
  * The basic DAO interface that all DAOs must implement.
  * Persistence Layer: DAO pattern
  * DAOs act as an intermediary between the application and the persistence layer.
