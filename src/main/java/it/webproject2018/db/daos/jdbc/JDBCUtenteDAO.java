@@ -91,13 +91,14 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return user;   
     }
     
+	/**
+	 * Returns the number of {@link Utente utenti} stored on the persistence
+	 * system of the application.
+	 *
+	 * @return the number of records present into the storage system.
+	 * @throws DAOException if an error occurred during the information
+	 */
 	@Override
-	public Utente update(Utente user) throws DAOException{
-		// da sistemare
-		return user;
-	}
-	
-    @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
             ResultSet counter = stmt.executeQuery("SELECT COUNT(*) FROM Utenti");
@@ -112,6 +113,14 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return 0L;
     }
     
+	/**
+	 * Returns the list of all the valid {@link Utente utenti} stored by the
+	 * storage system.
+	 *
+	 * @return the list of all the valid {@code utenti}.
+	 * @throws DAOException if an error occurred during the information
+	 * retrieving.
+	 */
     @Override
     public List<Utente> getAll() throws DAOException {
         List<Utente> utenti = new ArrayList<>();
@@ -137,7 +146,37 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the list of users", ex);
         }
-        
         return utenti;
     }
+	
+	/**
+	 * Update the user passed as parameter and returns it.
+     *
+     * @param user the user used to update the persistence system.
+     * @return the updated user.
+     * @throws DAOException if an error occurred during the action.
+	 */
+	@Override
+	public Utente update(Utente user) throws DAOException{
+		if (user == null) {
+			throw new DAOException("Parameter 'user' not valid for update", 
+					new IllegalArgumentException("The passed user is null"));
+		}
+		
+		try (PreparedStatement std = CON.prepareStatement("UPDATE app.users SET email = ?, password = ?, name = ?, lastname = ?, avatar_path = ? WHERE id = ?")) {
+            std.setString(1, user.getEmail());
+            std.setString(2, user.getPassword());
+            std.setString(3, user.getFirstName());
+            std.setString(4, user.getLastName());
+            std.setString(5, user.getAvatarPath());
+            std.setInt(6, user.getId());
+            if (std.executeUpdate() == 1) {
+                return user;
+            } else {
+                throw new DAOException("Impossible to update the user");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the user", ex);
+        }
+	}
 }
