@@ -26,7 +26,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         super(con);
     }    
     
-    @Override   
+    @Override
     public Utente getByPrimaryKey(String userEmail) throws DAOException{
         if (userEmail == null) {
             throw new DAOException("userEmail is null");
@@ -151,6 +151,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 	
 	/**
 	 * Update the user passed as parameter and returns it.
+	 * Senza email perchè primary key
      *
      * @param user the user used to update the persistence system.
      * @return the updated user.
@@ -163,13 +164,13 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 					new IllegalArgumentException("The passed user is null"));
 		}
 		
-		try (PreparedStatement std = CON.prepareStatement("UPDATE app.users SET email = ?, password = ?, name = ?, lastname = ?, avatar_path = ? WHERE id = ?")) {
-            std.setString(1, user.getEmail());
-            std.setString(2, user.getPassword());
-            std.setString(3, user.getFirstName());
-            std.setString(4, user.getLastName());
-            std.setString(5, user.getAvatarPath());
-            std.setInt(6, user.getId());
+		try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
+				+ "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ? WHERE Email = ?")) {
+            std.setString(1, user.getName());
+            std.setString(2, user.getSurname());
+            std.setString(3, user.getPicture());
+            std.setBoolean(4, user.getIsAdmin());
+            std.setString(5, user.getEmail());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {

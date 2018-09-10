@@ -20,7 +20,6 @@ public class Utente {
     private String cognome;
     private String email;
     private String immagine;
-	private String password;
     private Boolean isAdmin;
     public ArrayList<Lista> Liste;
     
@@ -66,14 +65,6 @@ public class Utente {
         this.immagine = immagine;
     }
 
-	public String getPassword() {
-        return password;
-    }
-	
-	public void setPassword(String password) {
-        this.password = password;
-    }
-	
     public Boolean getIsAdmin() {
         return isAdmin;
     }
