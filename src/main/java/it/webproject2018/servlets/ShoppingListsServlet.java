@@ -42,7 +42,7 @@ public class ShoppingListsServlet extends HttpServlet {
             System.out.println("##############" + user.getEmail() + "################");
             
             String lista = "";
-			System.out.println("####### " + user.Liste.size() + " liste per Richard");
+			System.out.println("####### " + user.Liste.size() + " liste per " + user.getName());
             
 			for(int i = 0; i < user.Liste.size(); i++){
                 lista += "<tr><td>Lista: </td><td><b>" + user.Liste.get(i).getNome() + "</b></td></tr><tr><td colspan='2'><ul>";
