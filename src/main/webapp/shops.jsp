@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="panel panel-primary">
                             <div class="panel-heading" id="accordion">
-                                <span class="glyphicon glyphicon-usd"></span> <a class="scegli_negozio" href="#"> <b> Nome negozio</b></a>
+                                <span class="glyphicon glyphicon-usd"></span> <a class="scegli_negozio" href="shopCategories.jsp"> <b> Nome negozio</b></a>
                             </div>
                         </div>
                     </div>
