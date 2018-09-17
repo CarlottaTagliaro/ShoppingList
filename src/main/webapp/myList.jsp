@@ -1,9 +1,3 @@
-<%-- 
-    Document   : myList
-    Created on : 1-lug-2018, 19.14.33
-    Author     : weatherly
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,8 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
-        
-
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title>JSP Page</title>
     </head>
     <body>
@@ -37,12 +30,14 @@
         </script>
 
         <div class="main">
-            <div class="row create addList">
-                <div class="crea-lista">
-                    <label class="lista1" style="font-size: 20px;"> Create new List: </label>
-                    <button class="myButton" onclick="location.href='newList.jsp'"> <b> + </b> </button>
+            <c:if test="${not empty sessionScope.User}">
+                <div class="row create addList">
+                    <div class="crea-lista">
+                        <label class="lista1" style="font-size: 20px;"> Create new List: </label>
+                        <button class="myButton" onclick="location.href='newList.jsp'"> <b> + </b> </button>
+                    </div>
                 </div>
-            </div>
+            </c:if>
 
             <!-- da capire come fare a mettere più di una foto in un mio tag (ex mettere massimo di foto caricabili e non mettere il required a true)-->
             <!--newList:newList nome="nuova lista" immagine="http://placehold.it/770x300&text=one" categoria="null" />-->

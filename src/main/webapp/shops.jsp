@@ -1,9 +1,3 @@
-<%-- 
-    Document   : lists
-    Created on : 15-ago-2018, 18.45.07
-    Author     : weatherly
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
@@ -22,6 +17,14 @@
         </script>
 
         <div class="main">
+            <c:if test="${sessionScope.User.isAdmin}">
+                <div class="row create">
+                    <div class="crea-shop">
+                        <label class="crea" style="font-size: 20px;"> Create new shop: </label>
+                        <button class="myButton2" onclick=""> <b> + </b> </button>
+                    </div>
+                </div>
+            </c:if>
             <div class="row">
                 <div class="col-md-4 liste">
                     <div class="row">

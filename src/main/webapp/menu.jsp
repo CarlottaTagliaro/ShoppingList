@@ -1,9 +1,3 @@
-<%-- 
-    Document   : menu
-    Created on : 22-giu-2018, 14.08.14
-    Author     : weatherly
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,12 +11,13 @@
         <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title>JSP Page</title>
     </head>
     <body>
         <div class="title">            
             <h1>Shopping List 
-                <img src="http://www.settenews.net/wp-content/uploads/2016/08/tmp_25920-Screenshot_2016-08-16-07-03-43-1-564085934.png" height="30px"/>
+                <!-- <img src="http://www.settenews.net/wp-content/uploads/2016/08/tmp_25920-Screenshot_2016-08-16-07-03-43-1-564085934.png" height="30px"/> -->
             </h1>
         </div>
 
@@ -43,11 +38,21 @@
                         <li data="home"><a href="home.jsp">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
                         <li data="shops"><a href="shops.jsp">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
                         <li data="myList"><a href="myList.jsp">My Lists<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
-                        <li data="myProducts"><a href="myProducts.jsp">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
-                        <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
-                        <li data="profile"><a href="profile.jsp">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
-                        <li data="login"><a href="login.jsp">Sign In<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
-                        <li data="login"><a href="#">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
+                        <c:if test="${not empty sessionScope.User}">
+                            <li data="myProducts"><a href="myProducts.jsp">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.User}">
+                            <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.User}">
+                            <li data="profile"><a href="profile.jsp">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+                        </c:if>
+                        <c:if test="${empty sessionScope.User}">
+                            <li data="login"><a href="login.jsp">Sign In<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.User}">
+                            <li data="logout"><a href="<%=request.getContextPath()%>/LogoutServlet">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
