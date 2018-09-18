@@ -21,13 +21,13 @@ import java.util.List;
  * @author davide
  */
 public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO {
-    
+
     public JDBCUtenteDAO(Connection con) {
         super(con);
-    }    
-    
+    }
+
     @Override
-    public Utente getByPrimaryKey(String userEmail) throws DAOException{
+    public Utente getByPrimaryKey(String userEmail) throws DAOException {
         if (userEmail == null) {
             throw new DAOException("userEmail is null");
         }
@@ -36,7 +36,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                if (rs.next()) {
                     Utente user = new Utente();
                     user.setName(rs.getString("Nome"));
                     user.setSurname(rs.getString("Cognome"));
@@ -53,26 +53,24 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (SQLException ex) {
             throw new DAOException("Error while getting User by Email", ex);
         }
-        
+
         return null;
     }
 
     @Override
-    public Utente getUserAuthentication(String userEmail, String password) throws DAOException{
+    public Utente getUserAuthentication(String userEmail, String password) throws DAOException {
         if (userEmail == null || password == null) {
             throw new DAOException("userEmail or password is null");
         }
-        
+
         Utente user = null;
-        
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = SHA2(?, 256)")){
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE Email = ? AND Password = SHA2(?, 256)")) {
             stm.setString(1, userEmail);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
 
-
-            if(rs.next())
-            {
+            if (rs.next()) {
                 user = new Utente();
 
                 user.setName(rs.getString("Nome"));
@@ -84,21 +82,20 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                 JDBCListaDAO listaDao = new JDBCListaDAO(CON);
                 user.Liste = listaDao.getUserLists(user.getEmail());
             }
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while authenticating User", ex);
         }
-        return user;   
+        return user;
     }
-    
-	/**
-	 * Returns the number of {@link Utente utenti} stored on the persistence
-	 * system of the application.
-	 *
-	 * @return the number of records present into the storage system.
-	 * @throws DAOException if an error occurred during the information
-	 */
-	@Override
+
+    /**
+     * Returns the number of {@link Utente utenti} stored on the persistence
+     * system of the application.
+     *
+     * @return the number of records present into the storage system.
+     * @throws DAOException if an error occurred during the information
+     */
+    @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
             ResultSet counter = stmt.executeQuery("SELECT COUNT(*) FROM Utenti");
@@ -112,15 +109,15 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
         return 0L;
     }
-    
-	/**
-	 * Returns the list of all the valid {@link Utente utenti} stored by the
-	 * storage system.
-	 *
-	 * @return the list of all the valid {@code utenti}.
-	 * @throws DAOException if an error occurred during the information
-	 * retrieving.
-	 */
+
+    /**
+     * Returns the list of all the valid {@link Utente utenti} stored by the
+     * storage system.
+     *
+     * @return the list of all the valid {@code utenti}.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     */
     @Override
     public List<Utente> getAll() throws DAOException {
         List<Utente> utenti = new ArrayList<>();
@@ -130,7 +127,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
                 while (rs.next()) {
                     Utente user = new Utente();
-                    
+
                     user.setName(rs.getString("Nome"));
                     user.setSurname(rs.getString("Cognome"));
                     user.setEmail(rs.getString("Email"));
@@ -139,7 +136,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
                     JDBCListaDAO listaDao = new JDBCListaDAO(CON);
                     user.Liste = listaDao.getUserLists(user.getEmail());
-                    
+
                     utenti.add(user);
                 }
             }
@@ -148,24 +145,24 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
         return utenti;
     }
-	
-	/**
-	 * Update the user passed as parameter and returns it.
-	 * Senza email perchè primary key
+
+    /**
+     * Update the user passed as parameter and returns it. Senza email perchè
+     * primary key
      *
      * @param user the user used to update the persistence system.
      * @return the updated user.
      * @throws DAOException if an error occurred during the action.
-	 */
-	@Override
-	public Utente update(Utente user) throws DAOException{
-		if (user == null) {
-			throw new DAOException("Parameter 'user' not valid for update", 
-					new IllegalArgumentException("The passed user is null"));
-		}
-		
-		try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
-				+ "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ? WHERE Email = ?")) {
+     */
+    @Override
+    public Utente update(Utente user) throws DAOException {
+        if (user == null) {
+            throw new DAOException("Parameter 'user' not valid for update",
+                    new IllegalArgumentException("The passed user is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
+                + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ? WHERE Email = ?")) {
             std.setString(1, user.getName());
             std.setString(2, user.getSurname());
             std.setString(3, user.getPicture());
@@ -179,5 +176,28 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (SQLException ex) {
             throw new DAOException("Impossible to update the user", ex);
         }
-	}
+    }
+    
+    @Override    
+    public void insert(Utente user, String password) throws DAOException{
+        if (user == null) {
+            throw new DAOException("Parameter 'user' not valid for insert",
+                    new IllegalArgumentException("The passed user is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("INSERT into Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) values"
+                + "(?, ?, ?, ?, SHA2(?, 256), ?)")) {
+            std.setString(1, user.getName());
+            std.setString(2, user.getSurname());
+            std.setString(3, user.getEmail());
+            std.setString(4, user.getPicture());
+            std.setString(5, password);
+            std.setBoolean(6, user.getIsAdmin());
+            if (std.executeUpdate() != 1) {
+                throw new DAOException("Impossible to insert the user");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to insert the user", ex);
+        }
+    }
 }
