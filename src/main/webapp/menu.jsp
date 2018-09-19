@@ -15,10 +15,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <div class="title">            
-            <h1>Shopping List 
-                <!-- <img src="http://www.settenews.net/wp-content/uploads/2016/08/tmp_25920-Screenshot_2016-08-16-07-03-43-1-564085934.png" height="30px"/> -->
-            </h1>
+        <div class="title">     
+            <img class="img-responsive banner" src="images/Senzanome.png" alt=""/>
         </div>
 
         <nav class="navbar navbar-inverse sidebar" role="navigation">

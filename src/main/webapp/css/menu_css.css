@@ -198,5 +198,11 @@ and open the template in the editor.
 	section{
 		padding-left: 15px;
 	}
-        
+
+
+        .banner {
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
         
