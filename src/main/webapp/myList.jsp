@@ -10,23 +10,31 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-        
+
         <script src="JS/carousel.js" type="text/javascript"></script>
         <script> 
-            $(document).ready(function () {
+            /*$(document).ready(function () {
                 $("#prova").click(function () {
                 if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
                     $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
                 } else {
                     $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                    }
+                });
+            });*/
+            function scendi(bottone) {
+                if ($(bottone).find(".scendi").hasClass('glyphicon-chevron-down')) {
+                    $(bottone).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                } else {
+                    $(bottone).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
                 }
-            }); 
-        });</script>
-        
+            }
+        </script>
+
         <script>
-            $(document).ready(function() {
-                selectMenuEl("myList"); 
-            });   
+            $(document).ready(function () {
+                selectMenuEl("myList");
+            });
         </script>
 
         <div class="main">
@@ -60,7 +68,7 @@
                                     <a type="button1 " title="Delete list" class="btn btn-default btn-xs small">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </a>
-                                    <button type="button" title="Show list" id="prova" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <button type="button" title="Show list" id="prova" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="scendi(this)">
                                         <span class=" scendi glyphicon glyphicon-chevron-down"></span>
                                     </button>
                                 </div>

@@ -48,7 +48,7 @@ public class NewList  extends SimpleTagSupport {
                 + "                                    <a type=\"button1 \" title=\"Delete list\" class=\"btn btn-default btn-xs small\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-trash\"></span>\n"
                 + "                                    </a>\n"
-                + "                                    <button type=\"button\" title=\"Show list\" id=\"prova\" class=\"btn btn-default btn-xs small\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse%s\">\n"
+                + "                                    <button type=\"button\" title=\"Show list\" id=\"prova\" class=\"btn btn-default btn-xs small\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse%s\" onclick=\"scendi(this)\">\n"
                 + "                                        <span class=\"scendi glyphicon glyphicon-chevron-down\"></span>\n"
                 + "                                    </button>\n"
                 + "                                </div>\n"
