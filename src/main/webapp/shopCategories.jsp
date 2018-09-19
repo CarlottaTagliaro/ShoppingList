@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="panel panel-primary">
                             <div class="panel-heading" id="accordion">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> <a class="scegli_categoria" href="prodotti_cat.jsp"> <b> Nome categoria</b></a>
+                                <span class="glyphicon glyphicon-shopping-cart"></span> <a class="scegli_categoria" href="prodotti.jsp"> <b> Nome categoria</b></a>
                             </div>
                         </div>
                     </div>
