@@ -355,4 +355,29 @@ public class DBManager {
         
         return prodotti;
     }
+
+    public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws SQLException {
+        if (userEmail == null || password == null || name == null || surname == null) {
+            throw new SQLException("userEmail or password or name or surname is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) VALUES (?, ?, ?, ?, SHA2(?, 256), ?);");
+            stm.setString(1, name);
+            stm.setString(2, surname);
+            stm.setString(3, userEmail);
+            stm.setString(4, "");
+            stm.setString(5, password);
+            stm.setInt(6, 0);
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
