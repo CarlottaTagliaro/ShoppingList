@@ -178,29 +178,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
     
-    @Override    
-    public void insert(Utente user, String password) throws DAOException{
-        if (user == null) {
-            throw new DAOException("Parameter 'user' not valid for insert",
-                    new IllegalArgumentException("The passed user is null"));
-        }
-
-        try (PreparedStatement std = CON.prepareStatement("INSERT into Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) values"
-                + "(?, ?, ?, ?, SHA2(?, 256), ?)")) {
-            std.setString(1, user.getName());
-            std.setString(2, user.getSurname());
-            std.setString(3, user.getEmail());
-            std.setString(4, user.getPicture());
-            std.setString(5, password);
-            std.setBoolean(6, user.getIsAdmin());
-            if (std.executeUpdate() != 1) {
-                throw new DAOException("Impossible to insert the user");
-            }
-        } catch (SQLException ex) {
-            throw new DAOException("Impossible to insert the user", ex);
-        }
-    }
-
     public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws SQLException {
         if (userEmail == null || password == null || name == null || surname == null) {
             throw new SQLException("userEmail or password or name or surname is null");

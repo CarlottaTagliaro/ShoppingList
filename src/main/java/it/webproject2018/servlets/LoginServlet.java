@@ -1,9 +1,11 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.DBManager;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +17,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefano
  */
 public class LoginServlet extends HttpServlet {
-    private DBManager dbManager;
+    private JDBCUtenteDAO JdbcUtenteDao;
 
     @Override
     public void init() throws ServletException {
-        // If you have any <init-param> in web.xml, then you could get them
-        // here by config.getInitParameter("name") and assign it as field.
-        dbManager = (DBManager) super.getServletContext().getAttribute("dbmanager");
+        Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+        JdbcUtenteDao = new JDBCUtenteDAO(conn);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             
-            Utente user = dbManager.getUserAuthentication(username, password);
+            Utente user = JdbcUtenteDao.getUserAuthentication(username, password);
             if (user == null || !user.getEmail().equals(username)) {
                 request.getSession().removeAttribute("User");
                 response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login page.
