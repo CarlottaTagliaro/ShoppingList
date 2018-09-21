@@ -37,6 +37,4 @@ public interface UtenteDAO extends DAO<Utente, String> {
 	 * @throws DAOException if an error occurred during the action.
 	 */
 	public Utente update(Utente user) throws DAOException;
-        
-        public void insert(Utente user, String password) throws DAOException;
 }

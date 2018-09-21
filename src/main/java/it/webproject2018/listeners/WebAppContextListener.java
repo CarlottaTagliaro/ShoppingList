@@ -5,7 +5,8 @@
  */
 package it.webproject2018.listeners;
 
-import it.webproject2018.db.entities.DBManager;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
@@ -29,8 +30,15 @@ public class WebAppContextListener implements ServletContextListener {
 
         try {
 
-            DBManager manager = new DBManager(dburl, dbname, dbpsw);
-            sce.getServletContext().setAttribute("dbmanager", manager);
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfe) {
+                throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
+            }
+
+            Connection conn = DriverManager.getConnection(dburl, dbname, dbpsw);
+            
+            sce.getServletContext().setAttribute("connection", conn);           
 
         } catch (SQLException ex) {
 
@@ -42,6 +50,6 @@ public class WebAppContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        DBManager.shutdown();
+        //DBManager.shutdown();
     }
 }

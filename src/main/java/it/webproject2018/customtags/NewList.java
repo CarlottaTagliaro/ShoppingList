@@ -5,8 +5,8 @@
  */
 package it.webproject2018.customtags;
 
+import it.webproject2018.db.entities.Lista;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -16,11 +16,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  * @author weatherly
  */
 public class NewList  extends SimpleTagSupport {
-    private String nome;
-    private String categoria;
-    private String immagine;
-    private String descrizione;
-    private ArrayList oggetti;
+    private Lista lista;
     private static int ListNum = 0;
     
     public NewList(){
@@ -30,6 +26,22 @@ public class NewList  extends SimpleTagSupport {
     @Override
     public void doTag() throws JspException, IOException {
         String col = "collapseTwo";
+        
+        String listaHtml = "";
+        
+        for(int i = 0; i < lista.size(); i ++){
+            listaHtml += String.format("<li class=\"left clearfix\">"
+                + "                         <span class=\"list-img pull-left\">\n"
+                + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text=%c\" alt=\"object\" class=\"img-circle\" />\n"
+                + "                         </span>\n"
+                + "                         <div class=\"list-body clearfix\">\n"
+                + "                             <div class=\"header\">\n"
+                + "                                 <strong class=\"primary-font\">%s</strong> \n"
+                + "                             </div>\n"
+                + "                         </div>\n"
+                + "                     </li>\n", lista.get(0).getNome().charAt(0), lista.get(0).getNome());
+        }
+        
         String html = String.format("<div class=\"col-md-4 liste\">\n"
                 + "                    <div class=\"row\">\n"
                 + "                        <div class=\"img_wrapper\">\n"
@@ -58,81 +70,28 @@ public class NewList  extends SimpleTagSupport {
                 + "                            <div class=\"collapse\" id=\"collapse%s\">\n"
                 + "                                <div class=\"panel-body\">\n"
                 + "                                    <ul class=\"lista\">\n"
-                + "                                        <li class=\"left clearfix\"><span class=\"list-img pull-left\">\n"
-                + "                                                <img src=\"http://placehold.it/50/55C1E7/fff&text=T\" alt=\"object\" class=\"img-circle\" />\n"
-                + "                                            </span>\n"
-                + "                                            <div class=\"list-body clearfix\">\n"
-                + "                                                <div class=\"header\">\n"
-                + "                                                    <strong class=\"primary-font\" >Tosaerba</strong> \n"
-                + "                                                </div>\n"
-                + "                                            </div>\n"
-                + "                                        </li>\n"
+                + "                                        %s\n"
                 + "                                    </ul>\n"
                 + "                                </div>\n"
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                </div>", immagine, descrizione, nome, categoria, ListNum, ListNum, oggetti);
+                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), ListNum, ListNum, listaHtml);
         ListNum++;
         getJspContext().getOut().write(html);
     }
     
-    //DA CAPIRE COME PASSARE UN ARRAY DI OGGETTI DA METTERE NELLA LISTA
-
     /**
-     * @return the nome
+     * @return the lista
      */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * @param nome the nome to set
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-     /**
-     * @return the descrizione
-     */
-    public String getDescrizione() {
-        return descrizione;
+    public Lista getLista() {
+        return lista;
     }
 
     /**
-     * @param descrizione the descrizione to set
+     * @param lista the lista to set
      */
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setLista(Lista lista) {
+        this.lista = lista;
     }
-    
-    /**
-     * @return the categoria
-     */
-    public String getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    /**
-     * @return the immagine
-     */
-    public String getImmagine() {
-        return immagine;
-    }
-
-    /**
-     * @param immagine the immagine to set
-     */
-    public void setImmagine(String immagine) {
-        this.immagine = immagine;
-    }
-    
 }
