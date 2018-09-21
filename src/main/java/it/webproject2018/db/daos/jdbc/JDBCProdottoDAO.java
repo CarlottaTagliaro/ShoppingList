@@ -9,6 +9,7 @@ import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.exceptions.DAOException;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +26,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     
     public JDBCProdottoDAO(Connection con) {
         super(con);
-    }    
+    }
 
     @Override
     public Prodotto getByPrimaryKey(Integer productID) throws DAOException{
@@ -166,4 +167,29 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return 0L;
     }
+	
+	
+	public Prodotto update(Prodotto product) throws DAOException {
+		if (product == null) {
+            throw new DAOException("Parameter 'product' not valid for update",
+                    new IllegalArgumentException("The passed product is null"));
+        }
+		
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Prodotti "
+                + "SET Nome = ?, Note = ?, Logo = ?, Categoria = ?, Owner = ? WHERE ID = ?")) {
+            std.setString(1, product.getNome());
+            std.setString(2, product.getNote());
+            std.setString(3, product.getLogo());
+            std.setString(4, product.getCategoria().getNome());
+            std.setString(5, product.getOwner().getEmail());
+            std.setInt(6, product.getId());
+            if (std.executeUpdate() == 1) {
+                return product;
+            } else {
+                throw new DAOException("Impossible to update the product");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the product", ex);
+        }
+	}
 }

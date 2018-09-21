@@ -20,4 +20,5 @@ public interface ProdottoDAO extends DAO<Prodotto, Integer> {
     public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws DAOException;
     
     public ArrayList<String> getProductImages(Integer productID) throws DAOException;
+	
 }

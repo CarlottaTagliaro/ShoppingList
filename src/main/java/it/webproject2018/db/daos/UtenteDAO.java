@@ -28,13 +28,6 @@ public interface UtenteDAO extends DAO<Utente, String> {
 	 * retrieving.
 	 */
 	public Utente getUserAuthentication(String userEmail, String password) throws DAOException;
-	
-	/**
-	 * Updates the user passed as parameter and returns it.
-	 * 
-	 * @param user the user used to update the persistence system.
-	 * @return the updated user.
-	 * @throws DAOException if an error occurred during the action.
-	 */
-	public Utente update(Utente user) throws DAOException;
+		
+	public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException;
 }

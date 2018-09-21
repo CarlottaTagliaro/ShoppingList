@@ -23,7 +23,8 @@ public class WebAppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
+		System.out.println("###########WebAppContextListener launched");
+		
         String dburl = sce.getServletContext().getInitParameter("dburl");
         String dbname = sce.getServletContext().getInitParameter("dbname");
         String dbpsw = sce.getServletContext().getInitParameter("dbpsw");

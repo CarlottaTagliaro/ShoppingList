@@ -19,6 +19,7 @@ public class Prodotto {
     private CategoriaProdotti categoria;
     public ArrayList<String> Fotografie;
     public ArrayList<InformazioniAcquisto> Acquisti;
+	public Utente owner;
     
     public Prodotto(){}
     
@@ -93,5 +94,19 @@ public class Prodotto {
      */
     public void setCategoria(CategoriaProdotti categoria) {
         this.categoria = categoria;
+    }
+	
+	/**
+     * @return the owner
+     */
+    public Utente getOwner() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner of the product
+     */
+    public void setOwner(Utente owner) {
+        this.owner = owner;
     }
 }

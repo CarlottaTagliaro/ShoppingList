@@ -5,12 +5,16 @@
  */
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +26,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShoppingListsServlet extends HttpServlet {
 	private JDBCUtenteDAO JdbcUtenteDao;
+	private JDBCProdottoDAO JdbcProdottoDao;
     
     @Override
     public void init() throws ServletException {
 		Connection conn = (Connection) super.getServletContext().getAttribute("connection");
 		JdbcUtenteDao = new JDBCUtenteDAO(conn);
+		JdbcProdottoDao = new JDBCProdottoDAO(conn);
     }
 
     @Override
@@ -34,16 +40,18 @@ public class ShoppingListsServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-        //String userEmail = "cucci@lo";	//copywright by stefano chirico
-        String userEmail = "g.s@agg.i";
+        String userEmail = "g.s@agg.it";
+		List<Utente> utenti = new ArrayList<>();
+		
         try {
-            Utente user = JdbcUtenteDao.getByPrimaryKey(userEmail);
+            Utente user = JdbcUtenteDao.getUserAuthentication(userEmail, "123");
             System.out.println("##############" + user.getEmail() + "################");
-            
             String lista = "";
 			System.out.println("####### " + user.Liste.size() + " liste per " + user.getName());
-            
-			for(int i = 0; i < user.Liste.size(); i++){
+			Prodotto prod = JdbcProdottoDao.getByPrimaryKey(5);
+			System.out.println("########prodotto" + prod.getNome());
+			
+/*			for(int i = 0; i < user.Liste.size(); i++){
                 lista += "<tr><td>Lista: </td><td><b>" + user.Liste.get(i).getNome() + "</b></td></tr><tr><td colspan='2'><ul>";
 				
                 for(int j = 0; j < user.Liste.get(i).size(); j++){
@@ -56,7 +64,7 @@ public class ShoppingListsServlet extends HttpServlet {
                 
                 lista += "</ul></td></tr>\n";;
             }
-            
+*/            
             out.println(
                     "<!DOCTYPE html>\n"
                     + "<html>\n"
@@ -94,12 +102,14 @@ public class ShoppingListsServlet extends HttpServlet {
                     + "            <div class=\"container\">\n"
                     + "                <div class=\"card border-danger\">\n"
                     + "                    <div class=\"card-header\">\n"
-                    + "                        <h3 class=\"card-title bg-danger text-white\">ToDos</h3>\n"
+                    + "                        <h3 class=\"card-title bg-danger text-white\">An error occurred</h3>\n"
                     + "                    </div>\n"
                     + "                    <div class=\"card-body\">\n"
-                    + "                        Error in retriving todos list: " + ex.getMessage() + "<br>\n"
+                    + "                        Exception: " + ex + "<br>\n"
                     + "                    </div>\n"
-                    + "                    <div class=\"card-footer\">Copyright &copy; 2018 - Stefano Chirico</div>\n"
+					+ "					   <div class=\"card-footer\">\n"
+					+ "							Error message: " + ex.getMessage() + "<br>"
+					+ "					   </div>\n"
                     + "                </div>\n"
                     + "            </div>\n"
                     + "        </div>\n"
