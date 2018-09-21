@@ -19,7 +19,7 @@
     <body>
         <div class="title">     
             <img class="img-responsive banner" src="images/Senzanome.png" alt=""/> 
-            <a href="#" class="dropdown-toggle notifiche" onclick="$('.dropdown-menu').toggle(); $('.main').toggle();" > 
+            <a href="#" class="dropdown-toggle notifiche" onclick="$('.dropdown-menu').toggle();" > 
                 <img class="img-responsive notification-bell" src="images/notification_bell1.png" alt=""/> 
             </a>
         </div>
