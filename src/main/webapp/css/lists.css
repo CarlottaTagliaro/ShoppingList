@@ -36,7 +36,7 @@ and open the template in the editor.
 .crea-lista {
     border: 1px solid #CCC;
     border-radius: 4px;
-    width: 197px;
+    width: fit-content;
     margin-top: 10px;
 }
 
