@@ -9,9 +9,9 @@ and open the template in the editor.
 */
 
 .hide-bullets {
-list-style:none;
-margin-left: -40px;
-margin-top:20px;
+    list-style:none;
+    margin-left: -40px;
+    margin-top:20px;
 }
 
 .immagine_liste {
@@ -133,34 +133,44 @@ margin-top:20px;
 }
 
 .img_wrapper {
-  position: relative;
-  height: 200px;
-  width: 300px;
+    position: relative;
+    height: 200px;
+    width: 300px;
+    display:inline-block;
 }
 
 .img_description {
-  border-radius: 4px 4px 0 0;
-  position: absolute;
-  top: 0;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0, 0.72);
-  color: #fff;
-  visibility: hidden;
-  opacity: 0;
+    border-radius: 4px 4px 0 0;
+    position: absolute;
+    top: 0;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0, 0.72);
+    color: #fff;
+    visibility: hidden;
+    opacity: 0;
 
-  /* transition effect. not necessary */
-  transition: opacity .2s, visibility .2s;
+    /* transition effect. not necessary */
+    transition: opacity .2s, visibility .2s;
 }
 
 .img_wrapper:hover .img_description {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 
 .descrizione {
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
+}
+
+.panel-primary{    
+    display:inline-block;
+    
+}
+
+.row-lista{
+    text-align: center;
 }
