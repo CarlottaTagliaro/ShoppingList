@@ -35,7 +35,7 @@ public class ShoppingListsServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
         //String userEmail = "cucci@lo";	//copywright by stefano chirico
-        String userEmail = "g.s@agg.it";
+        String userEmail = "g.s@agg.i";
         try {
             Utente user = JdbcUtenteDao.getByPrimaryKey(userEmail);
             System.out.println("##############" + user.getEmail() + "################");
@@ -84,8 +84,8 @@ public class ShoppingListsServlet extends HttpServlet {
                     "<!DOCTYPE html>\n"
                     + "<html>\n"
                     + "    <head>\n"
-                    + "        <title>eccezioneLab 06: ToDo List</title>\n"
                     + "        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
+					+ "        <title>Exception caught</title>\n"
                     + "        <!-- Latest compiled and minified CSS -->\n"
                     + "        <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" crossorigin=\"anonymous\">\n"
                     + "    </head>\n"
