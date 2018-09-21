@@ -25,7 +25,6 @@ public class NewList  extends SimpleTagSupport {
     
     @Override
     public void doTag() throws JspException, IOException {
-        String col = "collapseTwo";
         
         String listaHtml = "";
         
@@ -39,7 +38,7 @@ public class NewList  extends SimpleTagSupport {
                 + "                                 <strong class=\"primary-font\">%s</strong> \n"
                 + "                             </div>\n"
                 + "                         </div>\n"
-                + "                     </li>\n", lista.get(0).getNome().charAt(0), lista.get(0).getNome());
+                + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome());
         }
         
         String html = String.format("<div class=\"col-md-4 liste\">\n"
