@@ -13,7 +13,7 @@ and open the template in the editor.
     color: #f5f5f5;
     line-height: 1.7;
     vertical-align: middle;
-    
+
 }
 .title{
     height: 70px;
@@ -25,184 +25,344 @@ and open the template in the editor.
 
 .h1{
     font-family: sans-serif;
-    
+
 }
-    body,html{
-		height: 100%;
-	}
+body,html{
+    height: 100% !important;
+}
 
-	/* remove outer padding */
-	.main .row{
-		padding: 0px;
-		margin: 0px;
-	}
+/* remove outer padding */
+.main .row{
+    padding: 0px;
+    margin: 0px;
+}
 
-	/*Remove rounded coners*/
+/*Remove rounded coners*/
 
-	nav.sidebar.navbar {
-		border-radius: 0px;
-                border: 0px;
-	}
+nav.sidebar.navbar {
+    border-radius: 0px;
+    border: 0px;
+}
 
-	nav.sidebar, .main{
-		-webkit-transition: margin 200ms ease-out;
-	    -moz-transition: margin 200ms ease-out;
-	    -o-transition: margin 200ms ease-out;
-	    transition: margin 200ms ease-out;
-	}
+nav.sidebar, .main{
+    -webkit-transition: margin 200ms ease-out;
+    -moz-transition: margin 200ms ease-out;
+    -o-transition: margin 200ms ease-out;
+    transition: margin 200ms ease-out;
+}
 
-	/* Add gap to nav and right windows.*/
-	.main{
-		padding: 10px 10px 0 10px;
-                overflow-y: auto;
-	}
+/* Add gap to nav and right windows.*/
+.main{
+    padding: 10px 10px 0 10px;
+    overflow-y: auto;
+}
 
-	/* .....NavBar: Icon only with coloring/layout.....*/
+/* .....NavBar: Icon only with coloring/layout.....*/
 
-	/*small/medium side display*/
-	@media (min-width: 768px) {
+/*small/medium side display*/
+@media (min-width: 768px) {
 
-		/*Allow main to be next to Nav*/
-		.main{
-			position: absolute;
-			height: calc(100% - 70px);
-			width: calc(100% - 40px); /*keeps 100% minus nav size*/
-			margin-left: 40px;
-			float: right;
-		}
+    /*Allow main to be next to Nav*/
+    .main{
+        position: absolute;
+        height: calc(100% - 70px);
+        width: calc(100% - 40px); /*keeps 100% minus nav size*/
+        margin-left: 40px;
+        float: right;
+    }
 
-		/*lets nav bar to be showed on mouseover*/
-		nav.sidebar:hover + .main{
-			margin-left: 200px;
-		}
-                
-                .navbar{
-                    border: 0px;
-                }
+    /*lets nav bar to be showed on mouseover*/
+    nav.sidebar:hover + .main{
+        margin-left: 200px;
+    }
 
-		/*Center Brand*/
-		nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-			margin-left: 0px;
-		}
-		/*Center Brand*/
-		nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-			text-align: center;
-			width: 100%;
-			margin-left: 0px;
-		}
+    .navbar{
+        border: 0px;
+    }
 
-		/*Center Icons*/
-		nav.sidebar a{
-			padding-right: 13px;
-		}
+    /*Center Brand*/
+    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
+        margin-left: 0px;
+    }
+    /*Center Brand*/
+    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
+        text-align: center;
+        width: 100%;
+        margin-left: 0px;
+    }
 
-		/*adds border top to first nav box */
-		nav.sidebar .navbar-nav > li:first-child{
-			border-top: 1px #e5e5e5 solid;
-		}
+    /*Center Icons*/
 
-		/*adds border to bottom nav boxes*/
-		nav.sidebar .navbar-nav > li{
-			border-bottom: 1px #e5e5e5 solid;
-		}
+    /*adds border top to first nav box */
+    nav.sidebar .navbar-nav > li:first-child{
+        border-top: 1px #e5e5e5 solid;
+    }
 
-		/* Colors/style dropdown box*/
-		nav.sidebar .navbar-nav .open .dropdown-menu {
-			position: static;
-			float: none;
-			width: auto;
-			margin-top: 0;
-			background-color: transparent;
-			border: 0;
-			-webkit-box-shadow: none;
-			box-shadow: none;
-		}
+    /*adds border to bottom nav boxes*/
+    nav.sidebar .navbar-nav > li{
+        border-bottom: 1px #e5e5e5 solid;
+    }
 
-		/*allows nav box to use 100% width*/
-		nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-			padding: 0 0px 0 0px;
-		}
+    /* Colors/style dropdown box*/
+    nav.sidebar .navbar-nav .open .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 
-		/*colors dropdown box text */
-		.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-			color: #222;
-                        background-color: #222;
-		}
+    /*allows nav box to use 100% width*/
+    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
+        padding: 0 0px 0 0px;
+    }
 
-		/*gives sidebar width/height*/
-		nav.sidebar{
-			width: 200px;
-			height: 100%;
-			margin-left: -160px;
-			float: left;
-			z-index: 8000;
-			margin-bottom: 0px;
-                        height: calc(100vh - 70px) ;
-		}
+    /*colors dropdown box text */
+    .navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
+        color: #222;
+        background-color: #222;
+    }
 
-		/*give sidebar 100% width;*/
-		nav.sidebar li {
-			width: 100%;
-		}
+    /*gives sidebar width/height*/
+    nav.sidebar{
+        width: 200px;
+        height: 100%;
+        margin-left: -160px;
+        float: left;
+        z-index: 8000;
+        margin-bottom: 0px;
+        height: calc(100vh - 70px) ;
+    }
 
-		/* Move nav to full on mouse over*/
-		nav.sidebar:hover{
-			margin-left: 0px;
-		}
-		/*for hiden things when navbar hidden*/
-		.forAnimate{
-			opacity: 0;
-		}
-	}
+    /*give sidebar 100% width;*/
+    nav.sidebar li {
+        width: 100%;
+    }
 
-	/* .....NavBar: Fully showing nav bar..... */
+    /* Move nav to full on mouse over*/
+    nav.sidebar:hover{
+        margin-left: 0px;
+    }
+    /*for hiden things when navbar hidden*/
+    .forAnimate{
+        opacity: 0;
+    }
+}
 
-	@media (min-width: 1330px) {
+/* .....NavBar: Fully showing nav bar..... */
 
-                
-                
-            
-		/*Allow main to be next to Nav*/
-		.main{
-			width: calc(100% - 200px); /*keeps 100% minus nav size*/
-			margin-left: 200px;
-		}
-
-		/*Show all nav*/
-		nav.sidebar{
-			margin-left: 0px;
-			float: left;
-                        border: 0px;
-		}
-                /*.container-fluid {
-                    background-color: #264040;
-                }*/
-		/*Show hidden items on nav*/
-		nav.sidebar .forAnimate{
-			opacity: 1;
-		}
-                
-                ul.navbar-nav{
-                    background-color: #222;
-                } 
-	}
-
-	nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-		color: #222;
-		background-color: #222;
-	}
-
-	nav:hover .forAnimate{
-		opacity: 1;
-	}
-	section{
-		padding-left: 15px;
-	}
+@media (min-width: 1330px) {
 
 
-        .banner {
-            height: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
+
+
+    /*Allow main to be next to Nav*/
+    .main{
+        width: calc(100% - 200px); /*keeps 100% minus nav size*/
+        margin-left: 200px;
+    }
+
+    /*Show all nav*/
+    nav.sidebar{
+        margin-left: 0px;
+        float: left;
+        border: 0px;
+    }
+    /*.container-fluid {
+        background-color: #264040;
+    }*/
+    /*Show hidden items on nav*/
+    nav.sidebar .forAnimate{
+        opacity: 1;
+    }
+
+    ul.navbar-nav{
+        background-color: #222;
+    } 
+}
+
+nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #222;
+    background-color: #222;
+}
+
+nav:hover .forAnimate{
+    opacity: 1;
+}
+section{
+    padding-left: 15px;
+}
+
+
+.banner {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: inline;
+}
+
+/*notification panel*/
+
+.dropdown-menu {
+    display: none ;
+}
+
+.dropdown-menu.notify-drop {
+    min-width: 330px;
+    background-color: #fff;
+    min-height: 360px;
+    max-height: 360px;
+    display: block;
+    top: 70px;
+    float: right;
+    right: 15px;
+    left: initial;
+    padding:0px;
+    border:0px;
+    margin:0px;
+    overflow-y: auto;
+}
+
+@media (max-width: 475px) {
+    .dropdown-menu.notify-drop {
+        top: 121px;
+        right: 0;
+        width: 100%;
+        bottom: 0;
+        max-height: 100%;
+        min-height: 0;
+    }
+}
+
+.dropdown-menu.notify-drop .drop-content::-webkit-scrollbar-track
+{
+    background-color: #F5F5F5;
+}
+
+.dropdown-menu.notify-drop .drop-content::-webkit-scrollbar
+{
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+.dropdown-menu.notify-drop .drop-content::-webkit-scrollbar-thumb
+{
+    background-color: #ccc;
+}
+.dropdown-menu.notify-drop .drop-content > li {
+    border-bottom: 1px solid #e2e2e2;
+    padding: 10px 0px 5px 0px;
+}
+.dropdown-menu.notify-drop .drop-content > li:nth-child(2n+0) {
+    background-color: #fafafa;
+}
+.dropdown-menu.notify-drop .drop-content > li:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+.dropdown-menu.notify-drop .drop-content > li:hover {
+    background-color: #fcfcfc;
+}
+.dropdown-menu.notify-drop .drop-content > li:last-child {
+    border-bottom: none;
+}
+.dropdown-menu.notify-drop .drop-content > li .notify-img {
+    float: left;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    margin: 0px 0px 8px 0px;
+}
+.dropdown-menu.notify-drop .allRead {
+    margin-right: 7px;
+}
+.dropdown-menu.notify-drop .rIcon {
+    float: right;
+    color: #999;
+}
+.dropdown-menu.notify-drop .rIcon:hover {
+    color: #333;
+}
+.dropdown-menu.notify-drop .drop-content > li a {
+    font-size: 12px;
+    font-weight: normal;
+}
+.dropdown-menu.notify-drop .drop-content > li {
+    font-weight: bold;
+    font-size: 11px;
+}
+.dropdown-menu.notify-drop .drop-content > li hr {
+    margin: 5px 0;
+    width: 70%;
+    border-color: #e2e2e2;
+}
+.dropdown-menu.notify-drop .drop-content .pd-l0 {
+    padding-left: 0;
+}
+.dropdown-menu.notify-drop .drop-content > li p {
+    font-size: 11px;
+    color: #666;
+    font-weight: normal;
+    margin: 3px 0;
+}
+.dropdown-menu.notify-drop .drop-content > li p.time {
+    font-size: 10px;
+    font-weight: 600;
+    top: -6px;
+    margin: 8px 0px 0px 0px;
+    padding: 0px 3px;
+    border: 1px solid #e2e2e2;
+    position: relative;
+    background-image: linear-gradient(#fff,#f2f2f2);
+    display: inline-block;
+    border-radius: 2px;
+    color: #B97745;
+}
+.dropdown-menu.notify-drop .drop-content > li p.time:hover {
+    background-image: linear-gradient(#fff,#fff);
+}
+
+.dropdown-menu.notify-drop .notify-drop-footer {
+    border-top: 1px solid #e2e2e2;
+    bottom: 0;
+    position: relative;
+    padzding: 8px 15px;
+}
+.dropdown-menu.notify-drop .notify-drop-footer a {
+    color: #777;
+    text-decoration: none;
+}
+
+.notifiche {
+    float: right;
+}
+
+.notification-bell {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+@media (max-width: 475px) {
+    .notification-bell {
+        display: none;
+    }
+    .notif-mobile {
+        height: 35px;
+        width: 35px;    
+        margin-top: 7px;
+        margin-left: 10px;
+    }
+}
+
+@media (min-width: 475px) {
+    .notif-mobile {
+        display: none;
+    }
+}
