@@ -1,7 +1,6 @@
 package it.webproject2018.servlets;
 
 import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
-import it.webproject2018.db.entities.DBManager;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;

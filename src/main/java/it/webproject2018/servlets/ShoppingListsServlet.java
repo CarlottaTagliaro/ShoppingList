@@ -5,10 +5,11 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.entities.DBManager;
+import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,25 +21,23 @@ import javax.servlet.http.HttpServletResponse;
  * @author Max
  */
 public class ShoppingListsServlet extends HttpServlet {
-
-    private DBManager dbManager;
-
+	private JDBCUtenteDAO JdbcUtenteDao;
+    
     @Override
     public void init() throws ServletException {
-        dbManager = (DBManager) super.getServletContext().getAttribute("dbmanager");
+		Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+		JdbcUtenteDao = new JDBCUtenteDAO(conn);
     }
 
-	// forse meglio in post
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        //String userEmail = String.valueOf(request.getParameter("Email"));
-        String userEmail = "r.benson@gmail.com";
+        //String userEmail = "cucci@lo";	//copywright by stefano chirico
+        String userEmail = "g.s@agg.it";
         try {
-            Utente user = dbManager.getUserByEmail(userEmail);
+            Utente user = JdbcUtenteDao.getByPrimaryKey(userEmail);
             System.out.println("##############" + user.getEmail() + "################");
             
             String lista = "";
@@ -79,7 +78,7 @@ public class ShoppingListsServlet extends HttpServlet {
                     + "	</body>\n"
                     + "</html>"
             );
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("##############################catch SQLException");
             out.println(
                     "<!DOCTYPE html>\n"
