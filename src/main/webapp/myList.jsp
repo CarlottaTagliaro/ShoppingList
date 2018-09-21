@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="it.webproject2018.db.entities.Utente"%>
 <%@page import="java.util.List"%>
 <%@page import="it.webproject2018.db.entities.Lista"%>
@@ -17,16 +18,7 @@
         <jsp:include page="menu.jsp"/>
 
         <script src="JS/carousel.js" type="text/javascript"></script>
-        <script> 
-            /*$(document).ready(function () {
-                $("#prova").click(function () {
-                if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-                } else {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-                    }
-                });
-            });*/
+        <script>
             function scendi(bottone) {
                 if ($(bottone).find(".scendi").hasClass('glyphicon-chevron-down')) {
                     $(bottone).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
@@ -57,7 +49,11 @@
                     Connection conn = (Connection) super.getServletContext().getAttribute("connection");
                     JDBCListaDAO JdbcListaDao = new JDBCListaDAO(conn);
                     Utente user = (Utente)request.getSession().getAttribute("User");
-                    List<Lista> userLists = JdbcListaDao.getUserLists(user.getEmail());
+                    List<Lista> userLists;
+                    if(user != null)
+                        userLists = JdbcListaDao.getUserLists(user.getEmail());
+                    else
+                        userLists = new ArrayList<>();
                     
                     pageContext.setAttribute("userLists", userLists);
                 %>
