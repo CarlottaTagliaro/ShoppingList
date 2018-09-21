@@ -36,7 +36,7 @@ public class ShoppingListsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         //String userEmail = String.valueOf(request.getParameter("Email"));
-        String userEmail = "cucci@lo";
+        String userEmail = "r.benson@gmail.com";
         try {
             Utente user = dbManager.getUserByEmail(userEmail);
             System.out.println("##############" + user.getEmail() + "################");
