@@ -24,19 +24,19 @@ and open the template in the editor.
     padding-left: 0px !important;
 }
 
-.addList {
+.addList, .addShop {
     margin-bottom: 10px !important;
 }
 
-.lista1 {
+.lista1, .shop1 {
     margin-left: 6px;
     margin-bottom: 0;
 }
 
-.crea-lista {
+.crea-lista, .crea-shop {
     border: 1px solid #CCC;
     border-radius: 4px;
-    width: 197px;
+    width: fit-content;
     margin-top: 10px;
 }
 

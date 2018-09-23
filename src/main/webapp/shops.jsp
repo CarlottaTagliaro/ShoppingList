@@ -18,10 +18,10 @@
 
         <div class="main">
             <c:if test="${sessionScope.User.isAdmin}">
-                <div class="row create">
+                <div class="row create addShop">
                     <div class="crea-shop">
-                        <label class="crea" style="font-size: 20px;"> Create new shop: </label>
-                        <button class="myButton2" onclick=""> <b> + </b> </button>
+                        <label class="shop1" style="font-size: 20px;"> Create new shop: </label>
+                        <button class="myButton" onclick="location.href='newShop.jsp'"> <b> + </b> </button>
                     </div>
                 </div>
             </c:if>
