@@ -154,7 +154,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
      * @return the updated user.
      * @throws DAOException if an error occurred during the action.
      */
-    @Override
+    
     public Utente update(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
@@ -178,9 +178,10 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
     
-    public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws SQLException {
+	@Override
+    public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException {
         if (userEmail == null || password == null || name == null || surname == null) {
-            throw new SQLException("userEmail or password or name or surname is null");
+            throw new DAOException("userEmail or password or name or surname is null");
         }
         try {
             PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) VALUES (?, ?, ?, ?, SHA2(?, 256), ?);");

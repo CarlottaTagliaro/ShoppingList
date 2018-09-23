@@ -56,6 +56,29 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	 */
 	public List<ENTITY_CLASS> getAll() throws DAOException;
 	
+	/*
+	/**
+	 * da commentareUpdates the entity of type {@code ENTITY_CLASS} in the persistence
+	 * layer
+	 *
+	 * @param entity the entity to insert
+	 * @return the updated entity
+	 * @throws DAOException if an error occurred during the information
+	 * retrieving.
+	 * /
+	public ENTITY_CLASS insert(ENTITY_CLASS entity) throws DAOException;
+	*/
+	
+	/**
+	 * Updates the entity of type {@code ENTITY_CLASS} passed as parameter 
+	 * and returns it.
+	 * 
+	 * @param entity the entity to update
+	 * @return the updated entity.
+	 * @throws DAOException if an error occurred during the action.
+	 */
+	//public ENTITY_CLASS update(ENTITY_CLASS entity) throws DAOException;
+	
 	/**
 	 * If this DAO can interact with it, then returns the DAO of class passed as
 	 * parameter.

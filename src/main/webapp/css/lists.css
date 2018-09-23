@@ -124,7 +124,7 @@ and open the template in the editor.
 .panel-body
 {
     overflow-y: scroll;
-    height: 250px;
+    max-height: 250px;
 }
 
 .scegli_negozio {
