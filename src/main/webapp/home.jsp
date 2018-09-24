@@ -11,16 +11,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
-        
+
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-        
+
         <script>
-            $(document).ready(function() {
-                selectMenuEl("home"); 
-            });   
+            $(document).ready(function () {
+                selectMenuEl("home");
+            });
         </script>
 
         <div class="main">
@@ -58,9 +58,10 @@
 
                 <div class="col-xs-3 myColumn">
                     <div>
-                        <label> Add to list: </label>
-                        <button class="myButton" text="+" data-toggle="modal" data-target="#exampleModal">+</button>
-
+                        <div class="add-lista">
+                            <label class="aggiungi"> Add: </label>
+                            <button class="myButton" text="+" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+                        </div>
                         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

@@ -5,7 +5,6 @@
  */
 package it.webproject2018.customtags;
 
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
@@ -16,18 +15,19 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  * @author davide
  */
 public class ProductCard extends SimpleTagSupport {
+
     private String nome;
     private String descrizione;
     private String categoria;
     private String immagine;
-    
-    public ProductCard(){
-        
+
+    public ProductCard() {
+
     }
-    
+
     @Override
     public void doTag() throws JspException, IOException {
-        String html = String.format("\n"
+        String html = String.format(" \n"
                 + "<div class=\"row card\">\n"
                 + "                <div class=\"col-xs-3\">\n"
                 + "                    <img class=\"imageList img-responsive\" src=\"%s\"/>\n"
@@ -40,9 +40,10 @@ public class ProductCard extends SimpleTagSupport {
                 + "\n"
                 + "                <div class=\"col-xs-3 myColumn\">\n"
                 + "                    <div>\n"
-                + "                        <label> Add to list: </label>\n"
-                + "                        <button class=\"myButton\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\">+</button>\n"
-                + "\n"
+                + "                         <div class=\"add-lista\">\n"
+                + "                             <label class=\"aggiungi\"> Add: </label>\n"
+                + "                            <button class=\"myButton\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\"><b>+</b></button>\n"
+                + "                        </div>"
                 + "                        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                            <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                <div class=\"modal-content\">\n"
@@ -67,9 +68,11 @@ public class ProductCard extends SimpleTagSupport {
                 + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
-                + "            </div>", immagine, nome, categoria, descrizione);
+                + "            </div>", immagine, nome, categoria, descrizione
+        );
         getJspContext().getOut().write(html);
     }
+
     /**
      * @return the nome
      */
