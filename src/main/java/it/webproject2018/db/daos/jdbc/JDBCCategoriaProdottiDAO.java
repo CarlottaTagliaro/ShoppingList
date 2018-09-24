@@ -97,4 +97,52 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return 0L;
     }
+    
+    
+    @Override
+    public CategoriaProdotti insert(CategoriaProdotti entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("CategoriaProdotti parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_categorie (Nome, Descrizione, Logo, Nome_liste_cat) VALUES (?, ?, ?, ?);");
+            stm.setString(1, entity.getNome());
+            stm.setString(2, entity.getDescrizione());
+            stm.setString(3, entity.getLogo());
+            stm.setString(4, entity.getCategoriaLista().getNome());
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return null;
+            }
+            else {
+                return entity;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public CategoriaProdotti update(CategoriaProdotti entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("Parameter 'CategoriaProdotti' not valid for update",
+                    new IllegalArgumentException("The passed CategoriaProdotti is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Prodotti_categorie "
+                + "SET Descrizione = ?, Logo = ?, Nome_liste_cat = ? WHERE Nome = ?")) {
+            std.setString(1, entity.getDescrizione());
+            std.setString(2, entity.getLogo());
+            std.setString(3, entity.getCategoriaLista().getNome());
+            std.setString(4, entity.getNome());
+            if (std.executeUpdate() == 1) {
+                return entity;
+            } else {
+                throw new DAOException("Impossible to update the CategoriaProdotti");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the CategoriaProdotti", ex);
+        }
+    }
 }

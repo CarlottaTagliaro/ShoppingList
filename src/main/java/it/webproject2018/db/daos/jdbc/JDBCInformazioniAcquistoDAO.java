@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -45,7 +45,9 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
                 
                     Date data_acq = rs.getDate("Data_acquisto");
                     Integer quantità = rs.getInt("Quantita");
-                    info.add(new InformazioniAcquisto(data_acq, quantità));
+                    Integer id_lista = rs.getInt("ID_lista");
+                    Integer id_prodotto = rs.getInt("ID_prodotto");
+                    info.add(new InformazioniAcquisto(data_acq, quantità, id_lista, id_prodotto));
                 }
             }
         } catch (SQLException ex) {
@@ -68,5 +70,53 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
     @Override
     public Long getCount() throws DAOException {
         return 0L;
+    }
+    
+    
+    @Override
+    public InformazioniAcquisto insert(InformazioniAcquisto entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("InformazioniAcquisto parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, ?, ?);");
+            stm.setInt(1, entity.getId_lista());
+            stm.setInt(2, entity.getId_prodotto());
+            stm.setDate(3, entity.getData());
+            stm.setInt(4, entity.getQuantità());
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return null;
+            }
+            else {
+                return entity;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public InformazioniAcquisto update(InformazioniAcquisto entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("Parameter 'InformazioniAcquisto' not valid for update",
+                    new IllegalArgumentException("The passed InformazioniAcquisto is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Liste_Prodotti_Acquistati "
+                + "SET Data_acquisto = ?, Quantita = ? WHERE I, ID_prodotto = ?")) {
+            std.setDate(1, entity.getData());
+            std.setInt(2, entity.getQuantità());
+            std.setInt(3, entity.getId_lista());
+            std.setInt(4, entity.getId_prodotto());
+            if (std.executeUpdate() == 1) {
+                return entity;
+            } else {
+                throw new DAOException("Impossible to update the InformazioniAcquisto");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the InformazioniAcquisto", ex);
+        }
     }
 }

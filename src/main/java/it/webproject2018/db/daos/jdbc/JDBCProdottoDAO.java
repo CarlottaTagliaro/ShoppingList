@@ -168,13 +168,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return 0L;
     }
 	
-	
-	public Prodotto update(Prodotto product) throws DAOException {
-		if (product == null) {
+    public Prodotto update(Prodotto product) throws DAOException {
+        if (product == null) {
             throw new DAOException("Parameter 'product' not valid for update",
                     new IllegalArgumentException("The passed product is null"));
         }
-		
+
         try (PreparedStatement std = CON.prepareStatement("UPDATE Prodotti "
                 + "SET Nome = ?, Note = ?, Logo = ?, Categoria = ?, Owner = ? WHERE ID = ?")) {
             std.setString(1, product.getNome());
@@ -191,5 +190,30 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         } catch (SQLException ex) {
             throw new DAOException("Impossible to update the product", ex);
         }
-	}
+    }
+    
+    @Override
+    public Prodotto insert(Prodotto entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("product parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?);");
+            stm.setString(1, entity.getNome());
+            stm.setString(2, entity.getNote());
+            stm.setString(3, entity.getLogo());
+            stm.setString(4, entity.getCategoria().getNome());
+            stm.setString(5, entity.getOwner().getEmail());
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return null;
+            }
+            else {
+                return entity;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

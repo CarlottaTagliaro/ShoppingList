@@ -112,4 +112,48 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
 
         return 0L;
     }
+    
+    
+    @Override
+    public CategoriaListe insert(CategoriaListe entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("CategoriaListe parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie (Nome, Descrizione) VALUES (?, ?);");
+            stm.setString(1, entity.getNome());
+            stm.setString(2, entity.getDescrizione());
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return null;
+            }
+            else {
+                return entity;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public CategoriaListe update(CategoriaListe entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("Parameter 'CategoriaListe' not valid for update",
+                    new IllegalArgumentException("The passed CategoriaListe is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Liste_categorie "
+                + "SET Descrizione = ? WHERE Nome = ?")) {
+            std.setString(1, entity.getDescrizione());
+            std.setString(2, entity.getNome());
+            if (std.executeUpdate() == 1) {
+                return entity;
+            } else {
+                throw new DAOException("Impossible to update the CategoriaListe");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the CategoriaListe", ex);
+        }
+    }
 }

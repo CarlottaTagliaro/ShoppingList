@@ -193,4 +193,54 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
 
         return 0L;
     }
+    
+    @Override
+    public Lista insert(Lista entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("list parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste (ID, Nome, Descrizione, Immagine, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?);");
+            stm.setString(1, entity.getNome());
+            stm.setString(2, entity.getDescrizione());
+            stm.setString(3, entity.getImmagine());
+            stm.setString(4, entity.getCategoria().getNome());
+            stm.setString(5, entity.getOwner());
+            Integer rs = stm.executeUpdate();
+            
+            if(rs <= 0) {
+                return null;
+            }
+            else {
+                return entity;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public Lista update(Lista entity) throws DAOException{
+        if (entity == null) {
+            throw new DAOException("Parameter 'list' not valid for update",
+                    new IllegalArgumentException("The passed list is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Liste "
+                + "SET Nome = ?, Descrizione = ?, Immagine = ?, Categoria = ?, Owner = ? WHERE ID = ?")) {
+            std.setString(1, entity.getNome());
+            std.setString(2, entity.getDescrizione());
+            std.setString(3, entity.getImmagine());
+            std.setString(4, entity.getCategoria().getNome());
+            std.setString(5, entity.getOwner());
+            std.setInt(6, entity.getId());
+            if (std.executeUpdate() == 1) {
+                return entity;
+            } else {
+                throw new DAOException("Impossible to update the list");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the list", ex);
+        }
+    }
 }
