@@ -19,13 +19,13 @@
     <body>
         <div class="title">     
             <img class="img-responsive banner" src="images/Senzanome.png" alt=""/> 
-            <a href="#" class="dropdown-toggle notifiche" onclick="$('.dropdown-menu').toggle();" > 
+            <a href="#" class="dropdown-toggle notifiche" onclick="$('.dropdown-menu1').toggle();" > 
                 <img class="img-responsive notification-bell" src="images/notification_bell1.png" alt=""/> 
             </a>
         </div>
 
         <div>
-            <ul class="dropdown-menu notify-drop" style="display:none;">
+            <ul class="dropdown-menu dropdown-menu1 notify-drop" style="display:none;">
                 <div class="drop-content">
                     <li>
                         <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
@@ -76,7 +76,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="#" class="dropdown-toggle " onclick="$('.dropdown-menu').toggle(); $('.navbar-toggle').toggle(); $('.main').toggle();" > 
+                    <a href="#" class="dropdown-toggle " onclick="$('.dropdown-menu1').toggle(); $('.navbar-toggle').toggle(); $('.main').toggle();" > 
                         <img class="img-responsive notif-mobile" src="images/notification_bell1.png" alt=""/> </a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
