@@ -65,7 +65,7 @@ select {
 }
 
 .myButton {
-    border-radius: 5px;
+    border-radius: 0 4px 4px 0;
     border: none;
     color: white;
     outline: 0;
@@ -73,8 +73,8 @@ select {
     background-color: #222;
     text-align: center;
     cursor: pointer;
-    width: 30px;
-    max-width: 40px;
+    height: 24px;
+    width: 24px;
     font-size: 10px;
 }
 
@@ -104,4 +104,22 @@ select {
 
 .cerca {
     width: 400px;
+}
+
+
+.lista1, .shop1 {
+    margin-left: 6px;
+    margin-bottom: 0;
+}
+
+.add-lista {
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.aggiungi {
+    margin-left: 5px;
+    margin-bottom: 0px;
 }

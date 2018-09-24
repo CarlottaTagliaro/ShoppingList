@@ -28,6 +28,7 @@
                 <h1>John Doe</h1>
                 <p class="titleNew">Email: John.Doe@gmail.com </p>
                 <p><button class="button1" style="margin: 0" > <b> Change profile pic </b> </button></p>
+                <p><button class="button1" style="margin: 0" > <b> Change details </b> </button></p>
             </div>
         </div>
     </body>
