@@ -5,7 +5,7 @@
  */
 package it.webproject2018.db.entities;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -14,10 +14,14 @@ import java.util.Date;
 public class InformazioniAcquisto {
     private Date data;
     private Integer quantità;
+    private Integer id_lista;
+    private Integer id_prodotto;
     
-    public InformazioniAcquisto(Date data, Integer quantità){
+    public InformazioniAcquisto(Date data, Integer quantità, Integer id_lista, Integer id_prodotto){
         this.data = data;
         this.quantità = quantità;
+        this.id_lista = id_lista;
+        this.id_prodotto = id_prodotto;
     }
 
     /**
@@ -46,5 +50,33 @@ public class InformazioniAcquisto {
      */
     public void setQuantità(Integer quantità) {
         this.quantità = quantità;
+    }
+
+    /**
+     * @return the id_lista
+     */
+    public Integer getId_lista() {
+        return id_lista;
+    }
+
+    /**
+     * @param id_lista the id_lista to set
+     */
+    public void setId_lista(Integer id_lista) {
+        this.id_lista = id_lista;
+    }
+
+    /**
+     * @return the id_prodotto
+     */
+    public Integer getId_prodotto() {
+        return id_prodotto;
+    }
+
+    /**
+     * @param id_prodotto the id_prodotto to set
+     */
+    public void setId_prodotto(Integer id_prodotto) {
+        this.id_prodotto = id_prodotto;
     }
 }

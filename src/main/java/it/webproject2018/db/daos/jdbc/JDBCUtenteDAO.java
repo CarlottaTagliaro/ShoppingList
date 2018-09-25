@@ -178,7 +178,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
     
-	@Override
+    @Override
     public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException {
         if (userEmail == null || password == null || name == null || surname == null) {
             throw new DAOException("userEmail or password or name or surname is null");
@@ -202,5 +202,11 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    @Override
+    public Utente insert(Utente entity) throws DAOException{
+        //TODO: pensare come sistemarlo
+        return null;
     }
 }
