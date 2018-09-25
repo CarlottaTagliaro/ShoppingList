@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
 
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
@@ -17,6 +18,7 @@
     <body>
         <jsp:include page="menu.jsp"/>
 
+        <script src="JS/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 selectMenuEl("home");
@@ -69,20 +71,31 @@
                                         <h3 class="modal-title" id="exampleModalLabel"><b>Choose the list:</b></h3>
                                     </div>
                                     <div class="modal-body">
-                                        <select class="form-control" id="search-select">
-                                            <option value="Pet shop">Pet shop</option>
-                                            <option value="Super Market">Super Market</option>
-                                        </select>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 scegliLista">
+                                                <select class="form-control" id="search-select1">
+                                                    <option value="Pet shop">Pet shop</option>
+                                                    <option value="Super Market">Super Market</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-4">
+                                                <div class="text-info"> Quantità presente: </div>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-4">
+                                                <div class="amount"><label>Amount:</label></div>
+                                                <input id="demo3" type="text" value="" name="demo3">
+                                                <script>
+                                                    $("input[name='demo3']").TouchSpin();
+                                                </script>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                        <button type="button" class=" btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="myButton3 btn btn-primary"> Add</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <input type="checkbox" value="true" disabled="true"> Already in a list
                         </div>
                     </div>
                 </div>
