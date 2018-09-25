@@ -36,8 +36,13 @@ public class NewList  extends SimpleTagSupport {
                 + "                         <div class=\"list-body clearfix\">\n"
                 + "                             <div class=\"header\">\n"
                 + "                                 <strong class=\"primary-font\">%s</strong> \n"
+                    
+                + "                    <div class=\"spacing\">\n"
+                + "                        <input type=\"checkbox\" name=\"inList\" value=\"true\"> \n"
+                + "                    </div>"
                 + "                             </div>\n"
                 + "                         </div>\n"
+                + "                                 \n"
                 + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome());
         }
         

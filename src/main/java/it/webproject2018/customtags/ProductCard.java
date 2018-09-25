@@ -63,9 +63,6 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                </div>\n"
                 + "                            </div>\n"
                 + "                        </div>\n"
-                + "                        <div>\n"
-                + "                            <input type=\"checkbox\" value=\"true\" disabled=\"true\"> Already in a list\n"
-                + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
                 + "            </div>", immagine, nome, categoria, descrizione
