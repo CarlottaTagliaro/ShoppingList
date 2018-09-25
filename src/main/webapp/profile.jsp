@@ -3,7 +3,12 @@
     Created on : 1-lug-2018, 10.45.35
     Author     : weatherly
 --%>
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="it.webproject2018.db.entities.Utente"%>
+<%@page import="java.util.List"%>
+<%@page import="it.webproject2018.db.entities.Lista"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="it.webproject2018.db.daos.jdbc.JDBCListaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,12 +27,17 @@
                 selectMenuEl("profile");
             });
         </script>
-
+<% 
+                    Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+                    JDBCListaDAO JdbcListaDao = new JDBCListaDAO(conn);
+                    Utente user = (Utente)request.getSession().getAttribute("User");
+                     pageContext.setAttribute("user", user);
+                %>
         <div class="main">
             <div class="card">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/John_Travolta_Deauville_2013_2.jpg/220px-John_Travolta_Deauville_2013_2.jpg" alt="John">
-                <h1>John Doe</h1>
-                <p class="titleNew">Email: John.Doe@gmail.com </p>
+                <img src="${user.getPicture()}" alt="${user.getName()}" class="img-responsive">
+                <h1>${user.getName()} ${user.getSurname()}</h1>
+                <p class="titleNew">Email: ${user.getEmail()} </p>
                 <div style="height:0px;overflow:hidden">
                     <input type="file" id="fileInput" name="fileInput" />
                 </div>
@@ -65,7 +75,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button1" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button1" class="btn btn-primary">Change</button>
+                                <button type="button1" class="btn btn-primary myButton3">Change</button>
                             </div>
                         </div>
                     </div>
