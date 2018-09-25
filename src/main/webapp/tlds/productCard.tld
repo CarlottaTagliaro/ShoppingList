@@ -26,20 +26,9 @@
 	<tag-class>it.webproject2018.customtags.ProductCard</tag-class>
 	<body-content>empty</body-content>
 	<attribute>
-            <name>nome</name>
+            <name>product</name>
             <required>true</required>
-	</attribute>
-	<attribute>
-            <name>descrizione</name>
-            <required>true</required>
-	</attribute>
-	<attribute>
-            <name>categoria</name>
-            <required>true</required>
-	</attribute>
-	<attribute>
-            <name>immagine</name>
-            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
 	</attribute>
     </tag>
 </taglib>

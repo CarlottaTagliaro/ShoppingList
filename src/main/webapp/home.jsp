@@ -4,6 +4,13 @@
     Author     : weatherly
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="it.webproject2018.db.entities.Prodotto"%>
+<%@page import="java.util.List"%>
+<%@page import="it.webproject2018.db.entities.Utente"%>
+<%@page import="it.webproject2018.db.daos.jdbc.JDBCProdottoDAO"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,6 +21,7 @@
         <title>JSP Page</title>
 
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
@@ -48,64 +56,28 @@
                 </div>
             </div>
 
-            <div class="row card">
-                <div class="col-xs-3">
-                    <img class="imageList img-responsive" src="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG"/>
-                </div>
-                <div class="col-xs-6">
-                    <h4> <b> Tosaerba </b></h4>
-                    <h6> Giardinaggio </h6>
-                    <p> questo è un tosaerba bellissimo </p>
-                </div>
+            
+            <%                    
+                Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+                JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
+                Utente user = (Utente)request.getSession().getAttribute("User");
+                List<Prodotto> productList;
+                productList = JdbcProdottoDao.getAll();
+                    
+                /* Da fare controllo su oggetti creati da utente
+                if(user != null)
+                
+                else
+                    userLists = new ArrayList<>();
+                */
 
-                <div class="col-xs-3 myColumn">
-                    <div>
-                        <div class="add-lista">
-                            <label class="aggiungi"> Add: </label>
-                            <button class="myButton" text="+" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel"><b>Choose the list:</b></h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-4 scegliLista">
-                                                <select class="form-control" id="search-select1">
-                                                    <option value="Pet shop">Pet shop</option>
-                                                    <option value="Super Market">Super Market</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-6 col-sm-4">
-                                                <div class="text-info"> Quantità presente: </div>
-                                            </div>
-                                            <div class="col-xs-6 col-sm-4">
-                                                <div class="amount"><label>Amount:</label></div>
-                                                <input id="demo3" type="text" value="" name="demo3">
-                                                <script>
-                                                    $("input[name='demo3']").TouchSpin();
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class=" btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="myButton3 btn btn-primary"> Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                pageContext.setAttribute("productList", productList);
+            %>
 
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-
+            <c:forEach items="${productList}" var="product">
+                <productCard:productCard product="${product}"/>
+            </c:forEach>
+            
         </div>
     </body>
 </html>
