@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class CategoriaListe {
     private String nome;
     private String descrizione;
-    public ArrayList<String> Immagini;
+    private ArrayList<String> immagini;
     
     public CategoriaListe(String nome, String descrizione, ArrayList<String> immagini){
         this.nome = nome;
         this.descrizione = descrizione;
-        this.Immagini = immagini;
+        this.immagini = immagini;
     }
 
     /**
@@ -48,5 +48,12 @@ public class CategoriaListe {
      */
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    /**
+     * @return the immagini
+     */
+    public ArrayList<String> getImmagini() {
+        return immagini;
     }
 }

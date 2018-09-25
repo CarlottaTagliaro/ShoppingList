@@ -174,3 +174,11 @@ and open the template in the editor.
 .row-lista{
     text-align: center;
 }
+
+.newLista{
+    display: inline-block;
+}
+
+.center{
+    text-align: center;
+}
