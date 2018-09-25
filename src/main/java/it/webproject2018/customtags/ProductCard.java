@@ -5,6 +5,7 @@
  */
 package it.webproject2018.customtags;
 
+import it.webproject2018.db.entities.Prodotto;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
@@ -16,10 +17,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class ProductCard extends SimpleTagSupport {
 
-    private String nome;
-    private String descrizione;
-    private String categoria;
-    private String immagine;
+    private Prodotto product;
 
     public ProductCard() {
 
@@ -65,64 +63,23 @@ public class ProductCard extends SimpleTagSupport {
                 + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
-                + "            </div>", immagine, nome, categoria, descrizione
+                + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/50/55C1E7/fff&text=" + getProduct().getNome().charAt(0), 
+                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote()
         );
         getJspContext().getOut().write(html);
     }
 
     /**
-     * @return the nome
+     * @return the product
      */
-    public String getNome() {
-        return nome;
+    public Prodotto getProduct() {
+        return product;
     }
 
     /**
-     * @param nome the nome to set
+     * @param product the product to set
      */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * @return the descrizione
-     */
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    /**
-     * @param descrizione the descrizione to set
-     */
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    /**
-     * @return the categoria
-     */
-    public String getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    /**
-     * @return the immagine
-     */
-    public String getImmagine() {
-        return immagine;
-    }
-
-    /**
-     * @param immagine the immagine to set
-     */
-    public void setImmagine(String immagine) {
-        this.immagine = immagine;
+    public void setProduct(Prodotto product) {
+        this.product = product;
     }
 }
