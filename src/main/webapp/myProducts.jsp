@@ -19,6 +19,7 @@
         <title>JSP Page</title>
         
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
+        <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
