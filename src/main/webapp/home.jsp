@@ -34,11 +34,11 @@
         </script>
 
         <div class="main">
-            <div class="row search-form">
+            <form class="row search-form">
                 <div class="col-sm-7">
                     <div class="ordering-form">
                         <label class="search"> Order by: </label>
-                        <select class="form-control selezione" id="search-select">
+                        <select class="form-control selezione" name="orderBy" id="search-select">
                             <option value="byName">name</option>
                             <option value="byShop">shop</option>
                         </select>
@@ -46,15 +46,15 @@
                 </div>
                 <div class="col-sm-5">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
+                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product">
                         <div class="input-group-btn">
-                            <button type="button" class="btn bottone-cerca btn-default">
+                            <button type="submit" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
             
             <%                    
@@ -62,11 +62,15 @@
                 JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
                 Utente user = (Utente)request.getSession().getAttribute("User");
                 List<Prodotto> productList;
+                
+                String srcText = request.getParameter("qry");
+                String orderBy = request.getParameter("orderBy");
+                                        
                     
                 if(user != null)
-                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail());                
+                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);                
                 else
-                    productList = JdbcProdottoDao.getAll();
+                    productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
                 
                 pageContext.setAttribute("productList", productList);
             %>
