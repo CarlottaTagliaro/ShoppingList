@@ -157,7 +157,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     public List<Prodotto> getAll() throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti")) {
+        //prendo solo prodotto creati da admin
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while(rs.next()){                
@@ -174,6 +175,33 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
     
+    
+    @Override
+    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail) throws DAOException {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        //prendo solo prodotti creati da admin
+        try (PreparedStatement stm = CON.prepareStatement("(select ID from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)"
+                + "UNION"
+                + "(SELECT ID_prodotto as ID FROM Utenti_Prodotti Where Email = ?)")) {
+            stm.setString(1, userEmail);
+            stm.setString(2, userEmail);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getByPrimaryKey(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting all All User Visible Products", ex);
+        }
+        
+        return prodotti;
+    }
+        
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {

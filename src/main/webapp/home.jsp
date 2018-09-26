@@ -62,15 +62,12 @@
                 JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
                 Utente user = (Utente)request.getSession().getAttribute("User");
                 List<Prodotto> productList;
-                productList = JdbcProdottoDao.getAll();
                     
-                /* Da fare controllo su oggetti condivisi con l'utente
                 if(user != null)
-                
+                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail());                
                 else
-                    userLists = new ArrayList<>();
-                */
-
+                    productList = JdbcProdottoDao.getAll();
+                
                 pageContext.setAttribute("productList", productList);
             %>
 
