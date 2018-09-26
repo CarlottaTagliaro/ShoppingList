@@ -13,6 +13,8 @@ import java.util.HashMap;
 /**
  *
  * @author davide
+ * @param <ENTITY_CLASS>
+ * @param <PRIMARY_KEY_CLASS> 
  */
 public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
     /**

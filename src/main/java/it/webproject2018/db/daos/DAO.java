@@ -55,8 +55,7 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	 * retrieving.
 	 */
 	public List<ENTITY_CLASS> getAll() throws DAOException;
-	
-	
+		
 	/**
 	 * Updates the entity of type {@code ENTITY_CLASS} in the persistence
 	 * layer
@@ -67,7 +66,6 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	 * retrieving.
 	 */
 	public ENTITY_CLASS insert(ENTITY_CLASS entity) throws DAOException;
-	
 	
 	/**
 	 * Updates the entity of type {@code ENTITY_CLASS} passed as parameter 

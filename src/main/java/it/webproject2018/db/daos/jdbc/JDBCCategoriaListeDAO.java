@@ -113,7 +113,6 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         return 0L;
     }
     
-    
     @Override
     public CategoriaListe insert(CategoriaListe entity) throws DAOException{
         if (entity == null) {

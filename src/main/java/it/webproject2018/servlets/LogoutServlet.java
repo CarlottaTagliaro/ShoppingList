@@ -1,7 +1,6 @@
 package it.webproject2018.servlets;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

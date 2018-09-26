@@ -9,7 +9,6 @@ import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.exceptions.DAOException;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
-import it.webproject2018.db.entities.Utente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -168,6 +167,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return 0L;
     }
 	
+	@Override
     public Prodotto update(Prodotto product) throws DAOException {
         if (product == null) {
             throw new DAOException("Parameter 'product' not valid for update",
