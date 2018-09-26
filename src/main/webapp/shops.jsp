@@ -1,3 +1,9 @@
+<%@page import="it.webproject2018.db.entities.CategoriaListe"%>
+<%@page import="java.util.List"%>
+<%@page import="it.webproject2018.db.entities.Utente"%>
+<%@page import="it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
+        <%@ taglib uri="/tlds/shopCard" prefix="shopCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
@@ -25,44 +32,22 @@
                     </div>
                 </div>
             </c:if>
-            <div class="row">
-                <div class="col-md-4 liste">
-                    <div class="row">
-                        <div class="carousel slide newLista" id="myCarousel1">
-                            <!-- Carousel items -->
-                            <div class="carousel-inner">
-                                <div class="active item" data-slide-number="0">
-                                    <img src="http://placehold.it/770x300&text=one">
-                                </div>
-                                <div class="item" data-slide-number="1">
-                                    <img src="http://placehold.it/770x300&text=two"></div>
-                                <div class="item" data-slide-number="2">
-                                    <img src="http://placehold.it/770x300&text=three"></div>
-                                <div class="item" data-slide-number="3">
-                                    <img src="http://placehold.it/770x300&text=four"></div>
-                                <div class="item" data-slide-number="4">
-                                    <img src="http://placehold.it/770x300&text=five"></div>
-                                <div class="item" data-slide-number="5">
-                                    <img src="http://placehold.it/770x300&text=six"></div>
-                            </div><!-- Carousel nav -->
-                            <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>  
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#myCarousel1" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                                <span class="sr-only">Next</span>
-                            </a>                                 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" id="accordion">
-                                <span class="glyphicon glyphicon-usd"></span> <a class="scegli_negozio" href="shopCategories.jsp"> <b> Nome negozio</b></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
+            
+                <%                    
+                    Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+                    JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(conn);
+                    List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
+                    
+                    pageContext.setAttribute("shops", shops);
+                %>
+
+                
+            
+            <div class="row">                
+                <c:forEach items="${shops}" var="shop">
+                    <shopCard:shopCard shop="${shop}"/>
+                </c:forEach>
             </div>
         </div>
     </body>

@@ -112,8 +112,9 @@ CREATE TABLE Liste_Prodotti_Acquistati(
 CREATE TABLE Chat(
     Email_sender varchar(100) not null,
     ID_list integer not null,
+    Data Timestamp not null,
     Message varchar(200) not null,
-    Data Datetime not null,
+    primary key(Email_sender, ID_list, Data),
     foreign key(Email_sender) references Utenti(Email),
     foreign key(ID_list) references Liste(ID)
 );

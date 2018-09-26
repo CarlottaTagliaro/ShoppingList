@@ -69,5 +69,9 @@
             <taglib-uri>/tlds/newList</taglib-uri>
             <taglib-location>/tlds/newList.tld</taglib-location>
         </taglib>
+        <taglib>
+            <taglib-uri>/tlds/shopCard</taglib-uri>
+            <taglib-location>/tlds/shopCard.tld</taglib-location>
+        </taglib>
     </jsp-config>
 </web-app>

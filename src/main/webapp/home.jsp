@@ -4,19 +4,29 @@
     Author     : weatherly
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="it.webproject2018.db.entities.Prodotto"%>
+<%@page import="java.util.List"%>
+<%@page import="it.webproject2018.db.entities.Utente"%>
+<%@page import="it.webproject2018.db.daos.jdbc.JDBCProdottoDAO"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
 
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
 
+        <script src="JS/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 selectMenuEl("home");
@@ -24,11 +34,11 @@
         </script>
 
         <div class="main">
-            <div class="row search-form">
+            <form class="row search-form">
                 <div class="col-sm-7">
                     <div class="ordering-form">
                         <label class="search"> Order by: </label>
-                        <select class="form-control selezione" id="search-select">
+                        <select class="form-control selezione" name="orderBy" id="search-select">
                             <option value="byName">name</option>
                             <option value="byShop">shop</option>
                         </select>
@@ -36,63 +46,40 @@
                 </div>
                 <div class="col-sm-5">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
+                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product">
                         <div class="input-group-btn">
-                            <button type="button" class="btn bottone-cerca btn-default">
+                            <button type="submit" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
-            <div class="row card">
-                <div class="col-xs-3">
-                    <img class="imageList img-responsive" src="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG"/>
-                </div>
-                <div class="col-xs-6">
-                    <h4> <b> Tosaerba </b></h4>
-                    <h6> Giardinaggio </h6>
-                    <p> questo è un tosaerba bellissimo </p>
-                </div>
 
-                <div class="col-xs-3 myColumn">
-                    <div>
-                        <div class="add-lista">
-                            <label class="aggiungi"> Add: </label>
-                            <button class="myButton" text="+" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel"><b>Choose the list:</b></h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <select class="form-control" id="search-select">
-                                            <option value="Pet shop">Pet shop</option>
-                                            <option value="Super Market">Super Market</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <input type="checkbox" value="true" disabled="true"> Already in a list
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <%
+                Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+                JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
+                Utente user = (Utente) request.getSession().getAttribute("User");
+                List<Prodotto> productList;
 
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
+                String srcText = request.getParameter("qry");
+                String orderBy = request.getParameter("orderBy");
+
+                if (user != null) {
+                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
+                } else {
+                    productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
+                }
+
+                pageContext.setAttribute("productList", productList);
+            %>
+
+            <c:forEach items="${productList}" var="product">
+                <productCard:productCard product="${product}"/>
+            </c:forEach>
 
         </div>
     </body>
 </html>
+

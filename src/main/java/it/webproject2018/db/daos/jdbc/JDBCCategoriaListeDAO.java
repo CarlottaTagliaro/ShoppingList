@@ -79,7 +79,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         List<CategoriaListe> shoppingLists = new ArrayList<>();
 
         try (Statement stm = CON.createStatement()) {
-            try (ResultSet rs = stm.executeQuery("SELECT * FROM Liste_categorie ORDER BY name")) {
+            try (ResultSet rs = stm.executeQuery("SELECT * FROM Liste_categorie ORDER BY Nome")) {
 
                 while (rs.next()) {
                     String nome = rs.getString("Nome");

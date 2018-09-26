@@ -5,6 +5,7 @@
  */
 package it.webproject2018.customtags;
 
+import it.webproject2018.db.entities.Prodotto;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
@@ -16,10 +17,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class ProductCard extends SimpleTagSupport {
 
-    private String nome;
-    private String descrizione;
-    private String categoria;
-    private String immagine;
+    private Prodotto product;
 
     public ProductCard() {
 
@@ -48,84 +46,63 @@ public class ProductCard extends SimpleTagSupport {
                 + "                            <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                <div class=\"modal-content\">\n"
                 + "                                    <div class=\"modal-header\">\n"
-                + "                                        <h3 class=\"modal-title\" id=\"exampleModalLabel\">Choose the list</h3>\n"
+                + "                                        <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Choose the list</b></h3>\n"
                 + "                                    </div>\n"
                 + "                                    <div class=\"modal-body\">\n"
-                + "                                        <select class=\"form-control\" id=\"search-select\">\n"
-                + "                                            <option value=\"Pet shop\">Pet shop</option>\n"
-                + "                                            <option value=\"Super Market\">Super Market</option>\n"
-                + "                                        </select>\n"
+                + "                                         <div class=\"row\">\n"
+                + "                                             <div class=\"col-xs-12 col-sm-4 scegliLista\">\n"
+                + "                                                 <div class=\"row amount\">\n"
+                + "                                                     <label> Choose: </label>\n"
+                + "                                                 </div>\n"
+                + "                                                 <div class=\"row\"> \n"
+                + "                                                     <select class=\"form-control\" id=\"search-select1\">\n"
+                + "                                                         <option value=\"Pet shop\">Pet shop</option>\n"
+                + "                                                         <option value=\"Super Market\">Super Market</option>\n"
+                + "                                                     </select>\n"
+                + "                                                 </div>"
+                + "                                             </div>\n"
+                + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
+                + "                                                 <div class=\"text-info\"><b> Already added: </b></div>\n"
+                + "                                             </div>\n"
+                + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
+                + "                                                 <div class=\"row\"> \n"
+                + "                                                     <div class=\"amount\"><label>Amount:</label></div>\n"
+                + "                                                 </div>\n"
+                + "                                                 <div class=\"row\">\n"
+                + "                                                     <input id=\"demo3\" type=\"text\" value=\"\" name=\"demo3\">\n"
+                + "                                                 </div>"
+                + "                                                 <script>\n"
+                + "                                                     $(\"input[name='demo3']\").TouchSpin();\n"
+                + "                                                 </script>\n"
+                + "                                             </div>\n"
+                + "                                         </div>"
                 + "                                    </div>\n"
                 + "                                    <div class=\"modal-footer\">\n"
-                + "                                        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n"
-                + "                                        <button type=\"button\" class=\"btn btn-primary\">Add</button>\n"
+                + "                                         <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
+                + "                                         <button type=\"button\" class=\"myButton3 btn btn-primary\"> <b>Add</b></button>"
                 + "                                    </div>\n"
                 + "                                </div>\n"
                 + "                            </div>\n"
                 + "                        </div>\n"
-                + "                        <div>\n"
-                + "                            <input type=\"checkbox\" value=\"true\" disabled=\"true\"> Already in a list\n"
-                + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
-                + "            </div>", immagine, nome, categoria, descrizione
+                + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/50/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
+                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote()
         );
         getJspContext().getOut().write(html);
     }
 
     /**
-     * @return the nome
+     * @return the product
      */
-    public String getNome() {
-        return nome;
+    public Prodotto getProduct() {
+        return product;
     }
 
     /**
-     * @param nome the nome to set
+     * @param product the product to set
      */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
-     * @return the descrizione
-     */
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    /**
-     * @param descrizione the descrizione to set
-     */
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
-    /**
-     * @return the categoria
-     */
-    public String getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    /**
-     * @return the immagine
-     */
-    public String getImmagine() {
-        return immagine;
-    }
-
-    /**
-     * @param immagine the immagine to set
-     */
-    public void setImmagine(String immagine) {
-        this.immagine = immagine;
+    public void setProduct(Prodotto product) {
+        this.product = product;
     }
 }

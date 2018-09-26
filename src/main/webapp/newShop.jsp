@@ -20,8 +20,8 @@
                     <label> Name: </label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Enter list name" required autofocus>
                 </div>
-                <button class="button1" type="submit" >Create</button>
-                <button class = "button1"type="submit"  onclick="goBack()">Annulla</button>
+                <button class="button1" type="submit" ><b>Create</b></button>
+                <button class = "button1"type="submit"  onclick="goBack()"><b>Cancel</b></button>
                 <script>
                     function goBack() {
                         window.history.back();

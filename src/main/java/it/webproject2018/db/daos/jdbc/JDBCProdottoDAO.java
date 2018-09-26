@@ -132,10 +132,33 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
     
     @Override
-    public List<Prodotto> getAll() throws DAOException {
+    public ArrayList<Prodotto> getUserProducts(String userEmail) throws DAOException{
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Owner = ?")) {
+            stm.setString(1, userEmail);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getByPrimaryKey(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting all user Products", ex);
+        }
+        
+        return prodotti;
+    }
+    
+    @Override
+    public List<Prodotto> getAll() throws DAOException {        
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        //prendo solo prodotto creati da admin
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while(rs.next()){                
@@ -152,6 +175,76 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
     
+    
+    @Override
+    public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy) throws DAOException {
+        if(srcQry == null)
+            srcQry = "";
+        
+        if(orderBy == null || orderBy.equals("byName") || orderBy.equals(""))
+            orderBy = "Nome";
+        else if(orderBy.equals("byShop"))
+            orderBy = "Categoria";
+        
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        //prendo solo prodotto creati da admin
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ORDER BY Prodotti." + orderBy)) {
+            stm.setString(1, "%" + srcQry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getByPrimaryKey(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting all Products", ex);
+        }
+        
+        return prodotti;
+    }
+    
+    
+    @Override
+    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy) throws DAOException {
+        if(srcQry == null)
+            srcQry = "";
+        
+        if(orderBy == null || orderBy.equals("byName") || orderBy.equals(""))
+            orderBy = "Nome";
+        else if(orderBy.equals("byShop"))
+            orderBy = "Categoria";
+        
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        //TODO: da sistemare orderby e like
+        
+        //prendo solo prodotti creati da admin
+        try (PreparedStatement stm = CON.prepareStatement("Select * from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)"
+                + "UNION"
+                + "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ? ORDER BY " +  orderBy)) {
+            stm.setString(1, userEmail);
+            stm.setString(2, userEmail);
+            stm.setString(3, "%" + srcQry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getByPrimaryKey(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting All User Visible Products", ex);
+        }
+        
+        return prodotti;
+    }
+        
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
