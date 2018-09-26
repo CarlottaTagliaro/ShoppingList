@@ -30,6 +30,7 @@
 .bootstrap-touchspin-down, .bootstrap-touchspin-up{
     width: 33px;
     background-color: #222 !important;
+    border-color: transparent !important;
 }
 
 

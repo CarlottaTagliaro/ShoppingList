@@ -56,29 +56,30 @@
                 </div>
             </form>
 
-            
-            <%                    
+
+            <%
                 Connection conn = (Connection) super.getServletContext().getAttribute("connection");
                 JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
-                Utente user = (Utente)request.getSession().getAttribute("User");
+                Utente user = (Utente) request.getSession().getAttribute("User");
                 List<Prodotto> productList;
-                
+
                 String srcText = request.getParameter("qry");
                 String orderBy = request.getParameter("orderBy");
-                                        
-                    
-                if(user != null)
-                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);                
-                else
+
+                if (user != null) {
+                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
+                } else {
                     productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
-                
+                }
+
                 pageContext.setAttribute("productList", productList);
             %>
 
             <c:forEach items="${productList}" var="product">
                 <productCard:productCard product="${product}"/>
             </c:forEach>
-            
+
         </div>
     </body>
 </html>
+
