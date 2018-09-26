@@ -24,6 +24,10 @@ and open the template in the editor.
     padding-left: 0px !important;
 }
 
+.liste:nth-child(3n+1) {
+    clear: left;
+}
+
 .addList, .addShop {
     margin-bottom: 10px !important;
 }
@@ -130,6 +134,16 @@ and open the template in the editor.
 .scegli_negozio {
     color: white;
     text-decoration: underline;
+}
+
+.shop-header{
+    height: 200px;
+}
+
+.shop-header>.carousel>.carousel-inner{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .img_wrapper {
