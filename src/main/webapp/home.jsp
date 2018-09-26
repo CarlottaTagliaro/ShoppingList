@@ -44,9 +44,18 @@
                         </select>
                     </div>
                 </div>
+
+                <script>
+                    $(document).ready(function () {
+                        var value = "<%= request.getParameter("orderBy") == null ? "" : request.getParameter("orderBy")%>";
+                        if(value != "")
+                            $("select[name=orderBy]").val(value);
+                    });
+                </script>
+
                 <div class="col-sm-5">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product">
+                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product" value="<%= request.getParameter("qry") == null ? "" : request.getParameter("qry")%>">
                         <div class="input-group-btn">
                             <button type="submit" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>
