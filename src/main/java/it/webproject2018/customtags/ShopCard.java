@@ -30,7 +30,7 @@ public class ShopCard  extends SimpleTagSupport {
         
         for(int i = 0; i < getShop().getImmagini().size(); i++){
             imgHtml += String.format("                                <div class=\"%s item\" data-slide-number=\"%d\">\n" +
-"                                    <img class=\"img-responsive\" src=\"%s\">\n" +
+"                                    <img class=\"img-responsive center-block\" src=\"%s\">\n" +
 "                                </div>\n", (i == 0 ? "active" : ""), i, getShop().getImmagini().get(i));
         }
                 
