@@ -64,7 +64,7 @@
                 List<Prodotto> productList;
                 productList = JdbcProdottoDao.getAll();
                     
-                /* Da fare controllo su oggetti creati da utente
+                /* Da fare controllo su oggetti condivisi con l'utente
                 if(user != null)
                 
                 else
