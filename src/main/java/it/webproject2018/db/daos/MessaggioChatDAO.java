@@ -10,12 +10,12 @@ import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import java.sql.Date;
 import java.util.ArrayList;
-import org.apache.commons.lang3.tuple;
+import org.glassfish.gmbal.generic.Triple;
 
 /**
  *
  * @author Max
  */
-public interface MessaggioChatDAO extends DAO<MessaggioChat, Triple<String, Integer, Date>>{
-	//public ArrayList<Utente> getListUsers(Integer id_list) throws DAOException;
+public interface MessaggioChatDAO extends DAO<MessaggioChat, Triple<String, Integer, Date>> {
+    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat) throws DAOException;
 }
