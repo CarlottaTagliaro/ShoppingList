@@ -58,7 +58,22 @@ and open the template in the editor.
     font-size: 20px;
 }
 
+.myButton3 {
+    border-radius: 4px !important;
+    border: none;
+    color: white;
+    outline: 0;
+    display: inline-block;
+    background-color: #222 !important;
+    text-align: center;
+    cursor: pointer;
+}
+
 .myButton:hover {
+    opacity: 0.7;
+}
+
+.myButton3:hover {
     opacity: 0.7;
 }
 
@@ -182,7 +197,7 @@ and open the template in the editor.
 
 .panel-primary{    
     display:inline-block;
-    
+
 }
 
 .row-lista{
@@ -200,4 +215,11 @@ and open the template in the editor.
 .aggiungi {
     margin-left: 40px;
     margin-top: 13px;
+}
+
+.addTo {
+    float: right;
+    margin-right: 5px;
+    height: 25px;
+    width: 27px;
 }
