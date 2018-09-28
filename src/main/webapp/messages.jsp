@@ -15,6 +15,7 @@
     <body>
         <jsp:include page="menu.jsp"/>
         
+        <script src="JS/chat.js" type="text/javascript"></script>
         <script>
             $(document).ready(function() {
                 selectMenuEl("messages"); 
@@ -45,7 +46,7 @@
                         </div>
                         <div class="panel-collapse in" id="collapseOne">
                             <div class="panel-body pannello-utenti">
-                                <ul class="chat">
+                                <ul id="chat-panel" class="chat">
                                     <li class="left clearfix"><span class="chat-img pull-left">
                                             <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
                                         </span>
@@ -67,7 +68,7 @@
                         </div>
                         <div class="panel-collapse" id="collapseOne">
                             <div class="panel-body">
-                                <ul class="chat">
+                                <ul id="chat-messages" class="chat">
                                     <li class="left clearfix"><span class="chat-img pull-left">
                                             <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
                                         </span>

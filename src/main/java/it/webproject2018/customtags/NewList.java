@@ -18,7 +18,6 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class NewList extends SimpleTagSupport {
 
     private Lista lista;
-    private static int ListNum = 0;
 
     public NewList() {
 
@@ -55,7 +54,7 @@ public class NewList extends SimpleTagSupport {
                     + "                                                         <div class=\"amount\"><label>Amount:</label></div>\n"
                     + "                                                     </div>\n"
                     + "                                                     <div class=\"row\">\n"
-                    + "                                                         <input id=\"demo3\" type=\"text\" value=\"\" name=\"demo3\">\n"
+                    + "                                                         <input id=\"demo3\" type=\"text\" value=\"0\" name=\"demo3\">\n"
                     + "                                                     </div>\n"
                     + "                                                     <script>\n"
                     + "                                                         $(\"input[name='demo3']\").TouchSpin();\n"
@@ -108,8 +107,8 @@ public class NewList extends SimpleTagSupport {
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), ListNum, ListNum, listaHtml);
-        ListNum++;
+                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), listaHtml);
+        
         getJspContext().getOut().write(html);
     }
 

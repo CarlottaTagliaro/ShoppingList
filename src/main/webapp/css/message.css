@@ -138,3 +138,7 @@ and open the template in the editor.
 label {
     font-size: 18px;
 }
+
+.chat-selector{
+    pointer:cursor;
+}
