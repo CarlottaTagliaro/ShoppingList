@@ -1,0 +1,142 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package it.webproject2018.servlets;
+
+import com.google.gson.Gson;
+import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.daos.jdbc.JDBCMessaggioChatDAO;
+import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.MessaggioChat;
+import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+/**
+ *
+ * @author davide
+ */
+@WebServlet(name = "ChatServlet", urlPatterns = {"/ChatServlet"})
+public class ChatServlet extends HttpServlet {
+    private JDBCListaDAO JdbcListaDao;
+    private JDBCMessaggioChatDAO JdbcMessaggioChatDao;
+
+    @Override
+    public void init() throws ServletException {
+        Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+        JdbcListaDao = new JDBCListaDAO(conn);
+        JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(conn);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Utente user = (Utente)request.getSession().getAttribute("User");
+        if(user != null){
+            String action = request.getParameter("action");
+            if(action.equals("getChatList"))
+                getChatList(user, response);
+            else if(action.equals("getChatMessages")){
+                int chat_list_id = Integer.parseInt(request.getParameter("list_id"));
+                getChatMessages(user, chat_list_id, response);
+            }
+        }
+        else{
+            response.setStatus(401);
+        }
+    }
+    
+    protected void getChatList(Utente user, HttpServletResponse response){
+        try {
+            ArrayList<Lista> liste = JdbcListaDao.getUserLists(user.getEmail());
+            ArrayList<ChatElement> chats = new ArrayList<>();
+            for(Lista l : liste){
+                chats.add(new ChatElement(l.getId(), l.getNome(), l.getImmagine()));
+            }
+
+            Gson gson = new Gson();
+            String json = gson.toJson(chats);
+
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+    
+    
+    protected void getChatMessages(Utente user, int chat_list_id, HttpServletResponse response){
+        try {
+            ArrayList<MessaggioChat> messaggi = JdbcMessaggioChatDao.getChatLastMessages(chat_list_id);
+
+            ChatView chat = new ChatView();
+            chat.id_lista = chat_list_id;
+            chat.messages = new ArrayList<>();
+            
+            for(MessaggioChat msg: messaggi){
+                String timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(msg.getDate());
+                System.out.println(timestamp);
+                chat.messages.add(new ChatMessage(msg.getSender().getEmail(), msg.getSender().getPicture(), msg.getSender().getEmail().equals(user.getEmail()), msg.getSender().getName(), msg.getSender().getSurname(), timestamp, msg.getMessage()));
+            }
+            
+            Gson gson = new Gson();
+            String json = gson.toJson(chat);
+
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+        } catch (Exception ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+        
+    class ChatElement{
+        public int id;
+        public String nome;
+        public String immagine;
+        
+        public ChatElement(int id, String nome, String immagine){
+            this.id = id;
+            this.nome = nome;
+            this.immagine = immagine;
+        }
+    }
+    
+    class ChatView{
+        public int id_lista;
+        public List<ChatMessage> messages;
+    }
+    
+    class ChatMessage{
+        public String email_utente;
+        public String immagine;
+        public Boolean isMe;
+        public String nome;
+        public String cognome;
+        public String timestamp;
+        public String messaggio;
+        
+        public ChatMessage(String email_utente, String immagine, Boolean isMe, String nome, String cognome, String timestamp, String messaggio){
+            this.email_utente = email_utente;
+            this.immagine = immagine;
+            this.isMe = isMe;
+            this.nome = nome;
+            this.cognome = cognome;
+            this.timestamp = timestamp;
+            this.messaggio = messaggio;
+        }
+    }
+}
