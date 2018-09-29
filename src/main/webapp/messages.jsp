@@ -15,6 +15,7 @@
     <body>
         <jsp:include page="menu.jsp"/>
         
+        <script src="JS/chat.js" type="text/javascript"></script>
         <script>
             $(document).ready(function() {
                 selectMenuEl("messages"); 
@@ -45,8 +46,8 @@
                         </div>
                         <div class="panel-collapse in" id="collapseOne">
                             <div class="panel-body pannello-utenti">
-                                <ul class="chat">
-                                    <li class="left clearfix"><span class="chat-img pull-left">
+                                <ul id="chat-panel" class="chat">
+                                    <!--<li class="left clearfix"><span class="chat-img pull-left">
                                             <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
                                         </span>
                                         <div class="chat-body clearfix">
@@ -54,7 +55,7 @@
                                                 <strong class="primary-font" >Jack Sparrow</strong> 
                                             </div>
                                         </div>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
                         </div>
@@ -67,8 +68,8 @@
                         </div>
                         <div class="panel-collapse" id="collapseOne">
                             <div class="panel-body">
-                                <ul class="chat">
-                                    <li class="left clearfix"><span class="chat-img pull-left">
+                                <ul id="chat-messages" class="chat">
+                                    <!--<li class="left clearfix"><span class="chat-img pull-left">
                                             <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
                                         </span>
                                         <div class="chat-body clearfix">
@@ -123,7 +124,7 @@
                                                 dolor, quis ullamcorper ligula sodales.
                                             </p>
                                         </div>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
                             <div class="panel-footer">

@@ -15,37 +15,64 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  *
  * @author weatherly
  */
-public class NewList  extends SimpleTagSupport {
+public class NewList extends SimpleTagSupport {
+
     private Lista lista;
-    private static int ListNum = 0;
-    
-    public NewList(){
-        
+
+    public NewList() {
+
     }
-    
+
     @Override
     public void doTag() throws JspException, IOException {
-        
+
         String listaHtml = "";
-        
-        for(int i = 0; i < lista.size(); i ++){
+
+        for (int i = 0; i < lista.size(); i++) {
             listaHtml += String.format("<li class=\"left clearfix\">"
-                + "                         <span class=\"list-img pull-left\">\n"
-                + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text=%c\" alt=\"object\" class=\"img-circle\" />\n"
-                + "                         </span>\n"
-                + "                         <div class=\"list-body clearfix\">\n"
-                + "                             <div class=\"header\">\n"
-                + "                                 <strong class=\"primary-font\">%s</strong> \n"
-                    
-                + "                    <div class=\"spacing\">\n"
-                + "                        <input type=\"checkbox\" name=\"inList\" value=\"true\"> \n"
-                + "                    </div>"
-                + "                             </div>\n"
-                + "                         </div>\n"
-                + "                                 \n"
-                + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome());
+                    + "                         <span class=\"list-img pull-left\">\n"
+                    + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text=%c\" alt=\"object\" class=\"img-circle\" />\n"
+                    + "                         </span>\n"
+                    + "                         <div class=\"list-body clearfix\">\n"
+                    + "                             <div class=\"header\">\n"
+                    + "                                 <strong class=\"primary-font\">%s</strong> \n"
+                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\"><b>+</b></button>\n"
+                    + "                                 <button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
+                    + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
+                    + "                                 </button>\n"
+                    + "                             </div>\n"
+                    + "                             <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                    + "                                 <div class=\"modal-dialog\" role=\"document\">\n"
+                    + "                                     <div class=\"modal-content\">\n"
+                    + "                                         <div class=\"modal-header\">\n"
+                    + "                                             <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Choose the quantity:</b></h3>\n"
+                    + "                                         </div>\n"
+                    + "                                         <div class=\"modal-body\">\n"
+                    + "                                             <div class=\"row\">\n"
+                    + "                                                 <div class=\"col-xs-6 col-sm-4\">\n"
+                    + "                                                     <div class=\"row\"> \n"
+                    + "                                                         <div class=\"amount\"><label>Amount:</label></div>\n"
+                    + "                                                     </div>\n"
+                    + "                                                     <div class=\"row\">\n"
+                    + "                                                         <input id=\"demo3\" type=\"text\" value=\"0\" name=\"demo3\">\n"
+                    + "                                                     </div>\n"
+                    + "                                                     <script>\n"
+                    + "                                                         $(\"input[name='demo3']\").TouchSpin();\n"
+                    + "                                                     </script>\n"
+                    + "                                                 </div>\n"
+                    + "                                             </div>\n"
+                    + "                                         </div>\n"
+                    + "                                         <div class=\"modal-footer\">\n"
+                    + "                                             <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
+                    + "                                             <button type=\"button\" class=\"myButton3 btn btn-primary\"> <b>Add</b></button>\"\n"
+                    + "                                         </div>\n"
+                    + "                                     </div>\n"
+                    + "                                 </div>\n"
+                    + "                             </div>\n"
+                    + "                         </div>\n"
+                    + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome());
         }
-        
+
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
                 + "                    <div class=\"row row-lista\">\n"
                 + "                        <div class=\"img_wrapper\">\n"
@@ -80,11 +107,11 @@ public class NewList  extends SimpleTagSupport {
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), ListNum, ListNum, listaHtml);
-        ListNum++;
+                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), listaHtml);
+        
         getJspContext().getOut().write(html);
     }
-    
+
     /**
      * @return the lista
      */

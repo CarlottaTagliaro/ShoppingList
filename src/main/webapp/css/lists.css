@@ -24,6 +24,10 @@ and open the template in the editor.
     padding-left: 0px !important;
 }
 
+.liste:nth-child(3n+1) {
+    clear: left;
+}
+
 .addList, .addShop {
     margin-bottom: 10px !important;
 }
@@ -54,7 +58,22 @@ and open the template in the editor.
     font-size: 20px;
 }
 
+.myButton3 {
+    border-radius: 4px !important;
+    border: none;
+    color: white;
+    outline: 0;
+    display: inline-block;
+    background-color: #222 !important;
+    text-align: center;
+    cursor: pointer;
+}
+
 .myButton:hover {
+    opacity: 0.7;
+}
+
+.myButton3:hover {
     opacity: 0.7;
 }
 
@@ -132,6 +151,16 @@ and open the template in the editor.
     text-decoration: underline;
 }
 
+.shop-header{
+    height: 200px;
+}
+
+.shop-header>.carousel>.carousel-inner{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .img_wrapper {
     position: relative;
     height: 200px;
@@ -168,7 +197,7 @@ and open the template in the editor.
 
 .panel-primary{    
     display:inline-block;
-    
+
 }
 
 .row-lista{
@@ -186,4 +215,11 @@ and open the template in the editor.
 .aggiungi {
     margin-left: 40px;
     margin-top: 13px;
+}
+
+.addTo {
+    float: right;
+    margin-right: 5px;
+    height: 25px;
+    width: 27px;
 }

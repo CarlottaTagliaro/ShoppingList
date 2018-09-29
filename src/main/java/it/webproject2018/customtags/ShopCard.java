@@ -35,7 +35,7 @@ public class ShopCard  extends SimpleTagSupport {
         }
                 
         String html = String.format("<div class=\"col-md-4 liste\">\n" +
-"                    <div class=\"row center\">\n" +
+"                    <div class=\"row center shop-header\">\n" +
 "                        <div class=\"carousel slide newLista\" id=\"myCarousel1\">\n" +
 "                            <!-- Carousel items -->\n" +
 "                            <div class=\"carousel-inner\">\n" +

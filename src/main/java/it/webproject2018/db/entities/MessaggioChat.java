@@ -5,38 +5,25 @@
  */
 package it.webproject2018.db.entities;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Max
  */
 public class MessaggioChat {
-	private String email_sender;
+	private Utente sender;
 	private Integer id_list;
 	private String message;
-	private Date date;
+	private Timestamp date;
 	
-	public MessaggioChat(String email_sender, Integer id_lista, String message, Date data) {
-		this.email_sender = email_sender;
+	public MessaggioChat(Utente sender, Integer id_lista, String message, Timestamp data) {
+		this.sender = sender;
 		this.id_list = id_lista;
 		this.message = message;
 		this.date = data;
 	}
 
-	/**
-	 * @return the email_sender
-	 */
-	public String getEmail_sender() {
-		return email_sender;
-	}
-
-	/**
-	 * @param email_sender the email_sender to set
-	 */
-	public void setEmail_sender(String email_sender) {
-		this.email_sender = email_sender;
-	}
 
 	/**
 	 * @return the id_list
@@ -69,14 +56,28 @@ public class MessaggioChat {
 	/**
 	 * @return the date
 	 */
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
 	/**
 	 * @param date the date to set
 	 */
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}	
+
+    /**
+     * @return the sender
+     */
+    public Utente getSender() {
+        return sender;
+    }
+
+    /**
+     * @param sender the sender to set
+     */
+    public void setSender(Utente sender) {
+        this.sender = sender;
+    }
 }

@@ -69,7 +69,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                                     <div class=\"amount\"><label>Amount:</label></div>\n"
                 + "                                                 </div>\n"
                 + "                                                 <div class=\"row\">\n"
-                + "                                                     <input id=\"demo3\" type=\"text\" value=\"\" name=\"demo3\">\n"
+                + "                                                     <input id=\"demo3\" type=\"text\" value=\"0\" name=\"demo3\">\n"
                 + "                                                 </div>"
                 + "                                                 <script>\n"
                 + "                                                     $(\"input[name='demo3']\").TouchSpin();\n"
