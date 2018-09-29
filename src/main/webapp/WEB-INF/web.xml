@@ -48,6 +48,14 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>CreateProductServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateProductServlet</servlet-name>
+        <url-pattern>/CreateProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.RegisterServlet</servlet-class>
     </servlet>
