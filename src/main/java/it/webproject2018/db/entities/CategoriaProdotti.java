@@ -15,6 +15,10 @@ public class CategoriaProdotti {
     private String logo;
     private CategoriaListe categoriaLista;
     
+    public CategoriaProdotti(String nome){
+        this.nome = nome;
+    }
+     
     public CategoriaProdotti(String nome, String descrizione, String logo, CategoriaListe categoriaLista){
         this.nome = nome;
         this.descrizione = descrizione;
