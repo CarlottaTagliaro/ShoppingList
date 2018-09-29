@@ -62,7 +62,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         List<CategoriaProdotti> lista = new ArrayList<>();
 
         try (Statement stm = CON.createStatement()) {
-            try (ResultSet rs = stm.executeQuery("SELECT * FROM Prodotti_categorie ORDER BY name")) {
+            try (ResultSet rs = stm.executeQuery("SELECT * FROM Prodotti_categorie ORDER BY Nome")) {
 
                 while (rs.next()) {
                     String nome = rs.getString("Nome");
@@ -81,6 +81,25 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         }
 
         return lista;
+    }
+
+    public List<String> getAllNames() throws DAOException {
+        List<String> names = new ArrayList<>();
+
+        try (Statement stm = CON.createStatement()) {
+            try (ResultSet rs = stm.executeQuery("select Nome from Prodotti_categorie order by Nome;")) {
+
+                while (rs.next()) {
+                    String nome = rs.getString("Nome");
+
+                    names.add(nome);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of list category", ex);
+        }
+
+        return names;
     }
     
     @Override
