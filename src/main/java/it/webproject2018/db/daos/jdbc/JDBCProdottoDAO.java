@@ -286,26 +286,23 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
     
     @Override
-    public Prodotto insert(Prodotto entity) throws DAOException{
+    public Boolean insert(Prodotto entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("product parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Fotografia, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?, ?);");
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getNote());
-            stm.setString(3, entity.getLogo());
-            stm.setString(4, entity.getCategoria().getNome());
-            stm.setString(5, entity.getOwner().getEmail());
+            stm.setString(3, "");
+            stm.setString(4, "");
+            stm.setString(5, entity.getCategoria().getNome());
+            stm.setString(6, entity.getOwner().getEmail());
             Integer rs = stm.executeUpdate();
             
-            if(rs <= 0) {
-                return null;
-            }
-            else {
-                return entity;
-            }
+            return (rs > 0);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
