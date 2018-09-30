@@ -65,7 +65,7 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	 * @throws DAOException if an error occurred during the information
 	 * retrieving.
 	 */
-	public ENTITY_CLASS insert(ENTITY_CLASS entity) throws DAOException;
+	public Boolean insert(ENTITY_CLASS entity) throws DAOException;
 	
 	/**
 	 * Updates the entity of type {@code ENTITY_CLASS} passed as parameter 

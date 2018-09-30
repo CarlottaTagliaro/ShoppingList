@@ -31,6 +31,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChatServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -48,12 +52,24 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>CreateProductServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateProductServlet</servlet-name>
+        <url-pattern>/CreateProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatServlet</servlet-name>
+        <url-pattern>/ChatServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

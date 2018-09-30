@@ -8,7 +8,7 @@ package it.webproject2018.db.daos;
 import it.webproject2018.db.entities.MessaggioChat;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import org.glassfish.gmbal.generic.Triple;
 
@@ -16,6 +16,6 @@ import org.glassfish.gmbal.generic.Triple;
  *
  * @author Max
  */
-public interface MessaggioChatDAO extends DAO<MessaggioChat, Triple<String, Integer, Date>> {
+public interface MessaggioChatDAO extends DAO<MessaggioChat, Triple<String, Integer, Timestamp>> {
     public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat) throws DAOException;
 }
