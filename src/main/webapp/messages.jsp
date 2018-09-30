@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/message.css" rel="stylesheet" type="text/css"/>
-        <title>JSP Page</title>
+        <title>Shopping List - Chat</title>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>

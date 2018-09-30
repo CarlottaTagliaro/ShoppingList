@@ -16,7 +16,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/myProducts.css" rel="stylesheet" type="text/css"/>
-        <title>JSP Page</title>
+        <title>Shopping List - Products</title>
         
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>

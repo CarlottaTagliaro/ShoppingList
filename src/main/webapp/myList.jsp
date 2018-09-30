@@ -13,7 +13,7 @@
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
         <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <title>JSP Page</title>
+        <title>Shopping List - List</title>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>

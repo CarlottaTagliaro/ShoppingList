@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Shopping List - Shops</title>
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
         <%@ taglib uri="/tlds/shopCard" prefix="shopCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,7 +43,7 @@
                 %>
 
                 
-                          
+                
                 <c:forEach items="${shops}" var="shop">
                     <shopCard:shopCard shop="${shop}"/>
                 </c:forEach>

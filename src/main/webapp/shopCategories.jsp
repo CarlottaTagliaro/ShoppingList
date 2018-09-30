@@ -13,7 +13,7 @@
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
         
 
-        <title>JSP Page</title>
+        <title>Shopping List - Shops</title>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>

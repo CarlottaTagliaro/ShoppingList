@@ -14,7 +14,7 @@
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <title>JSP Page</title>
+        <title>Shopping List</title>
     </head>
     <body>
         <div class="title">     
