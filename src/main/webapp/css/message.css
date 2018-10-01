@@ -148,3 +148,7 @@ label {
 .img-chat-list{
     width: 70px;
 }
+
+.chat li.left .chat-body{
+    margin-left: 80px !important;
+}

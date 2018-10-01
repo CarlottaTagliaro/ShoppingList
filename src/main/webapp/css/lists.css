@@ -24,7 +24,7 @@ and open the template in the editor.
     padding-left: 0px !important;
 }
 
-.liste:nth-child(3n+1) {
+div.liste:nth-child(3n+1) {
     clear: left;
 }
 

@@ -87,7 +87,6 @@ public class ChatServlet extends HttpServlet {
             
             for(MessaggioChat msg: messaggi){
                 String timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(msg.getDate());
-                System.out.println(timestamp);
                 chat.messages.add(new ChatMessage(msg.getSender().getEmail(), msg.getSender().getPicture(), msg.getSender().getEmail().equals(user.getEmail()), msg.getSender().getName(), msg.getSender().getSurname(), timestamp, msg.getMessage()));
             }
             
