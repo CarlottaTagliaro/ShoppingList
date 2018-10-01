@@ -43,10 +43,11 @@
                 %>
 
                 
-                
+            <div class="row">
                 <c:forEach items="${shops}" var="shop">
                     <shopCard:shopCard shop="${shop}"/>
                 </c:forEach>
+            </div>
         </div>
     </body>
 </html>
