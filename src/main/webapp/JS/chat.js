@@ -10,6 +10,8 @@ $(document).ready(function () {
     getListChats();
 });
 
+var selChatId;
+
 function getListChats() {
     /*var json = '[\n\
      {"id":1,\n\
@@ -43,6 +45,8 @@ function getListChats() {
 }
 
 function getChatMessages(sender, id) {
+    selChatId = id;
+    
     var liste = $("#chat-panel").children();
     for (var i = 0; i < liste.length; i++) {
         $(liste[i]).css("background-color", "initial");
@@ -50,6 +54,10 @@ function getChatMessages(sender, id) {
 
     $(sender).css("background-color", "rgba(180,180,180, 0.5)");
 
+    refreshChatMessages();
+}
+
+function refreshChatMessages(){
     /*
      var json = '{\n\
      "id_lista": 1,\n\
@@ -80,9 +88,9 @@ function getChatMessages(sender, id) {
 
     $("#chat-messages").empty();
 
-    $.post("/ShoppingList/ChatServlet", {"action": "getChatMessages", "list_id": id}).done(function (chat) {
+    $.post("/ShoppingList/ChatServlet", {"action": "getChatMessages", "list_id": selChatId}).done(function (chat) {
 
-        if (chat.messages !== undefined) {
+        if (chat.messages !== undefined && chat.messages.length > 0) {
             for (var i = 0; i < chat.messages.length; i++) {
                 var elem = "";
                 if (chat.messages[i].isMe) {
@@ -119,9 +127,26 @@ function getChatMessages(sender, id) {
                 elem = elem.format(chat.messages[i].messaggio, chat.messages[i].immagine, chat.messages[i].nome + " " + chat.messages[i].cognome, chat.messages[i].timestamp);
                 $("#chat-messages").append(elem);
             }
+            
+            //scroll to bottom of the chat
+            $(".panel-body").animate({ scrollTop: $('.panel-body').prop("scrollHeight")}, 500);
         }
         else{
             //nessun messaggio nella chat
+            elem = "<li class='left clearfix center'>" +
+"                       <p>No messages yet</p>" +
+"                   </li>";
+            $("#chat-messages").append(elem);
         }
     });
+}
+
+function sendMessage(){
+    var text = $("#msg-text").val();
+    if(text !== undefined && text !== ""){        
+        $.post("/ShoppingList/ChatServlet", {"action": "sendMessage", "list_id": selChatId, "text": text}).done(function (res) {
+            $("#msg-text").val("");
+            refreshChatMessages(); 
+        });
+    }
 }

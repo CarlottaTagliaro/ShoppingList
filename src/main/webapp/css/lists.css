@@ -208,10 +208,6 @@ div.liste:nth-child(3n+1) {
     display: inline-block;
 }
 
-.center{
-    text-align: center;
-}
-
 .aggiungi {
     margin-left: 40px;
     margin-top: 13px;

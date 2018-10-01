@@ -138,9 +138,9 @@
 
                                         </ul>
                                     </div>
-                                    <input id="btn-input" type="text" class="form-control" placeholder="Type your message here..." />
+                                    <input id="msg-text" type="text" class="form-control" placeholder="Type your message here..." />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning" id="btn-chat">
+                                        <button class="btn btn-warning" id="btn-chat" onclick="sendMessage()">
                                             <b> Send </b>
                                         </button>
                                     </span>
