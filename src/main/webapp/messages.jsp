@@ -20,18 +20,15 @@
             $(document).ready(function() {
                 selectMenuEl("messages"); 
                 
-               $("#collapse-btn").click(function () {
-                if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-                } else {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-                }
-            }); 
-                
+                $("#collapse-btn").click(function () {
+                    if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
+                        $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                    } else {
+                        $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                    }
+                });                 
             });   
         </script>
-        
-        <script src="JS/messages.js" type="text/javascript"></script>
         <div class="main">
             <div class="row">
                 <div class="col-md-4 selectChat">

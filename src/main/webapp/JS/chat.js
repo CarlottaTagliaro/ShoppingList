@@ -1,3 +1,22 @@
+$(document).ready(function(){
+    var suggestions = [
+        "Sto andando a fare la spesa, manca qualcosa?", 
+        "Lista modificata. Guarda cosa ho aggiunto", 
+        "Spesa fatta. Ti puoi rilassare",
+        "Ho convidiso la lista con un'altra persona",
+        "Puoi andare a fare la spesa?"
+    ];
+
+    for(var i = 0; i < suggestions.length; i++){
+        $("#suggestions-btns").append('<li><a href="#" onclick="setText(this)">'+suggestions[i]+'</a></li>');
+    }
+});
+
+function setText(sender){
+    $("#msg-text").val($(sender).text());
+}
+
+
 $(document).ready(function () {
     String.prototype.format = function () {
         var formatted = this;
