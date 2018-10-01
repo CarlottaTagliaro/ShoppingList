@@ -195,7 +195,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
     }
     
     @Override
-    public Lista insert(Lista entity) throws DAOException{
+    public Boolean insert(Lista entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("list parameter is null");
         }
@@ -208,14 +208,9 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             stm.setString(5, entity.getOwner());
             Integer rs = stm.executeUpdate();
             
-            if(rs <= 0) {
-                return null;
-            }
-            else {
-                return entity;
-            }
+            return (rs > 0);
         } catch (Exception e) {
-            return null;
+            return false;
         }
     }
     

@@ -74,7 +74,7 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
     
     
     @Override
-    public InformazioniAcquisto insert(InformazioniAcquisto entity) throws DAOException{
+    public Boolean insert(InformazioniAcquisto entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("InformazioniAcquisto parameter is null");
         }
@@ -86,14 +86,9 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
             stm.setInt(4, entity.getQuantità());
             Integer rs = stm.executeUpdate();
             
-            if(rs <= 0) {
-                return null;
-            }
-            else {
-                return entity;
-            }
+            return (rs > 0);
         } catch (Exception e) {
-            return null;
+            return false;
         }
     }
     

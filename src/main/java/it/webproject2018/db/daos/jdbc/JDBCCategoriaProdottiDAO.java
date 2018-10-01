@@ -119,7 +119,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
     
     
     @Override
-    public CategoriaProdotti insert(CategoriaProdotti entity) throws DAOException{
+    public Boolean insert(CategoriaProdotti entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("CategoriaProdotti parameter is null");
         }
@@ -131,12 +131,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
             stm.setString(4, entity.getCategoriaLista().getNome());
             Integer rs = stm.executeUpdate();
             
-            if(rs <= 0) {
-                return null;
-            }
-            else {
-                return entity;
-            }
+            return (rs > 0);
         } catch (Exception e) {
             return null;
         }
