@@ -77,16 +77,17 @@ function getChatMessages(sender, id){
     
     var chat = JSON.parse(json);*/
     
+    
+    $("#chat-messages").empty();
+        
     $.post( "/ShoppingList/ChatServlet", {"action": "getChatMessages", "list_id":"1"}).done(function( chat ) {
     
-    
-        $("#chat-messages").empty();
 
         for(var i = 0; i < chat.messages.length; i++){
             var elem = "";
             if(chat.messages[i].isMe){
                 elem = "<li class='right clearfix'><span class='chat-img pull-right'>" +
-    "                                            <img src='{1}' alt='User Avatar' class='img-circle'>" +
+    "                                            <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
     "                                        </span>" +
     "                                        <div class='chat-body clearfix'>" +
     "                                            <div class='header'>" +
@@ -102,7 +103,7 @@ function getChatMessages(sender, id){
             else{
                 elem = "<li class='left clearfix'>" +
     "                       <span class='chat-img pull-left'>" +
-    "                           <img src='{1}' alt='User Avatar' class='img-circle'>" +
+    "                           <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
     "                       </span>" +
     "                       <div class='chat-body clearfix'>" +
     "                           <div class='header'>" +
