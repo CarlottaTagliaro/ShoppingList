@@ -219,3 +219,7 @@ div.liste:nth-child(3n+1) {
     height: 25px;
     width: 27px;
 }
+
+.panel-btn{
+    margin-top: 7px;
+}
