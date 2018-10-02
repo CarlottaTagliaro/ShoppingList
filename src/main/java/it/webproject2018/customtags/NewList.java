@@ -82,6 +82,7 @@ public class NewList extends SimpleTagSupport {
                 + "                    </div>\n"
                 + "                    <div class=\"row row-lista\">\n"
                 + "                        <div class=\"panel panel-primary\">\n"
+                + "                            <div class=\"panel-heading\" id=\"accordion\">\n"
                 + "                                <div class=\"col\">"
                 + "                                    <span class=\"glyphicon glyphicon-shopping-cart\"></span> <b> %s </b> (%s)\n"
                 + "                                </div>"
