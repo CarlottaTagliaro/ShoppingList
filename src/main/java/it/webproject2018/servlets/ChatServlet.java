@@ -41,8 +41,11 @@ public class ChatServlet extends HttpServlet {
         JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(super.getServletContext());
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        init();
+        
         Utente user = (Utente) request.getSession().getAttribute("User");
         try {
             if (user != null) {
