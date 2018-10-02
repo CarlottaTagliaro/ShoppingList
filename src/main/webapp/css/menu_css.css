@@ -23,6 +23,10 @@ and open the template in the editor.
     background-color: #222;
 }
 
+.center{
+    text-align: center;
+}
+
 .h1{
     font-family: sans-serif;
 

@@ -154,12 +154,12 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
         
         ArrayList<MessaggioChat> messages = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Chat "
-                + "where ID_list = ? LIMIT 15")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from "
+                    + "(select * from Chat "
+                    + "where ID_list = ? ORDER BY Data DESC LIMIT 15) as a order by a.Data")) {
             stm.setInt(1, id_list_chat);
-            try (ResultSet rs = stm.executeQuery()) {
-
-                rs.next();
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
 
                 String email_sender = rs.getString("Email_sender");
                 Integer id_list = rs.getInt("ID_list");

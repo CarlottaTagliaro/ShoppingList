@@ -20,18 +20,15 @@
             $(document).ready(function() {
                 selectMenuEl("messages"); 
                 
-               $("#collapse-btn").click(function () {
-                if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-                } else {
-                    $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-                }
-            }); 
-                
+                $("#collapse-btn").click(function () {
+                    if ($(this).find(".scendi").hasClass('glyphicon-chevron-down')) {
+                        $(this).find(".scendi").removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                    } else {
+                        $(this).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                    }
+                });                 
             });   
         </script>
-        
-        <script src="JS/messages.js" type="text/javascript"></script>
         <div class="main">
             <div class="row">
                 <div class="col-md-4 selectChat">
@@ -138,9 +135,9 @@
 
                                         </ul>
                                     </div>
-                                    <input id="btn-input" type="text" class="form-control" placeholder="Type your message here..." />
+                                    <input id="msg-text" type="text" class="form-control" placeholder="Type your message here..." />
                                     <span class="input-group-btn">
-                                        <button class="btn btn-warning" id="btn-chat">
+                                        <button class="btn btn-warning" id="btn-chat" onclick="sendMessage()">
                                             <b> Send </b>
                                         </button>
                                     </span>

@@ -24,7 +24,7 @@ and open the template in the editor.
     padding-left: 0px !important;
 }
 
-.liste:nth-child(3n+1) {
+div.liste:nth-child(3n+1) {
     clear: left;
 }
 
@@ -208,10 +208,6 @@ and open the template in the editor.
     display: inline-block;
 }
 
-.center{
-    text-align: center;
-}
-
 .aggiungi {
     margin-left: 40px;
     margin-top: 13px;
@@ -224,12 +220,6 @@ and open the template in the editor.
     width: 27px;
 }
 
-.glyphicon-shopping-cart {
-    
-    float: left !important;
-    margin-right: 2px;
-}
-
-.titolo-lista {
-    float: left;
+.panel-btn{
+    margin-top: 7px;
 }
