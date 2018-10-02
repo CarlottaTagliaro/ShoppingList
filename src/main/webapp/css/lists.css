@@ -223,3 +223,13 @@ and open the template in the editor.
     height: 25px;
     width: 27px;
 }
+
+.glyphicon-shopping-cart {
+    
+    float: left !important;
+    margin-right: 2px;
+}
+
+.titolo-lista {
+    float: left;
+}

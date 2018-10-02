@@ -65,10 +65,9 @@
             <c:forEach items="${userLists}" var="lista">
                 <newList:newList lista="${lista}"/>
             </c:forEach>
-            
-            
-            <!-- DA CANCELLARE, MI SERVE SOLO PER FARE LE PROVE
-            <div class="col-md-4 liste">
+
+
+            <!--<div class="col-md-4 liste">
                 <div class="row">
                     <div class="img_wrapper">
                         <img class="immagine_liste" src="http://placehold.it/770x300&text=three">
@@ -78,17 +77,21 @@
                 <div class="row">
                     <div class="panel panel-primary">
                         <div class="panel-heading" id="accordion">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b> (categoria)
-                            <div class="btn-group pull-right">
-                                <a type="button1 " title="Share list" class="btn btn-default btn-xs small">
-                                    <span class="glyphicon glyphicon-share-alt"></span>
-                                </a>
-                                <a type="button1 " title="Delete list" class="btn btn-default btn-xs small">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
-                                <button type="button" title="Show list" id="prova" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    <span class=" scendi glyphicon glyphicon-chevron-down"></span>
-                                </button>
+                            <div class="row">
+                                <div class ="titolo-lista col-xs-7">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> <b> Nome lista </b> (categoria aksfbasjndak)
+                                </div>
+                                <div class="btn-group pull-right col-xs-5">
+                                    <a type="button1 " title="Share list" class="btn btn-default btn-xs small">
+                                        <span class="glyphicon glyphicon-share-alt"></span>
+                                    </a>
+                                    <a type="button1 " title="Delete list" class="btn btn-default btn-xs small">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                    <button type="button" title="Show list" id="prova" class="btn btn-default btn-xs small" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                        <span class=" scendi glyphicon glyphicon-chevron-down"></span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
