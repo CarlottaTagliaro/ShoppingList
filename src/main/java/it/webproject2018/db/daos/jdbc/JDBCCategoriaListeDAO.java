@@ -25,6 +25,10 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
     public JDBCCategoriaListeDAO(ServletContext sc) {
         super(sc);
     }    
+      
+    public JDBCCategoriaListeDAO(Connection conn) {
+        super(conn);
+    }    
     
     @Override
     public CategoriaListe getByPrimaryKey(String primaryKey) throws DAOException {

@@ -24,6 +24,10 @@ import javax.servlet.ServletContextEvent;
  * @author davide
  */
 public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String> implements CategoriaProdottiDAO  {    
+    public JDBCCategoriaProdottiDAO(Connection conn) {
+        super(conn);
+    }    
+    
     public JDBCCategoriaProdottiDAO(ServletContext sc) {
         super(sc);
     }    
@@ -43,7 +47,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
                     String logo = rs.getString("Logo");
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
                     CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              

@@ -28,6 +28,11 @@ import org.glassfish.gmbal.generic.Triple;
  */
 public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, Integer, Timestamp>> implements MessaggioChatDAO {
 
+    public JDBCMessaggioChatDAO(Connection con) {
+        super(con);
+    }
+
+
     public JDBCMessaggioChatDAO(ServletContext sc) {
         super(sc);
     }
@@ -52,7 +57,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
                     String message = rs.getString("Message");
                     Timestamp date = rs.getTimestamp("Data");
 
-                    JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(SC);
+                    JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(CON);
                     Utente user = JdbcUtenteDao.getByPrimaryKey(email_sender);
 
                     MessaggioChat mex = new MessaggioChat(user, id_list, message, date);

@@ -26,6 +26,10 @@ import javax.servlet.ServletContextEvent;
  */
 public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
     
+    public JDBCListaDAO(Connection conn) {
+        super(conn);
+    }    
+    
     public JDBCListaDAO(ServletContext sc) {
         super(sc);
     }    
@@ -55,7 +59,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                     String descrizione = rs.getString("Descrizione");
                     String immagine = rs.getString("Immagine");
                     
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Categoria"));
                     String owner = rs.getString("Owner");
 
@@ -90,9 +94,9 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                 while(rs.next()){
                 
                     Integer id_prodotto = rs.getInt("ID_prodotto");
-                    JDBCProdottoDAO prodottoDao = new JDBCProdottoDAO(SC);
+                    JDBCProdottoDAO prodottoDao = new JDBCProdottoDAO(CON);
                     Prodotto pro = prodottoDao.getByPrimaryKey(id_prodotto);
-                    JDBCInformazioniAcquistoDAO infoDao = new JDBCInformazioniAcquistoDAO(SC);
+                    JDBCInformazioniAcquistoDAO infoDao = new JDBCInformazioniAcquistoDAO(CON);
                     pro.Acquisti.addAll(infoDao.getListProductsBuyInfo(listID, id_prodotto));
                     prodotti.add(pro);
                 }
@@ -126,7 +130,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                     String descrizione = rs.getString("Descrizione");
                     String immagine = rs.getString("Immagine");
                     
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Categoria"));
                     String owner = rs.getString("Owner");
 
@@ -162,7 +166,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                     String descrizione = rs.getString("Descrizione");
                     String immagine = rs.getString("Immagine");
                     
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Categoria"));
                     String owner = rs.getString("Owner");
 

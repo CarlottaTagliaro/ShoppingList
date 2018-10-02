@@ -55,6 +55,15 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
         }
     }
     
+    
+    protected JDBCDAO(Connection conn) {
+        super();
+        
+        this.SC = null;
+        this.CON = conn;
+        FRIEND_DAOS = new HashMap<>();
+    }
+    
     protected JDBCDAO(ServletContext sc) {
         super();
         

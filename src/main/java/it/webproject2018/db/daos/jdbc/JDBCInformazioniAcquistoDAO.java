@@ -23,6 +23,10 @@ import javax.servlet.ServletContextEvent;
  * @author davide
  */
 public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, Integer> implements InfomazioniAcquistoDAO  {    
+    public JDBCInformazioniAcquistoDAO(Connection conn) {
+        super(conn);
+    }    
+    
     public JDBCInformazioniAcquistoDAO(ServletContext sc) {
         super(sc);
     }    
