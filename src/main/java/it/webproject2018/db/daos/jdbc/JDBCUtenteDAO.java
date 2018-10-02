@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -22,8 +24,8 @@ import java.util.List;
  */
 public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO {
 
-    public JDBCUtenteDAO(Connection con) {
-        super(con);
+    public JDBCUtenteDAO(ServletContext sc) {
+        super(sc);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setPicture(rs.getString("Immagine"));;
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
+                    JDBCListaDAO listaDao = new JDBCListaDAO(SC);
                     user.Liste = listaDao.getUserLists(user.getEmail());
 
                     return user;
@@ -79,7 +81,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                 user.setPicture(rs.getString("Immagine"));
                 user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                JDBCListaDAO listaDao = new JDBCListaDAO(CON);
+                JDBCListaDAO listaDao = new JDBCListaDAO(SC);
                 user.Liste = listaDao.getUserLists(user.getEmail());
             }
         } catch (SQLException ex) {
@@ -134,7 +136,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setPicture(rs.getString("Immagine"));
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
+                    JDBCListaDAO listaDao = new JDBCListaDAO(SC);
                     user.Liste = listaDao.getUserLists(user.getEmail());
 
                     utenti.add(user);

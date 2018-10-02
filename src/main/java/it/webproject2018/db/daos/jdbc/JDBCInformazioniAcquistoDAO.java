@@ -15,14 +15,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  *
  * @author davide
  */
 public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, Integer> implements InfomazioniAcquistoDAO  {    
-    public JDBCInformazioniAcquistoDAO(Connection con) {
-        super(con);
+    public JDBCInformazioniAcquistoDAO(ServletContext sc) {
+        super(sc);
     }    
     
     @Override

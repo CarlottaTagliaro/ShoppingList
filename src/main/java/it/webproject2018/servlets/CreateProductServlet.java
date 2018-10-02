@@ -22,8 +22,7 @@ public class CreateProductServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-        JDBCProdottoDAO = new JDBCProdottoDAO(conn);
+        JDBCProdottoDAO = new JDBCProdottoDAO(super.getServletContext());
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

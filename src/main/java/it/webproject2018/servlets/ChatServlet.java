@@ -37,9 +37,8 @@ public class ChatServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-        JdbcListaDao = new JDBCListaDAO(conn);
-        JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(conn);
+        JdbcListaDao = new JDBCListaDAO(super.getServletContext());
+        JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(super.getServletContext());
     }
 
     @Override

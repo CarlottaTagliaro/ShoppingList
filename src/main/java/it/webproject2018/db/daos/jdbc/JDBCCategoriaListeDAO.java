@@ -15,14 +15,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
 
 /**
  *
  * @author davide
  */
 public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> implements CategoriaListeDAO  {    
-    public JDBCCategoriaListeDAO(Connection con) {
-        super(con);
+    public JDBCCategoriaListeDAO(ServletContext sc) {
+        super(sc);
     }    
     
     @Override

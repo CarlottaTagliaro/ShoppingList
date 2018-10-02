@@ -48,8 +48,7 @@
 
 
             <%
-                Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-                JDBCListaDAO JdbcListaDao = new JDBCListaDAO(conn);
+                JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
                 Utente user = (Utente) request.getSession().getAttribute("User");
                 List<Lista> userLists;
                 if (user != null) {

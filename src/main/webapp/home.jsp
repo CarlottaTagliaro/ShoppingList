@@ -66,8 +66,7 @@
 
 
             <%
-                Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-                JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(conn);
+                JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
                 Utente user = (Utente) request.getSession().getAttribute("User");
                 List<Prodotto> productList;
 
