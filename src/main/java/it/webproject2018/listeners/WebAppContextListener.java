@@ -26,7 +26,7 @@ public class WebAppContextListener implements ServletContextListener {
 		System.out.println("###########WebAppContextListener launched");
 		
         String dburl = sce.getServletContext().getInitParameter("dburl");
-        String dbname = sce.getServletContext().getInitParameter("dbname");
+        String dbuser = sce.getServletContext().getInitParameter("dbuser");
         String dbpsw = sce.getServletContext().getInitParameter("dbpsw");
 
         try {
@@ -37,7 +37,7 @@ public class WebAppContextListener implements ServletContextListener {
                 throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
             }
 
-            Connection conn = DriverManager.getConnection(dburl, dbname, dbpsw);
+            Connection conn = DriverManager.getConnection(dburl, dbuser, dbpsw);
             
             sce.getServletContext().setAttribute("connection", conn);           
 

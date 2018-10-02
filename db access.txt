@@ -1,3 +1,15 @@
+--NEW--
+Server: eu-cdbr-west-02.cleardb.net
+Name: heroku_7d9bc6f76d5ec4d
+Username: b8d4be00180e53
+Password: 48d163c7
+Port number: 3306
+
+ConnString: mysql://b8d4be00180e53:48d163c7@eu-cdbr-west-02.cleardb.net/heroku_7d9bc6f76d5ec4d?reconnect=true
+
+
+
+--OLD--
 Server: sql2.freemysqlhosting.net
 Name: sql2241988
 Username: sql2241988
