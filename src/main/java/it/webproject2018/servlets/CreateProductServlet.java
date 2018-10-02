@@ -4,6 +4,7 @@ import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.exceptions.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -37,7 +38,7 @@ public class CreateProductServlet extends HttpServlet {
             prod.setOwner(user);
             Boolean ok = JDBCProdottoDAO.insert(prod);
             response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct.jsp" : "/myProducts.jsp"));
-        } catch (Exception e) {
+        } catch (DAOException e) {
             w.println(e.getMessage());
         }
     }

@@ -155,6 +155,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
      * @throws DAOException if an error occurred during the action.
      */
     
+	@Override
     public Utente update(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",

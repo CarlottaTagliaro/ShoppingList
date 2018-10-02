@@ -175,7 +175,6 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
     
-    
     @Override
     public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy) throws DAOException {
         if(srcQry == null)
@@ -206,7 +205,6 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         
         return prodotti;
     }
-    
     
     @Override
     public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy) throws DAOException {

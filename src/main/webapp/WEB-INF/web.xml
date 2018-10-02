@@ -35,6 +35,10 @@
         <servlet-name>ChatServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.ChatServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateListServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.CreateListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -70,6 +74,10 @@
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
         <url-pattern>/ChatServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateListServlet</servlet-name>
+        <url-pattern>/CreateListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
