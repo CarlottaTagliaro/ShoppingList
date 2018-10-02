@@ -23,7 +23,7 @@ public class WebAppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-		System.out.println("###########WebAppContextListener launched");
+		/*System.out.println("###########WebAppContextListener launched");
 		
         String dburl = sce.getServletContext().getInitParameter("dburl");
         String dbuser = sce.getServletContext().getInitParameter("dbuser");
@@ -39,14 +39,14 @@ public class WebAppContextListener implements ServletContextListener {
 
             Connection conn = DriverManager.getConnection(dburl, dbuser, dbpsw);
             
-            sce.getServletContext().setAttribute("connection", conn);           
+            sce.getServletContext().setAttribute("connection", conn);
 
         } catch (SQLException ex) {
 
             Logger.getLogger(getClass().getName()).severe(ex.toString());
             throw new RuntimeException(ex);
 
-        }
+        }*/
     }
 
     @Override

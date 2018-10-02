@@ -16,14 +16,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  *
  * @author davide
  */
 public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String> implements CategoriaProdottiDAO  {    
-    public JDBCCategoriaProdottiDAO(Connection con) {
-        super(con);
+    public JDBCCategoriaProdottiDAO(ServletContext sc) {
+        super(sc);
     }    
     
     @Override
@@ -41,7 +43,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
                     String logo = rs.getString("Logo");
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
                     CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              
@@ -68,7 +70,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
                     String logo = rs.getString("Logo");
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
                     CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);

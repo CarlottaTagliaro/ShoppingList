@@ -35,8 +35,7 @@
             
             
                 <%                    
-                    Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-                    JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(conn);
+                    JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(super.getServletContext());
                     List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
                     
                     pageContext.setAttribute("shops", shops);

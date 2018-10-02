@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -23,8 +25,8 @@ import java.util.List;
  */
 public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements ProdottoDAO {
     
-    public JDBCProdottoDAO(Connection con) {
-        super(con);
+    public JDBCProdottoDAO(ServletContext sc) {
+        super(sc);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
                     String note = rs.getString("Note");
                     String logo = rs.getString("Logo");
                     ArrayList<String> fotografie = getProductImages(productID);
-                    JDBCCategoriaProdottiDAO categoriaProdottiDao = new JDBCCategoriaProdottiDAO(CON);
+                    JDBCCategoriaProdottiDAO categoriaProdottiDao = new JDBCCategoriaProdottiDAO(SC);
                     CategoriaProdotti categoria = categoriaProdottiDao.getByPrimaryKey(rs.getString("Categoria"));
 
                     Prodotto product = new Prodotto(id, nome, note, logo, fotografie, categoria);

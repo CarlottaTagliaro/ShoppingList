@@ -29,9 +29,8 @@ public class ShoppingListsServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-		Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-		JdbcUtenteDao = new JDBCUtenteDAO(conn);
-		JdbcProdottoDao = new JDBCProdottoDAO(conn);
+		JdbcUtenteDao = new JDBCUtenteDAO(super.getServletContext());
+		JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
     }
 
     @Override

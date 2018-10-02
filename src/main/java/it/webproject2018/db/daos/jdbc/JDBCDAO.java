@@ -8,7 +8,12 @@ package it.webproject2018.db.daos.jdbc;
 import it.webproject2018.db.daos.DAO;
 import it.webproject2018.db.exceptions.DAOFactoryException;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -21,14 +26,40 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
      * The JDBC {@link Connection} used to access the persistence system.
      */
     protected final Connection CON;
+    protected final ServletContext SC;
     /**
      * The list of other DAOs this DAO can interact with.
      */
     protected final HashMap<Class, DAO> FRIEND_DAOS;
     
-    protected JDBCDAO(Connection con) {
+    final private Connection CreateDbConn(ServletContext sc){
+        String dburl = sc.getInitParameter("dburl");
+        String dbuser = sc.getInitParameter("dbuser");
+        String dbpsw = sc.getInitParameter("dbpsw");
+
+        try {
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfe) {
+                throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
+            }
+
+            Connection conn = DriverManager.getConnection(dburl, dbuser, dbpsw);
+            return conn;
+        } catch (SQLException ex) {
+
+            Logger.getLogger(getClass().getName()).severe(ex.toString());
+            throw new RuntimeException(ex);
+
+        }
+    }
+    
+    protected JDBCDAO(ServletContext sc) {
         super();
-        this.CON = con;
+        
+        this.SC = sc;
+        this.CON = CreateDbConn(sc);
         FRIEND_DAOS = new HashMap<>();
     }
     
