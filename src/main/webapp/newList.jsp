@@ -14,9 +14,13 @@
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        <script src="JS/uploadFile.js" type="text/javascript"></script>
         <div class="main">
             <div class="card">
-                <img class="logo" alt="Qui ci sarà la feature di caricamento" width="128" height="128">
+                <form id="upload_form" enctype="multipart/form-data" method="post">
+                    <input type="file" name="file" id="file" class="inputfile">
+                    <label for="file" class="button1 button2 btn" ><span class="glyphicon glyphicon-open"></span> Choose file </label>
+                </form>
                 <div class="form-group elemento">
                     <label> Name: </label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Enter list name" required autofocus>
@@ -37,7 +41,7 @@
                 <script>
                     function goBack() {
                         window.history.back();
-                    } 
+                    }
                 </script> 
             </div>
         </div>
