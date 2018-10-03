@@ -4,13 +4,6 @@
     Author     : weatherly
 --%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.Prodotto"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCProdottoDAO"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -64,23 +57,6 @@
                 </div>
             </form>
 
-
-            <%
-                JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
-                Utente user = (Utente) request.getSession().getAttribute("User");
-                List<Prodotto> productList;
-
-                String srcText = request.getParameter("qry");
-                String orderBy = request.getParameter("orderBy");
-
-                if (user != null) {
-                    productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
-                } else {
-                    productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
-                }
-
-                pageContext.setAttribute("productList", productList);
-            %>
 
             <c:forEach items="${productList}" var="product">
                 <productCard:productCard product="${product}"/>

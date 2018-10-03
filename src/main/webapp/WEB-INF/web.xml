@@ -39,6 +39,22 @@
         <servlet-name>CreateListServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>myList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.myList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>myProducts</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.myProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.profile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -78,6 +94,22 @@
     <servlet-mapping>
         <servlet-name>CreateListServlet</servlet-name>
         <url-pattern>/CreateListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>myList</servlet-name>
+        <url-pattern>/myList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>myProducts</servlet-name>
+        <url-pattern>/myProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -36,7 +36,7 @@ public class CreateProductServlet extends HttpServlet {
             Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category));
             prod.setOwner(user);
             Boolean ok = JDBCProdottoDAO.insert(prod);
-            response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct.jsp" : "/myProducts.jsp"));
+            response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct.jsp" : "/myProducts"));
         } catch (DAOException e) {
             w.println(e.getMessage());
         }

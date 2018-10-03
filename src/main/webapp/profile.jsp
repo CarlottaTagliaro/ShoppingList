@@ -3,12 +3,7 @@
     Created on : 1-lug-2018, 10.45.35
     Author     : weatherly
 --%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Lista"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCListaDAO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,12 +22,7 @@
                 selectMenuEl("profile");
             });
         </script>
-<% 
-                    Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-                    JDBCListaDAO JdbcListaDao = new JDBCListaDAO(conn);
-                    Utente user = (Utente)request.getSession().getAttribute("User");
-                     pageContext.setAttribute("user", user);
-                %>
+        
         <div class="main">
             <div class="card">
                 <img src="${user.getPicture()}" alt="${user.getName()}" class="img-responsive">

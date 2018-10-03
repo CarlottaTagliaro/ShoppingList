@@ -1,9 +1,3 @@
-<%@page import="it.webproject2018.db.entities.CategoriaListe"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,13 +27,6 @@
                 </div>
             </c:if>
             
-            
-                <%                    
-                    JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(super.getServletContext());
-                    List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
-                    
-                    pageContext.setAttribute("shops", shops);
-                %>
 
                 
             <div class="row">

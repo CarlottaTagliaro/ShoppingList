@@ -1,9 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Lista"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCListaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -46,19 +40,6 @@
                 </div>
             </c:if>
 
-
-            <%
-                JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
-                Utente user = (Utente) request.getSession().getAttribute("User");
-                List<Lista> userLists;
-                if (user != null) {
-                    userLists = JdbcListaDao.getUserLists(user.getEmail());
-                } else {
-                    userLists = new ArrayList<>();
-                }
-
-                pageContext.setAttribute("userLists", userLists);
-            %>
 
 
             <c:forEach items="${userLists}" var="lista">
