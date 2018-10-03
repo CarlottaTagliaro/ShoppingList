@@ -14,6 +14,9 @@
         <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
+        
+        <link rel="icon" type="image/ico" href="favicon.ico">
+        
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title>Shopping List</title>
     </head>
