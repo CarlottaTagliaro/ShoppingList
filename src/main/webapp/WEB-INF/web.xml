@@ -3,17 +3,17 @@
     <!--I seguenti tre parametri servono per connettersi al database mysql-->
     <context-param>
         <param-name>dburl</param-name>
-        <param-value>jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_7d9bc6f76d5ec4d</param-value>
+        <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
         <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
 				ma anche no, funziona uguale-->
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
-        <param-value>b8d4be00180e53</param-value>
+        <param-value>cucciolo</param-value>
     </context-param>
     <context-param>
         <param-name>dbpsw</param-name>
-        <param-value>48d163c7</param-value>
+        <param-value>1EEFA02E-D313-4589-AFAD-92FAD1741B20</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener</description>
