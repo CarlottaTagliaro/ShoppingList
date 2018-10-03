@@ -137,6 +137,28 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
     
+    
+    public ArrayList<Prodotto> getAllProductsByCategory(String catName) throws DAOException{
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Categoria = ?")) {
+            stm.setString(1, catName);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){                
+                    Integer id_prodotto = rs.getInt("ID");
+                    Prodotto pro = getByPrimaryKey(id_prodotto);
+                    prodotti.add(pro);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting all Products by Category", ex);
+        }
+        
+        return prodotti;
+    }
+    
     @Override
     public ArrayList<Prodotto> getUserProducts(String userEmail) throws DAOException{
         ArrayList<Prodotto> prodotti = new ArrayList<>();

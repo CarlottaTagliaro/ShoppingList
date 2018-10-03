@@ -55,6 +55,14 @@
         <servlet-name>profile</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.profile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>shopCategories</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.shopCategories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>prodotti</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.prodotti</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -111,6 +119,14 @@
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>shopCategories</servlet-name>
+        <url-pattern>/shopCategories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>prodotti</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -128,6 +144,10 @@
         <taglib>
             <taglib-uri>/tlds/shopCard</taglib-uri>
             <taglib-location>/tlds/shopCard.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/tlds/shopCategoriesCard</taglib-uri>
+            <taglib-location>/tlds/shopCategoriesCard.tld</taglib-location>
         </taglib>
     </jsp-config>
 </web-app>

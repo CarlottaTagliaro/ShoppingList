@@ -10,7 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
-        <%@ taglib uri="/tlds/newList" prefix="newList"%>
+        
+        <%@ taglib uri="/tlds/shopCategoriesCard" prefix="shopCategoriesCard"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         
 
         <title>Shopping List - Shops</title>
@@ -26,6 +28,12 @@
 
         <div class="main">
             <div class="row">
+                
+                <c:forEach items="${categories}" var="cat">
+                    <shopCategoriesCard:shopCategoriesCard category="${cat}"/>
+                </c:forEach>
+                
+                <!--
                 <div class="col-md-4 liste">
                     <div class="row">
                         <div class="img_wrapper">
@@ -40,7 +48,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>   
         </div>
     </body>
