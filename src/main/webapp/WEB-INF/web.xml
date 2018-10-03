@@ -63,6 +63,14 @@
         <servlet-name>prodotti</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.prodotti</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>newList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>newProduct</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newProduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -126,6 +134,14 @@
     <servlet-mapping>
         <servlet-name>prodotti</servlet-name>
         <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newList</servlet-name>
+        <url-pattern>/newList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newProduct</servlet-name>
+        <url-pattern>/newProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

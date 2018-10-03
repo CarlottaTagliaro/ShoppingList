@@ -26,17 +26,6 @@
     <body>
         <jsp:include page="menu.jsp" />
         <script src="JS/uploadFile.js" type="text/javascript"></script>
-        <%
-            JDBCCategoriaProdottiDAO CategoriaProdottiDAO = new JDBCCategoriaProdottiDAO(super.getServletContext());
-            Utente user = (Utente) request.getSession().getAttribute("User");
-            List<String> catProductList = new ArrayList<>();
-
-            if (user != null) {
-                catProductList = CategoriaProdottiDAO.getAllNames();
-            }
-
-            pageContext.setAttribute("CatProductList", catProductList);
-        %>
 
         <div class="main">
             <div class="card">
