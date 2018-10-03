@@ -23,14 +23,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Max
  */
 public class CreateListServlet extends HttpServlet {
-	private JDBCListaDAO JDBCListaDAO;
-	
-	@Override
-	public void init() throws ServletException {
+
+    private JDBCListaDAO JDBCListaDAO;
+
+    @Override
+    public void init() throws ServletException {
         Connection conn = (Connection) super.getServletContext().getAttribute("connection");
         JDBCListaDAO = new JDBCListaDAO(conn);
     }
-    @Override
+    /*@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter w = response.getWriter();
 		try {
@@ -50,5 +51,5 @@ public class CreateListServlet extends HttpServlet {
         } catch (DAOException e) {
             w.println(e.getMessage());
         }
-    }
+    }*/
 }
