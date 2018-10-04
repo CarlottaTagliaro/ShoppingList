@@ -6,20 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.CategoriaProdotti"%>
-<%@page import="java.util.List"%>
-<%@page import="java.lang.String"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCCategoriaProdottiDAO"%>
-<%@page import="java.sql.Connection"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Product</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 

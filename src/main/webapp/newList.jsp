@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <title>Shopping List - List</title>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>

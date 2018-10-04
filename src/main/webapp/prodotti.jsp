@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Shops</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

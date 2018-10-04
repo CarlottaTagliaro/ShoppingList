@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/myProducts.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Products</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>

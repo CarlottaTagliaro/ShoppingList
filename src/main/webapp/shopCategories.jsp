@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
         
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        
         <%@ taglib uri="/tlds/shopCategoriesCard" prefix="shopCategoriesCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         

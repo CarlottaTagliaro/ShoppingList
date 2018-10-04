@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
         <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

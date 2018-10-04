@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="css/register.css" rel="stylesheet" type="text/css" />
     <title>Shopping List - Register</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 </head>
 
 <body>
