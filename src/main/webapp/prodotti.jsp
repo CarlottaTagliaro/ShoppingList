@@ -37,6 +37,7 @@
                     </div>
             </div>
 
+            <!--
             <div class="row card">
                 <div class="col-xs-3">
                     <img class="imageList img-responsive" src="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG"/>
@@ -77,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
             
             <c:forEach items="${productList}" var="product">
