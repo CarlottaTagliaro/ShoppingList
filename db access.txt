@@ -1,4 +1,13 @@
 --NEW--
+Server: gg18.ml
+Name: cucciolo
+Username: cucciolo
+Password: 1EEFA02E-D313-4589-AFAD-92FAD1741B20
+Port number: 3306
+
+
+
+--OLD--
 Server: eu-cdbr-west-02.cleardb.net
 Name: heroku_7d9bc6f76d5ec4d
 Username: b8d4be00180e53

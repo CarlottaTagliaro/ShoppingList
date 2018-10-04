@@ -29,7 +29,7 @@
             <div class="row create">
                 <div class="crea-prodotto">
                     <label class="crea" style="font-size: 20px;"> Create new product: </label>
-                    <button class="myButton2" onclick="location.href='newProduct.jsp'"> <b> + </b> </button>
+                    <button class="myButton2" onclick="location.href='newProduct'"> <b> + </b> </button>
                 </div>
             </div>
         

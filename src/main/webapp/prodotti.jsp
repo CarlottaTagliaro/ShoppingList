@@ -13,6 +13,7 @@
         <title>Shopping List - Shops</title>
         
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
@@ -76,10 +77,10 @@
                 </div>
             </div>
 
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-
+            
+            <c:forEach items="${productList}" var="product">
+                <productCard:productCard product="${product}"/>
+            </c:forEach>
         </div>
     </body>
 </html>

@@ -58,7 +58,7 @@
                                     
                                     <div class="row cambia-dati">
                                         <label class="search">Password:</label> 
-                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new name"
+                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new password"
                                     </div>
                                 </div>
                             </div>

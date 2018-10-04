@@ -35,7 +35,7 @@
                 <div class="row create addList">
                     <div class="crea-lista">
                         <label class="lista1" style="font-size: 20px;"> Create new List: </label>
-                        <button class="myButton" onclick="location.href = 'newList.jsp'"> <b> + </b> </button>
+                        <button class="myButton" onclick="location.href = 'newList'"> <b> + </b> </button>
                     </div>
                 </div>
             </c:if>

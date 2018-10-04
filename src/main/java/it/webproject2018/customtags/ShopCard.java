@@ -8,6 +8,7 @@ package it.webproject2018.customtags;
 import it.webproject2018.db.entities.CategoriaListe;
 import it.webproject2018.db.entities.Lista;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -29,7 +30,7 @@ public class ShopCard  extends SimpleTagSupport {
         String imgHtml = "";
         
         for(int i = 0; i < getShop().getImmagini().size(); i++){
-            imgHtml += String.format("                                <div class=\"%s item\" data-slide-number=\"%d\">\n" +
+            imgHtml += String.format("<div class=\"%s item\" data-slide-number=\"%d\">\n" +
 "                                    <img class=\"img-responsive center-block\" src=\"%s\">\n" +
 "                                </div>\n", (i == 0 ? "active" : ""), i, getShop().getImmagini().get(i));
         }
@@ -54,11 +55,11 @@ public class ShopCard  extends SimpleTagSupport {
 "                    <div class=\"row center\">\n" +
 "                        <div class=\"panel panel-primary\">\n" +
 "                            <div class=\"panel-heading\" id=\"accordion\">\n" +
-"                                <span class=\"glyphicon glyphicon-usd\"></span> <a class=\"scegli_negozio\" href=\"shopCategories.jsp\"><b>%s</b></a>\n" +
+"                                <span class=\"glyphicon glyphicon-usd\"></span> <a class=\"scegli_negozio\" href=\"shopCategories?catName=%s\"><b>%s</b></a>\n" +
 "                            </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
-"                </div>", imgHtml, getShop().getNome());
+"                </div>", imgHtml, URLEncoder.encode(shop.getNome()), shop.getNome());
         getJspContext().getOut().write(html);
     }
 

@@ -3,17 +3,17 @@
     <!--I seguenti tre parametri servono per connettersi al database mysql-->
     <context-param>
         <param-name>dburl</param-name>
-        <param-value>jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_7d9bc6f76d5ec4d</param-value>
+        <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
         <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
 				ma anche no, funziona uguale-->
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
-        <param-value>b8d4be00180e53</param-value>
+        <param-value>cucciolo</param-value>
     </context-param>
     <context-param>
         <param-name>dbpsw</param-name>
-        <param-value>48d163c7</param-value>
+        <param-value>1EEFA02E-D313-4589-AFAD-92FAD1741B20</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener</description>
@@ -54,6 +54,22 @@
     <servlet>
         <servlet-name>profile</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>shopCategories</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.shopCategories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>prodotti</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.prodotti</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>newList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>newProduct</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newProduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
@@ -111,6 +127,22 @@
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>shopCategories</servlet-name>
+        <url-pattern>/shopCategories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>prodotti</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newList</servlet-name>
+        <url-pattern>/newList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newProduct</servlet-name>
+        <url-pattern>/newProduct</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -128,6 +160,10 @@
         <taglib>
             <taglib-uri>/tlds/shopCard</taglib-uri>
             <taglib-location>/tlds/shopCard.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/tlds/shopCategoriesCard</taglib-uri>
+            <taglib-location>/tlds/shopCategoriesCard.tld</taglib-location>
         </taglib>
     </jsp-config>
 </web-app>
