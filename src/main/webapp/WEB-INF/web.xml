@@ -143,6 +143,35 @@
         <servlet-name>newProduct</servlet-name>
         <url-pattern>/newProduct</url-pattern>
     </servlet-mapping>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>it.webproject2018.filters.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name></param-name>
+            <param-value></param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/messages.jsp</url-pattern>
+        <url-pattern>/messages</url-pattern>
+        <url-pattern>/newProduct.jsp</url-pattern>
+        <url-pattern>/newProduct</url-pattern>
+        <url-pattern>/myProducts.jsp</url-pattern>
+        <url-pattern>/myProducts</url-pattern>
+        <url-pattern>/profile.jsp</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/logout.jsp</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/newList.jsp</url-pattern>
+        <url-pattern>/newList</url-pattern>
+        <url-pattern>/newShop.jsp</url-pattern>
+        <url-pattern>/newShop</url-pattern>
+        <url-pattern>/shopCategories.jsp</url-pattern>
+        <url-pattern>/shopCategories</url-pattern>
+        <url-pattern>/prodotti.jsp</url-pattern>
+        <url-pattern>/prodotti</url-pattern>
+    </filter-mapping>
     <session-config>
         <session-timeout>
             30
