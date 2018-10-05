@@ -84,6 +84,14 @@ function getChatMessages(sender, id) {
     }
 
     $(sender).css("background-color", "rgba(180,180,180, 0.5)");
+    
+    
+    //loading messages
+    $("#chat-messages").empty();
+    elem = "<li class='left clearfix center'>" +
+            "   <p>Loading messages...</p>&nbsp;&nbsp;" +
+            "</li>";
+    $("#chat-messages").append(elem);
 }
 
 function refreshChatMessages() {
@@ -113,7 +121,6 @@ function refreshChatMessages() {
      }';
      
      var chat = JSON.parse(json);*/
-
 
     $.post("/ShoppingList/ChatServlet", {
         "action": "getChatMessages", 
