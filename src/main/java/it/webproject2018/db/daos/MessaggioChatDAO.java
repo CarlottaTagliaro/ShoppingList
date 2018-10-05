@@ -17,5 +17,5 @@ import org.glassfish.gmbal.generic.Triple;
  * @author Max
  */
 public interface MessaggioChatDAO extends DAO<MessaggioChat, Triple<String, Integer, Timestamp>> {
-    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat) throws DAOException;
+    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat, Timestamp lasttime) throws DAOException;
 }

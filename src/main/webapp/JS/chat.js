@@ -27,9 +27,11 @@ $(document).ready(function () {
     };
 
     getListChats();
+    
+    refreshChatMessages();
 });
 
-var selChatId;
+var selChatId, lastMsgSender, lastMsgTime;
 
 function getListChats() {
     /*var json = '[\n\
@@ -74,6 +76,7 @@ function getListChats() {
 
 function getChatMessages(sender, id) {
     selChatId = id;
+    lastMsgSender = lastMsgTime = null;
 
     var liste = $("#chat-panel").children();
     for (var i = 0; i < liste.length; i++) {
@@ -81,8 +84,6 @@ function getChatMessages(sender, id) {
     }
 
     $(sender).css("background-color", "rgba(180,180,180, 0.5)");
-
-    refreshChatMessages();
 }
 
 function refreshChatMessages() {
@@ -114,10 +115,17 @@ function refreshChatMessages() {
      var chat = JSON.parse(json);*/
 
 
-    $("#chat-messages").empty();
-
-    $.post("/ShoppingList/ChatServlet", {"action": "getChatMessages", "list_id": selChatId}).done(function (chat) {
-
+    $.post("/ShoppingList/ChatServlet", {
+        "action": "getChatMessages", 
+        "list_id": selChatId,
+        "lastMsgSender": lastMsgSender,
+        "lastMsgTime": lastMsgTime
+    }).done(function (chat) {
+        console.log("ok refresh");
+        
+        if(lastMsgTime === null)
+            $("#chat-messages").empty();
+        
         if (chat.messages !== undefined && chat.messages.length > 0) {
             for (var i = 0; i < chat.messages.length; i++) {
                 var elem = "";
@@ -155,16 +163,33 @@ function refreshChatMessages() {
                 elem = elem.format(chat.messages[i].messaggio, chat.messages[i].immagine, chat.messages[i].nome + " " + chat.messages[i].cognome, chat.messages[i].timestamp);
                 $("#chat-messages").append(elem);
             }
+            
+            //set last msg
+            lastMsgTime = chat.messages[chat.messages.length-1].milliseconds;
 
             //scroll to bottom of the chat
             $(".panel-body").animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 500);
-        } else {
+        } else if(chat !== "" && lastMsgTime === null) {
             //nessun messaggio nella chat
             elem = "<li class='left clearfix center'>" +
-                    "                       <p>No messages yet</p>" +
-                    "                   </li>";
+                    "   <p>No messages yet</p>" +
+                    "</li>";
+            $("#chat-messages").append(elem);
+        } else if(chat === ""){
+            //loading messages
+            $("#chat-messages").empty();
+            elem = "<li class='left clearfix center'>" +
+                    "   <p>Loading messages...</p>&nbsp;&nbsp;" +
+                    "</li>";
             $("#chat-messages").append(elem);
         }
+        
+        
+        //check for new msg every tot secs
+        var interval = 5000;
+        if(selChatId === undefined || selChatId === null)
+            interval = 500;
+        setTimeout(refreshChatMessages, interval);
     });
 }
 
@@ -173,7 +198,6 @@ function sendMessage() {
     if (text !== undefined && text !== "") {
         $.post("/ShoppingList/ChatServlet", {"action": "sendMessage", "list_id": selChatId, "text": text}).done(function (res) {
             $("#msg-text").val("");
-            refreshChatMessages();
         });
     }
 }

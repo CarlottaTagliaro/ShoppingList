@@ -15,6 +15,7 @@ import it.webproject2018.db.exceptions.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,11 +42,10 @@ public class ChatServlet extends HttpServlet {
         JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(super.getServletContext());
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         init();
-        
+
         Utente user = (Utente) request.getSession().getAttribute("User");
         try {
             if (user != null) {
@@ -53,8 +53,16 @@ public class ChatServlet extends HttpServlet {
                 if (action.equals("getChatList")) {
                     getChatList(user, response);
                 } else if (action.equals("getChatMessages")) {
-                    int chat_list_id = Integer.parseInt(request.getParameter("list_id"));
-                    getChatMessages(user, chat_list_id, response);
+                    String str_chatId = request.getParameter("list_id");
+                    if (str_chatId != null && !str_chatId.equals("")) {
+                        int chat_list_id = Integer.parseInt(str_chatId);
+                        String str_lasttime = request.getParameter("lastMsgTime");
+                        Timestamp lasttime = null;
+                        if (str_lasttime != null && !str_lasttime.equals("")) {
+                            lasttime = new Timestamp(Long.parseLong(str_lasttime));
+                        }
+                        getChatMessages(user, chat_list_id, lasttime, response);
+                    }
                 } else if (action.equals("sendMessage")) {
                     int chat_list_id = Integer.parseInt(request.getParameter("list_id"));
                     String text = request.getParameter("text");
@@ -89,9 +97,9 @@ public class ChatServlet extends HttpServlet {
         }
     }
 
-    protected void getChatMessages(Utente user, int chat_list_id, HttpServletResponse response) {
+    protected void getChatMessages(Utente user, int chat_list_id, Timestamp lasttime, HttpServletResponse response) {
         try {
-            ArrayList<MessaggioChat> messaggi = JdbcMessaggioChatDao.getChatLastMessages(chat_list_id);
+            ArrayList<MessaggioChat> messaggi = JdbcMessaggioChatDao.getChatLastMessages(chat_list_id, lasttime);
 
             ChatView chat = new ChatView();
             chat.id_lista = chat_list_id;
@@ -99,7 +107,7 @@ public class ChatServlet extends HttpServlet {
 
             for (MessaggioChat msg : messaggi) {
                 String timestamp = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(msg.getDate());
-                chat.messages.add(new ChatMessage(msg.getSender().getEmail(), msg.getSender().getPicture(), msg.getSender().getEmail().equals(user.getEmail()), msg.getSender().getName(), msg.getSender().getSurname(), timestamp, msg.getMessage()));
+                chat.messages.add(new ChatMessage(msg.getSender().getEmail(), msg.getSender().getPicture(), msg.getSender().getEmail().equals(user.getEmail()), msg.getSender().getName(), msg.getSender().getSurname(), timestamp, msg.getDate().getTime(), msg.getMessage()));
             }
 
             Gson gson = new Gson();
@@ -158,14 +166,16 @@ public class ChatServlet extends HttpServlet {
         public String cognome;
         public String timestamp;
         public String messaggio;
+        public Long milliseconds;
 
-        public ChatMessage(String email_utente, String immagine, Boolean isMe, String nome, String cognome, String timestamp, String messaggio) {
+        public ChatMessage(String email_utente, String immagine, Boolean isMe, String nome, String cognome, String timestamp, Long milliseconds, String messaggio) {
             this.email_utente = email_utente;
             this.immagine = immagine;
             this.isMe = isMe;
             this.nome = nome;
             this.cognome = cognome;
             this.timestamp = timestamp;
+            this.milliseconds = milliseconds;
             this.messaggio = messaggio;
         }
     }
