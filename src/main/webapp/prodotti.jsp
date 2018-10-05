@@ -12,29 +12,31 @@
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Shops</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-        
+
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-        
+
         <script>
-            $(document).ready(function() {
-                selectMenuEl("shops"); 
-            });   
+            $(document).ready(function () {
+                selectMenuEl("shops");
+            });
         </script>
 
         <div class="main">
             <div class="row search-form">
-                    <div class="input-group cerca">
-                        <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn bottone-cerca btn-default">
-                                <span class="glyphicon glyphicon-search"/>
-                            </button>
-                        </div>
+                <div class="input-group cerca">
+                    <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn bottone-cerca btn-default">
+                            <span class="glyphicon glyphicon-search"/>
+                        </button>
                     </div>
+                </div>
+                <label class="pageFrom">${titolo}</label>
+
             </div>
 
             <!--
@@ -80,7 +82,7 @@
             </div>
             -->
 
-            
+
             <c:forEach items="${productList}" var="product">
                 <productCard:productCard product="${product}"/>
             </c:forEach>

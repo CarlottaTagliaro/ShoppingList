@@ -110,6 +110,7 @@ select {
 
 .cerca {
     width: 400px;
+    float: right;
 }
 
 
@@ -151,4 +152,8 @@ select {
 
 .bootstrap-touchspin {
     width: 70%;
+}
+
+.pageFrom {
+    font-size: 30px;
 }

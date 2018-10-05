@@ -40,6 +40,7 @@ public class prodotti extends HttpServlet {
             List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName);
 
             request.setAttribute("productList", products);
+            request.setAttribute("titolo", catName);
             getServletContext().getRequestDispatcher("/prodotti.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

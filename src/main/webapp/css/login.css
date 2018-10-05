@@ -28,12 +28,12 @@ and open the template in the editor.
 }
 
 .form-group {
-  position: relative;
-  margin-bottom: 1rem;
+    position: relative;
+    margin-bottom: 1rem;
 }
 
 .form-group > input {
-  padding-left: 5px;
+    padding-left: 5px;
 }
 
 
@@ -71,10 +71,10 @@ and open the template in the editor.
 /*for the upload picture*/
 
 .inputfile {
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
 .inputfile + label {
@@ -90,11 +90,15 @@ and open the template in the editor.
 }
 
 .inputfile + label {
-	cursor: pointer; /* "hand" cursor */
+    cursor: pointer; /* "hand" cursor */
 }
 
 .inputfile:focus + label,
 .inputfile.has-focus + label {
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
+}
+
+.descrizione {
+    max-width: 335px;
 }

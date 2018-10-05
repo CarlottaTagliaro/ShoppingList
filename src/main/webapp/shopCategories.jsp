@@ -30,6 +30,9 @@
 
         <div class="main">
             <div class="row">
+                <label class="pageFrom">${titolo}</label>
+            </div>
+            <div class="row">
                 
                 <c:forEach items="${categories}" var="cat">
                     <shopCategoriesCard:shopCategoriesCard category="${cat}"/>
