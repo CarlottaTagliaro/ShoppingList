@@ -9,7 +9,7 @@ package it.webproject2018.db.entities;
  *
  * @author alberto
  */
-public class Notifiche {
+public class Notifica {
     private Integer id;
     private Lista list;
     private Prodotto product;
@@ -18,12 +18,13 @@ public class Notifiche {
     private boolean mail;
     private boolean sito;
     
-    public Notifiche() {}
+    public Notifica() {}
     
-    public Notifiche(Integer id, Lista list, Integer giorniMancanti, 
+    public Notifica(Integer id, Lista list, Prodotto product, Integer giorniMancanti, 
                      Integer quantitaMancante, boolean mail, boolean sito) {
         this.id = id;
         this.list = list;
+        this.product = product;
         this.giorniMancanti = giorniMancanti;
         this.quantitaMancante = quantitaMancante;
         this.mail = mail;

@@ -5,7 +5,7 @@
  */
 package it.webproject2018.db.daos;
 
-import it.webproject2018.db.entities.Notifiche;
+import it.webproject2018.db.entities.Notifica;
 import it.webproject2018.db.exceptions.DAOException;
 import java.util.ArrayList;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
  *
  * @author alberto
  */
-public interface NotificheDAO extends DAO<Notifiche, Integer> {
+public interface NotificaDAO extends DAO<Notifica, Integer> {
     
-    public ArrayList<Notifiche> getNotificationByUserEmail(String userEmail) throws DAOException;
+    public ArrayList<Notifica> getNotificationByUserEmail(String userEmail) throws DAOException;
 }
 
