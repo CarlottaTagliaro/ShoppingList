@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             }
             else {
                 request.getSession().setAttribute("User", user);
-                response.sendRedirect(request.getContextPath() + "/home.jsp");
+                response.sendRedirect(request.getContextPath() + "/home");
                 // Logged-in user found, so just continue request.
             }
         } catch (Exception e) {

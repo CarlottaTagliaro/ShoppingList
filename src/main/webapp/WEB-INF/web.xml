@@ -3,17 +3,17 @@
     <!--I seguenti tre parametri servono per connettersi al database mysql-->
     <context-param>
         <param-name>dburl</param-name>
-        <param-value>jdbc:mysql://eu-cdbr-west-02.cleardb.net:3306/heroku_7d9bc6f76d5ec4d</param-value>
+        <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
         <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
 				ma anche no, funziona uguale-->
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
-        <param-value>b8d4be00180e53</param-value>
+        <param-value>cucciolo</param-value>
     </context-param>
     <context-param>
         <param-name>dbpsw</param-name>
-        <param-value>48d163c7</param-value>
+        <param-value>1EEFA02E-D313-4589-AFAD-92FAD1741B20</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener</description>
@@ -38,6 +38,38 @@
     <servlet>
         <servlet-name>CreateListServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>home</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>myList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.myList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>myProducts</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.myProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>profile</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>shopCategories</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.shopCategories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>prodotti</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.prodotti</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>newList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>newProduct</servlet-name>
+        <servlet-class>it.webproject2018.servlets.pages.newProduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
@@ -79,6 +111,67 @@
         <servlet-name>CreateListServlet</servlet-name>
         <url-pattern>/CreateListServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>myList</servlet-name>
+        <url-pattern>/myList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>myProducts</servlet-name>
+        <url-pattern>/myProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>shopCategories</servlet-name>
+        <url-pattern>/shopCategories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>prodotti</servlet-name>
+        <url-pattern>/prodotti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newList</servlet-name>
+        <url-pattern>/newList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>newProduct</servlet-name>
+        <url-pattern>/newProduct</url-pattern>
+    </servlet-mapping>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>it.webproject2018.filters.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name></param-name>
+            <param-value></param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/messages.jsp</url-pattern>
+        <url-pattern>/messages</url-pattern>
+        <url-pattern>/newProduct.jsp</url-pattern>
+        <url-pattern>/newProduct</url-pattern>
+        <url-pattern>/myProducts.jsp</url-pattern>
+        <url-pattern>/myProducts</url-pattern>
+        <url-pattern>/profile.jsp</url-pattern>
+        <url-pattern>/profile</url-pattern>
+        <url-pattern>/logout.jsp</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/newList.jsp</url-pattern>
+        <url-pattern>/newList</url-pattern>
+        <url-pattern>/newShop.jsp</url-pattern>
+        <url-pattern>/newShop</url-pattern>
+        <url-pattern>/shopCategories.jsp</url-pattern>
+        <url-pattern>/shopCategories</url-pattern>
+        <url-pattern>/prodotti.jsp</url-pattern>
+        <url-pattern>/prodotti</url-pattern>
+    </filter-mapping>
     <session-config>
         <session-timeout>
             30
@@ -97,5 +190,13 @@
             <taglib-uri>/tlds/shopCard</taglib-uri>
             <taglib-location>/tlds/shopCard.tld</taglib-location>
         </taglib>
+        <taglib>
+            <taglib-uri>/tlds/shopCategoriesCard</taglib-uri>
+            <taglib-location>/tlds/shopCategoriesCard.tld</taglib-location>
+        </taglib>
     </jsp-config>
+    
+    <welcome-file-list>
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
 </web-app>

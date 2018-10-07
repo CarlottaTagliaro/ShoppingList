@@ -1,9 +1,3 @@
-<%@page import="it.webproject2018.db.entities.CategoriaListe"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Shopping List - Shops</title>
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <%@ taglib uri="/tlds/shopCard" prefix="shopCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
@@ -33,13 +28,6 @@
                 </div>
             </c:if>
             
-            
-                <%                    
-                    JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(super.getServletContext());
-                    List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
-                    
-                    pageContext.setAttribute("shops", shops);
-                %>
 
                 
             <div class="row">

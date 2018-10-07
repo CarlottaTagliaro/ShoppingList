@@ -17,7 +17,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -69,6 +68,33 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         try (Statement stm = CON.createStatement()) {
             try (ResultSet rs = stm.executeQuery("SELECT * FROM Prodotti_categorie ORDER BY Nome")) {
+
+                while (rs.next()) {
+                    String nome = rs.getString("Nome");
+                    String descrizione = rs.getString("Descrizione");;
+                    String logo = rs.getString("Logo");
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
+
+                    CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);
+
+                    lista.add(cat);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of list category", ex);
+        }
+
+        return lista;
+    }
+    
+    
+    public List<CategoriaProdotti> getAllByShop(String catName) throws DAOException {
+        List<CategoriaProdotti> lista = new ArrayList<>();
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Prodotti_categorie WHERE Nome_liste_cat = ?")) {
+            stm.setString(1, catName);
+            try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
                     String nome = rs.getString("Nome");

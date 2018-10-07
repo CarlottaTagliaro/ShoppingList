@@ -3,12 +3,7 @@
     Created on : 1-lug-2018, 10.45.35
     Author     : weatherly
 --%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Lista"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCListaDAO"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +11,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/profile.css" rel="stylesheet" type="text/css"/>
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
         <title>Shopping List - Profile</title>
     </head>
     <body>
@@ -27,12 +25,7 @@
                 selectMenuEl("profile");
             });
         </script>
-<% 
-                    Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-                    JDBCListaDAO JdbcListaDao = new JDBCListaDAO(conn);
-                    Utente user = (Utente)request.getSession().getAttribute("User");
-                     pageContext.setAttribute("user", user);
-                %>
+        
         <div class="main">
             <div class="card">
                 <img src="${user.getPicture()}" alt="${user.getName()}" class="img-responsive">
@@ -69,7 +62,7 @@
                                     
                                     <div class="row cambia-dati">
                                         <label class="search">Password:</label> 
-                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new name"
+                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new password"
                                     </div>
                                 </div>
                             </div>

@@ -224,3 +224,7 @@ div.liste:nth-child(3n+1) {
 .panel-btn{
     margin-top: 7px;
 }
+
+.pageFrom {
+    font-size: 30px;
+}

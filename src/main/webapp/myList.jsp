@@ -1,15 +1,10 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="it.webproject2018.db.entities.Utente"%>
-<%@page import="java.util.List"%>
-<%@page import="it.webproject2018.db.entities.Lista"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="it.webproject2018.db.daos.jdbc.JDBCListaDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/lists.css" rel="stylesheet" type="text/css"/>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         <%@ taglib uri="/tlds/newList" prefix="newList"%>
         <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -41,24 +36,11 @@
                 <div class="row create addList">
                     <div class="crea-lista">
                         <label class="lista1" style="font-size: 20px;"> Create new List: </label>
-                        <button class="myButton" onclick="location.href = 'newList.jsp'"> <b> + </b> </button>
+                        <button class="myButton" onclick="location.href = 'newList'"> <b> + </b> </button>
                     </div>
                 </div>
             </c:if>
 
-
-            <%
-                JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
-                Utente user = (Utente) request.getSession().getAttribute("User");
-                List<Lista> userLists;
-                if (user != null) {
-                    userLists = JdbcListaDao.getUserLists(user.getEmail());
-                } else {
-                    userLists = new ArrayList<>();
-                }
-
-                pageContext.setAttribute("userLists", userLists);
-            %>
 
 
             <c:forEach items="${userLists}" var="lista">

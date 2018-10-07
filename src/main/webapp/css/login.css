@@ -28,12 +28,12 @@ and open the template in the editor.
 }
 
 .form-group {
-  position: relative;
-  margin-bottom: 1rem;
+    position: relative;
+    margin-bottom: 1rem;
 }
 
 .form-group > input {
-  padding-left: 5px;
+    padding-left: 5px;
 }
 
 
@@ -54,6 +54,10 @@ and open the template in the editor.
     font-size: 18px;
 }
 
+.button2 {
+    max-width: 200px;
+}
+
 
 .button1:hover {
     opacity: 0.7;
@@ -62,3 +66,39 @@ and open the template in the editor.
 /*.descrizione {
     height: 60px !important;
 }*/
+
+
+/*for the upload picture*/
+
+.inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    opacity: 0.7;
+}
+
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.descrizione {
+    max-width: 335px;
+}

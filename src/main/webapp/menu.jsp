@@ -14,6 +14,9 @@
         <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
+        
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title>Shopping List</title>
     </head>
@@ -83,18 +86,18 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li data="home"><a href="home.jsp">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-                        <li data="shops"><a href="shops.jsp">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
-                        <li data="myList"><a href="myList.jsp">My Lists<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
-                                <c:if test="${not empty sessionScope.User}">
-                            <li data="myProducts"><a href="myProducts.jsp">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
+                        <li data="home"><a href="home">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                        <li data="shops"><a href="shops">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
+                        <li data="myList"><a href="myList">My Lists<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
+                        <c:if test="${not empty sessionScope.User}">
+                            <li data="myProducts"><a href="myProducts">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
                             <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
-                            <li data="profile"><a href="profile.jsp">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
+                            <li data="profile"><a href="profile">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
                             <li data="logout"><a href="<%=request.getContextPath()%>/LogoutServlet">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
-                                </c:if>
-                                <c:if test="${empty sessionScope.User}">
+                        </c:if>
+                        <c:if test="${empty sessionScope.User}">
                             <li data="login"><a href="login.jsp">Sign In<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
-                                </c:if>
+                        </c:if>
                     </ul>
                 </div>
             </div>

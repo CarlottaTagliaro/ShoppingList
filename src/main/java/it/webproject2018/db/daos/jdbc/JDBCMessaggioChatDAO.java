@@ -47,7 +47,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
                 + "where Email_sender = ? and ID_list = ? and Data = ? LIMIT 15")) {
             stm.setString(1, primaryKey.first());
             stm.setInt(2, primaryKey.second());
-            stm.setString(3, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(primaryKey.third()));
+            stm.setTimestamp(3, primaryKey.third());
             
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -154,7 +154,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
     }
 
     @Override
-    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat) throws DAOException{
+    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat, Timestamp lasttime) throws DAOException{
         if (id_list_chat == null) {
             throw new DAOException("id_list of the chat is null");
         }
@@ -163,8 +163,10 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
         try (PreparedStatement stm = CON.prepareStatement("select * from "
                     + "(select * from Chat "
-                    + "where ID_list = ? ORDER BY Data DESC LIMIT 15) as a order by a.Data")) {
+                    + "where ID_list = ? and (Data > ? OR ?) ORDER BY Data DESC LIMIT 15) as a order by a.Data")) {
             stm.setInt(1, id_list_chat);
+            stm.setTimestamp(2, lasttime);
+            stm.setBoolean(3, lasttime == null);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
 

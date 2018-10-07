@@ -11,30 +11,35 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Shops</title>
-        
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
-        
+
         <script>
-            $(document).ready(function() {
-                selectMenuEl("shops"); 
-            });   
+            $(document).ready(function () {
+                selectMenuEl("shops");
+            });
         </script>
 
         <div class="main">
             <div class="row search-form">
-                    <div class="input-group cerca">
-                        <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn bottone-cerca btn-default">
-                                <span class="glyphicon glyphicon-search"/>
-                            </button>
-                        </div>
+                <div class="input-group cerca">
+                    <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn bottone-cerca btn-default">
+                            <span class="glyphicon glyphicon-search"/>
+                        </button>
                     </div>
+                </div>
+                <label class="pageFrom">${titolo}</label>
+
             </div>
 
+            <!--
             <div class="row card">
                 <div class="col-xs-3">
                     <img class="imageList img-responsive" src="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG"/>
@@ -75,12 +80,12 @@
                     </div>
                 </div>
             </div>
+            -->
 
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
-            <productCard:productCard nome="Tosaerba" categoria="Giardinaggio" descrizione="questo è un tosaerba bellissimo" immagine="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG" />
 
+            <c:forEach items="${productList}" var="product">
+                <productCard:productCard product="${product}"/>
+            </c:forEach>
         </div>
     </body>
 </html>
