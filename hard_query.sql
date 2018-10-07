@@ -1,6 +1,6 @@
 -- to get product the user need to buy 
-
-select * from
+select without_owner.ID_lista, without_owner.ID_prodotto, without_owner.giorni_manc ,Liste.Owner from
+(select * from
 
 	(select ID_lista, ID_prodotto, 
 		(giorni_media - DATEDIFF(NOW(), ultimo)) as giorni_manc,
@@ -18,7 +18,8 @@ select * from
 				
 				group by a.Data_acquisto, a.ID_lista, a.ID_prodotto) as tmp
 			group by ID_lista, ID_prodotto) as medie) as final
-	where quant_manc > 0 and (ID_lista, ID_prodotto) not in (select ID_lista, ID_prodotto from Liste_Prodotti);
+	where quant_manc > 0 and (ID_lista, ID_prodotto) not in (select ID_lista, ID_prodotto from Liste_Prodotti)) as without_owner 
+    join Liste on Liste.ID = without_owner.ID_lista;
 
 -- giorni_manc: tra quanti giorni deve fare l'acquisto (se negativo doveva farlo giorni fa)
 -- quant_manc: quantità che manca da comprare tra "giorni_manc" giorni
