@@ -127,3 +127,16 @@ CREATE TABLE Utenti_Prodotti(
     foreign key(Email) references Utenti(Email),
     foreign key(ID_prodotto) references Prodotti(ID)
 );
+
+CREATE TABLE Notifiche(
+  ID integer auto_increment not null,
+  ID_list integer not null,
+  ID_prodotto integer not null,
+  Giorni_mancanti integer not null,
+  Quantita_mancanti integer not null,
+  Mail boolean not null,
+  Sito boolean not null,
+  primary key(ID),
+  foreign key(ID_list) references Liste(ID),
+  foreign key(ID_prodotto) references Prodotti(ID)
+);
