@@ -22,12 +22,9 @@
 
         <div class="main">
             <div class="card">
-                <form action="CreateProductServlet" method="POST">
-                    <!--FIXME: Non si può utilizzare un subform(form dentro un altro form)
-                        <form id="upload_form" enctype="multipart/form-data" method="post">
+                <form action="CreateProductServlet" id="upload_form" enctype="multipart/form-data" method="POST">
                         <input type="file" name="file" id="file" class="inputfile" data-multiple-caption="{count} files selected" multiple>
                         <label for="file" class="button1 button2 btn" ><span class="glyphicon glyphicon-open"></span> Choose files </label>
-                    </form>-->
                     <div class="form-group elemento">
                         <label> Name: </label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter product name"
