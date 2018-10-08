@@ -73,6 +73,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     boolean sito = rs.getBoolean("sito");
 
                     Notifica notification = new Notifica(id, list, product, giorniMancanti, quantitaMancante, mail, sito);
+                    return notification;
                 }
             }
         }
@@ -80,7 +81,8 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
             throw new DAOException("Error while getting Product by ID", ex);
         }
         
-        return null;    }
+        return null;    
+    }
 
     @Override
     public List<Notifica> getAll() throws DAOException {
