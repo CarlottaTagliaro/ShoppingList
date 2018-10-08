@@ -7,6 +7,7 @@ package it.webproject2018.servlets;
 
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.CategoriaListe;
+import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
@@ -20,18 +21,21 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Max
+ * @author Stefano
  */
 public class CreateListServlet extends HttpServlet {
 
-    private JDBCListaDAO JDBCListaDAO;
+    private JDBCListaDAO JDBCLista;
+    private JDBCCategoriaListeDAO JDBCCategoriaListe;
 
     @Override
     public void init() throws ServletException {
-        Connection conn = (Connection) super.getServletContext().getAttribute("connection");
-        JDBCListaDAO = new JDBCListaDAO(conn);
+        //Connection conn = (Connection) super.getServletContext().getAttribute("connection");
+        JDBCLista = new JDBCListaDAO(super.getServletContext());
+        JDBCCategoriaListe = new JDBCCategoriaListeDAO(super.getServletContext());
     }
-    /*@Override
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter w = response.getWriter();
 		try {
@@ -39,17 +43,18 @@ public class CreateListServlet extends HttpServlet {
 			
 			String name = request.getParameter("name");
             String description = request.getParameter("description");
-            String picture = request.getParameter("picture");
-			String listCategoryName = request.getParameter("listCategory");
-   //da sistemare         CategoriaListe category = new CategoriaListe(listCategoryName); 
-			String owner = user.getEmail();
-			
-            Lista list = new Lista(null, null, null, null, null, name, description, picture, category, owner);
+			String category = request.getParameter("category");
+            String owner = user.getEmail();
+            //String picture = request.getParameter("file");
 
-			Boolean ok = JDBCListaDAO.insert(list);
-            response.sendRedirect(request.getContextPath() + (!ok ? "/newList.jsp" : "/myList.jsp"));
+            CategoriaListe cat = JDBCCategoriaListe.getByPrimaryKey(category);
+            //Lista list = new Lista(false, false, false, false, null, name, description, picture, cat, owner);
+            Lista list = new Lista(false, false, false, false, null, name, description, "", cat, owner);
+
+			Boolean ok = JDBCLista.insert(list);
+            response.sendRedirect(request.getContextPath() + (!ok ? "/newList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());
         }
-    }*/
+    }
 }
