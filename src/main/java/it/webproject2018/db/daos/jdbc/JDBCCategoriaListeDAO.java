@@ -30,12 +30,31 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         super(conn);
     }    
     
+    public List<String> getAllNames() throws DAOException {
+        List<String> names = new ArrayList<>();
+
+        try (Statement stm = CON.createStatement()) {
+            try (ResultSet rs = stm.executeQuery("select Nome from Liste_categorie order by Nome;")) {
+
+                while (rs.next()) {
+                    String nome = rs.getString("Nome");
+
+                    names.add(nome);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of list category", ex);
+        }
+
+        return names;
+    }
+
     @Override
     public CategoriaListe getByPrimaryKey(String primaryKey) throws DAOException {
         if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Liste_categorie WHERE Nome = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Liste_categorie WHERE Nome = ?;")) {
             stm.setString(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 
