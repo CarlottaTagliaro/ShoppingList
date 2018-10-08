@@ -5,10 +5,6 @@
  */
 package it.webproject2018.db.daos.jdbc;
 
-import it.webproject2018.db.daos.ProdottoDAO;
-import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.db.entities.CategoriaProdotti;
-import it.webproject2018.db.entities.Prodotto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
+
+import it.webproject2018.db.daos.ProdottoDAO;
+import it.webproject2018.db.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.exceptions.DAOException;
 
 /**
  *
@@ -317,13 +318,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             throw new DAOException("product parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Fotografia, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?)");
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getNote());
             stm.setString(3, "");
-            stm.setString(4, "");
-            stm.setString(5, entity.getCategoria().getNome());
-            stm.setString(6, entity.getOwner().getEmail());
+            stm.setString(4, entity.getCategoria().getNome());
+            stm.setString(5, entity.getOwner().getEmail());
             Integer rs = stm.executeUpdate();
             
             return (rs > 0);
