@@ -90,6 +90,7 @@
     <servlet>
         <servlet-name>CreateProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
+        <multipart-config></multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateProductServlet</servlet-name>

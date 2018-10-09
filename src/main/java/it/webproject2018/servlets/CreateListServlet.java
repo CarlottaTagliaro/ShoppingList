@@ -52,6 +52,7 @@ public class CreateListServlet extends HttpServlet {
             //String picture = request.getParameter("file");
 
             CategoriaListe cat = JDBCCategoriaListe.getByPrimaryKey(category);
+
             Lista list = new Lista(null, name, description, "", cat, owner);
 
             list = JDBCLista.insert(list);
@@ -61,8 +62,6 @@ public class CreateListServlet extends HttpServlet {
                 ListaPermessi permessi = new ListaPermessi(true, true, true, true, user.getEmail(), list.getId());
                 JDBCListaPermessi.insert(permessi);
             }
-            
-
             response.sendRedirect(request.getContextPath() + (!ok ? "/newList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());

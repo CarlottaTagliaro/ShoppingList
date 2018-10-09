@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-
+import java.nio.file.Files;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import java.io.File;
+import java.nio.file.Path;
 
 /**
  *
@@ -41,6 +43,9 @@ public class CreateProductServlet extends HttpServlet {
             String category = request.getParameter("selectCategory");
             String description = request.getParameter("description");
 
+            System.out.println("Nome: "+request.getPart("name"));
+            System.out.println("category: "+request.getParameter("selectCategory"));
+            
             Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category));
             prod.setOwner(user);
             Boolean ok = JDBCProdotto.insert(prod) != null;
@@ -50,9 +55,13 @@ public class CreateProductServlet extends HttpServlet {
 
                 for (Object oFilePart : fileParts) {
                     Part filePart = (Part) oFilePart;
-                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                     InputStream fileContent = filePart.getInputStream();
-                    // ... (do your job here)
+                    
+                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator)+"imagesUpload/"+fileName);
+                    
+                    Files.copy(fileContent, pathToFile);
+                    prod.Fotografie.add("imagesUpload/"+fileName);
                 }
             }
             response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct" : "/myProducts"));
