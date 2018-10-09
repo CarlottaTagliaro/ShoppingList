@@ -20,6 +20,10 @@ import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import java.io.File;
 import java.nio.file.Path;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 /**
  *
@@ -57,10 +61,18 @@ public class CreateProductServlet extends HttpServlet {
                     String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                     InputStream fileContent = filePart.getInputStream();
 
-                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + "imagesUpload/" + fileName);
+                    try {
+                        String ext = fileName.substring(fileName.lastIndexOf("."));
+                        fileName = randomString(70) + ext; //assign random name
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    String img = "imagesUpload/" + fileName;
+
+                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
 
                     Files.copy(fileContent, pathToFile);
-                    String img = "imagesUpload/" + fileName;
                     prod.Fotografie.add(img);
                     JDBCProdotto.insertImage(prod, img);
                 }
@@ -69,5 +81,16 @@ public class CreateProductServlet extends HttpServlet {
         } catch (DAOException e) {
             w.println(e.getMessage());
         }
+    }
+
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static SecureRandom rnd = new SecureRandom();
+
+    String randomString(int len) {
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
     }
 }
