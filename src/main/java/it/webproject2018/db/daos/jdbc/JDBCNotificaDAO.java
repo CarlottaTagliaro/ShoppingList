@@ -110,7 +110,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
             throw new DAOException("notication parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, entity.getId());
             stm.setInt(2, entity.getLista().getId());
             stm.setInt(3, entity.getProdotto().getId());

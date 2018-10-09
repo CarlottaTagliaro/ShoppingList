@@ -26,6 +26,7 @@ import java.nio.file.Path;
  * @author Stefano
  */
 public class CreateProductServlet extends HttpServlet {
+
     private JDBCProdottoDAO JDBCProdotto;
 
     @Override
@@ -43,12 +44,10 @@ public class CreateProductServlet extends HttpServlet {
             String category = request.getParameter("selectCategory");
             String description = request.getParameter("description");
 
-            System.out.println("Nome: "+request.getPart("name"));
-            System.out.println("category: "+request.getParameter("selectCategory"));
-            
             Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category));
             prod.setOwner(user);
-            Boolean ok = JDBCProdotto.insert(prod) != null;
+            prod = JDBCProdotto.insert(prod);
+            Boolean ok = prod != null;
             if (ok) {
                 List<Object> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName()))
                         .collect(Collectors.toList());
@@ -57,11 +56,13 @@ public class CreateProductServlet extends HttpServlet {
                     Part filePart = (Part) oFilePart;
                     String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
                     InputStream fileContent = filePart.getInputStream();
-                    
-                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator)+"imagesUpload/"+fileName);
-                    
+
+                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + "imagesUpload/" + fileName);
+
                     Files.copy(fileContent, pathToFile);
-                    prod.Fotografie.add("imagesUpload/"+fileName);
+                    String img = "imagesUpload/" + fileName;
+                    prod.Fotografie.add(img);
+                    JDBCProdotto.insertImage(prod, img);
                 }
             }
             response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct" : "/myProducts"));
