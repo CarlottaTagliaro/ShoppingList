@@ -43,7 +43,7 @@ public class CreateProductServlet extends HttpServlet {
 
             Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category));
             prod.setOwner(user);
-            Boolean ok = JDBCProdotto.insert(prod);
+            Boolean ok = JDBCProdotto.insert(prod) != null;
             if (ok) {
                 List<Object> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName()))
                         .collect(Collectors.toList());

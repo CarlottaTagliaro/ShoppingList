@@ -126,7 +126,7 @@ public class ChatServlet extends HttpServlet {
         Boolean res;
         try {
             MessaggioChat msg = new MessaggioChat(user, chat_list_id, text, new Timestamp(System.currentTimeMillis()));
-            res = JdbcMessaggioChatDao.insert(msg);
+            res = JdbcMessaggioChatDao.insert(msg) != null;
         } catch (Exception ex) {
             res = false;
         }

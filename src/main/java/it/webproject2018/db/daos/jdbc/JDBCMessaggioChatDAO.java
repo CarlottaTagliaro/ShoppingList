@@ -111,7 +111,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
     }
 
     @Override
-    public Boolean insert(MessaggioChat entity) throws DAOException {
+    public MessaggioChat insert(MessaggioChat entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("message parameter is null");
         }
@@ -124,9 +124,12 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             stm.setTimestamp(4, entity.getDate());
             Integer rs = stm.executeUpdate();
 
-            return (rs > 0);
+            if (rs > 0)
+                return entity;
+            
+            return null;
         } catch (SQLException e) {
-            return false;
+            return null;
         }
     }
 

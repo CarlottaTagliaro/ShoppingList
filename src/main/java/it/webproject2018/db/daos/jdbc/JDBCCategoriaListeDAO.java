@@ -138,7 +138,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
     }
     
     @Override
-    public Boolean insert(CategoriaListe entity) throws DAOException{
+    public CategoriaListe insert(CategoriaListe entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("CategoriaListe parameter is null");
         }
@@ -148,9 +148,12 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
             stm.setString(2, entity.getDescrizione());
             Integer rs = stm.executeUpdate();
             
-            return (rs <= 0);
+            if (rs <= 0)
+                return getByPrimaryKey(entity.getNome());
+            
+            return null;
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
     

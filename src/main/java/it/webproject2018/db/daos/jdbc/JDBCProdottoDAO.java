@@ -313,7 +313,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
     
     @Override
-    public Boolean insert(Prodotto entity) throws DAOException{
+    public Prodotto insert(Prodotto entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("product parameter is null");
         }
@@ -326,7 +326,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             stm.setString(5, entity.getOwner().getEmail());
             Integer rs = stm.executeUpdate();
             
-            return (rs > 0);
+            ResultSet rsi = stm.getGeneratedKeys();
+            if (rsi.next()) {
+                return getByPrimaryKey(rsi.getInt(1));
+            }
+
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

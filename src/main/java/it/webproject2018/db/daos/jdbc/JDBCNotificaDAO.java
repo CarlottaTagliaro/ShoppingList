@@ -105,7 +105,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
     }
 
     @Override
-    public Boolean insert(Notifica entity) throws DAOException {
+    public Notifica insert(Notifica entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("notication parameter is null");
         }
@@ -121,7 +121,12 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 
             Integer rs = stm.executeUpdate();
             
-            return (rs > 0);
+            ResultSet rsi = stm.getGeneratedKeys();
+            if (rsi.next()) {
+                return getByPrimaryKey(rsi.getInt(1));
+            }
+
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
