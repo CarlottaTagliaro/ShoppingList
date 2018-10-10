@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -78,9 +77,8 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
         return 0L;
     }
     
-    
     @Override
-    public Boolean insert(InformazioniAcquisto entity) throws DAOException{
+    public InformazioniAcquisto insert(InformazioniAcquisto entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("InformazioniAcquisto parameter is null");
         }
@@ -92,9 +90,12 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
             stm.setInt(4, entity.getQuantità());
             Integer rs = stm.executeUpdate();
             
-            return (rs > 0);
+            if (rs > 0)
+                return entity;
+            
+            return null;
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
     
@@ -120,4 +121,20 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
             throw new DAOException("Impossible to update the InformazioniAcquisto", ex);
         }
     }
+	
+	@Override
+	public Boolean delete(Integer primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Lista prodotti acquistati is null");
+		}
+		/*try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_Prodotti_Acquistati WHERE ? = ? ")) {
+			stm.setInt(1, primaryKey);
+			try (ResultSet rs = stm.executeQuery()) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			throw new DAOException("Impossible to delete the passed primary key", ex);
+		}*/
+		return false;
+	}
 }

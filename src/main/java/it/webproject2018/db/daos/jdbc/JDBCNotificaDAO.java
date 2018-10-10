@@ -105,12 +105,12 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
     }
 
     @Override
-    public Boolean insert(Notifica entity) throws DAOException {
+    public Notifica insert(Notifica entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("notication parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, entity.getId());
             stm.setInt(2, entity.getLista().getId());
             stm.setInt(3, entity.getProdotto().getId());
@@ -121,7 +121,12 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 
             Integer rs = stm.executeUpdate();
             
-            return (rs > 0);
+            ResultSet rsi = stm.getGeneratedKeys();
+            if (rsi.next()) {
+                return getByPrimaryKey(rsi.getInt(1));
+            }
+
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -177,5 +182,19 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         }
         return notificationList;
     }
-
+	
+	@Override
+	public Boolean delete(Integer primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Notifica is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Notifiche where ID = ? ")) {
+			stm.setInt(1, primaryKey);
+			try (ResultSet rs = stm.executeQuery()) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author davide
  */
 public class Prodotto {
+
     private Integer id;
     private String nome;
     private String note;
@@ -19,11 +20,12 @@ public class Prodotto {
     private CategoriaProdotti categoria;
     public ArrayList<String> Fotografie;
     public ArrayList<InformazioniAcquisto> Acquisti;
-	public Utente owner;
-    
-    public Prodotto(){}
-    
-    public Prodotto(Integer id, String nome, String note, String logo, ArrayList<String> fotografie, CategoriaProdotti categoria){
+    public Utente owner;
+
+    public Prodotto() {
+    }
+
+    public Prodotto(Integer id, String nome, String note, String logo, ArrayList<String> fotografie, CategoriaProdotti categoria) {
         this.id = id;
         this.nome = nome;
         this.note = note;
@@ -95,8 +97,8 @@ public class Prodotto {
     public void setCategoria(CategoriaProdotti categoria) {
         this.categoria = categoria;
     }
-	
-	/**
+
+    /**
      * @return the owner
      */
     public Utente getOwner() {

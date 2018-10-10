@@ -5,11 +5,21 @@
  */
 package it.webproject2018.customtags;
 
+import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+import org.glassfish.gmbal.generic.Triple;
 
 /**
  *
@@ -25,6 +35,26 @@ public class ProductCard extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
+        PageContext pageContext = (PageContext) getJspContext();
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        HttpSession session = request.getSession();
+        ServletContext servletContext = session.getServletContext();
+        JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(servletContext);
+        Utente user = (Utente) request.getSession().getAttribute("User");
+
+        String listeHtml = "";
+        try {
+            if (user != null) {
+                List<Triple<Integer, String, Integer>> lista = JdbcProdottoDao.getProductListAmount(product, user);
+                
+                for (int i = 0; i < lista.size(); i++) {
+                    listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", lista.get(i).first(), lista.get(i).third(), lista.get(i).second());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         String html = String.format(" \n"
                 + "<div class=\"row card\">\n"
                 + "                <div class=\"col-xs-3\">\n"
@@ -55,24 +85,27 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                                     <label> Choose: </label>\n"
                 + "                                                 </div>\n"
                 + "                                                 <div class=\"row\"> \n"
-                + "                                                     <select class=\"form-control\" id=\"search-select1\">\n"
-                + "                                                         <option value=\"Pet shop\">Pet shop</option>\n"
-                + "                                                         <option value=\"Super Market\">Super Market</option>\n"
+                + "                                                     <select id=\"selList_%d\" class=\"form-control\">\n"
+                + "                                                         %s"
                 + "                                                     </select>\n"
                 + "                                                 </div>"
                 + "                                             </div>\n"
                 + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
-                + "                                                 <div class=\"text-info\"><b> Already added: </b></div>\n"
+                + "                                                 <div class=\"text-info\"><b> Already added: </b><p id=\"amount_%d\"></p></div>\n"
                 + "                                             </div>\n"
                 + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
                 + "                                                 <div class=\"row\"> \n"
                 + "                                                     <div class=\"amount\"><label>Amount:</label></div>\n"
                 + "                                                 </div>\n"
                 + "                                                 <div class=\"row\">\n"
-                + "                                                     <input id=\"demo3\" type=\"text\" value=\"0\" name=\"demo3\">\n"
+                + "                                                     <input id=\"amount_value\" type=\"text\" value=\"0\" name=\"demo3\">\n"
                 + "                                                 </div>"
                 + "                                                 <script>\n"
-                + "                                                     $(\"input[name='demo3']\").TouchSpin();\n"
+                + "                                                     $(\"input[name='amount_value']\").TouchSpin();\n"
+                + "                                                     $( \"#selList_%d\" ).change(function() {\n"
+                + "                                                         var value = $(this).val();"
+                + "                                                         $(\"#amount_%d\").text($(this).find(\"option[value=\"+value+\"]\").attr(\"amount\"));"
+                + "                                                     });"
                 + "                                                 </script>\n"
                 + "                                             </div>\n"
                 + "                                         </div>"
@@ -87,7 +120,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                    </div>\n"
                 + "                </div>\n"
                 + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/50/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
-                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote()
+                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId()
         );
         getJspContext().getOut().write(html);
     }
