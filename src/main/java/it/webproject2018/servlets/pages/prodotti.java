@@ -35,9 +35,12 @@ public class prodotti extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String catName = request.getParameter("catName");
+            String qry = request.getParameter("qry");
+            if(qry == null)
+                qry = "";
             
             JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
-            List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName);
+            List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName, qry);
 
             request.setAttribute("productList", products);
             request.setAttribute("titolo", catName);

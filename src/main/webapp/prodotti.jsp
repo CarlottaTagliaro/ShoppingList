@@ -27,14 +27,15 @@
 
         <div class="main">
             <div class="row search-form">
-                <div class="input-group cerca">
-                    <input type="text" class="form-control form-control1" aria-label="..." placeholder="Search product">
+                <form class="input-group cerca">
+                    <input type="hidden" name="catName" value="<%=request.getParameter("catName") %>">
+                    <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product" value="<%= request.getParameter("qry") == null ? "" : request.getParameter("qry")%>">
                     <div class="input-group-btn">
-                        <button type="button" class="btn bottone-cerca btn-default">
+                        <button type="submit" class="btn bottone-cerca btn-default">
                             <span class="glyphicon glyphicon-search"/>
                         </button>
                     </div>
-                </div>
+                </form>
                 <label class="pageFrom">${titolo}</label>
 
             </div>
