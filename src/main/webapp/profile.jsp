@@ -59,21 +59,39 @@
                                         <label class="search">Surname:</label> 
                                         <input type="text" class="form-control inserisci" aria-label="..." placeholder="Insert new surname">
                                     </div>
-
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button1" class="modal-btn btn btn-secondary" data-dismiss="modal"> <b>Close</b></button>
+                                <button type="button1" class="modal-btn btn btn-primary myButton3"><b>Change</b></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p><button class="button1" style="margin: 0" data-toggle="modal" data-target="#change-pwd"> <b> Change Password </b> </button></p>
+                <div class="modal fade" id="change-pwd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="exampleModalLabel"><b>Change credentials:</b></h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group">
                                     <div class="row cambia-dati">
                                         <label class="search">Password:</label> 
-                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new password"
+                                        <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new password">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button1" class="btn btn-secondary" data-dismiss="modal"> <b>Close</b></button>
-                                <button type="button1" class="btn btn-primary myButton3"><b>Change</b></button>
+                                <button type="button1" class="modal-btn btn btn-secondary" data-dismiss="modal"> <b>Close</b></button>
+                                <button type="button1" class="modal-btn btn btn-primary myButton3"><b>Change</b></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
