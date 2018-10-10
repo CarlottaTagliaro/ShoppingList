@@ -18,7 +18,9 @@ import javax.servlet.ServletContext;
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import org.glassfish.gmbal.generic.Triple;
 
 /**
  *
@@ -112,6 +114,34 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
+    
+    
+    public List<Triple<Integer, String, Integer>> getProductListAmount(Prodotto entity, Utente user) throws DAOException {
+        ArrayList<Triple<Integer, String, Integer>> lista = new ArrayList<>();
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT DISTINCT * FROM (SELECT distinct Liste.ID, Liste.Nome FROM Liste, Utenti_Liste, Utenti" +
+"                WHERE Liste.ID = Utenti_Liste.ID" +
+"                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?) as a" +
+"                LEFT JOIN (SELECT * FROM Liste_Prodotti WHERE ID_prodotto = ?) as b ON a.ID = b.ID_lista;")) {
+            stm.setString(1, user.getEmail());
+            stm.setInt(2, entity.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    Integer id_lista = rs.getInt("ID");
+                    String nome = rs.getString("Nome");
+                    Integer quantità = rs.getInt("Quantita");
+                    
+                    lista.add(new Triple(id_lista, nome, quantità));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting all Product List Amount", ex);
+        }
+
+        return lista;
+    }
+    
     @Override
     public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();

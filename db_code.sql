@@ -93,6 +93,7 @@ CREATE TABLE Prodotti_immagini(
 CREATE TABLE Liste_Prodotti(
     ID_lista integer not null,
     ID_prodotto integer not null,
+    Quantita integer not null, 
     primary key(ID_lista, ID_prodotto),
     foreign key(ID_lista) references Liste(ID),
     foreign key(ID_prodotto) references Prodotti(ID)
