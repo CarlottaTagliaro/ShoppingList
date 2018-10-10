@@ -70,9 +70,9 @@ public class ProductCard extends SimpleTagSupport {
                 + "                    <div class=\"row\">\n"
                 + "                         <div class=\"add-lista\">\n"
                 + "                             <label class=\"aggiungi\"> Add: </label>\n"
-                + "                            <button class=\"myButton\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\"><span class=\"glyphicon glyphicon-plus\"></span></button>\n"
+                + "                            <button class=\"myButton\" text=\"+\" data-toggle=\"modal\" data-target=\"#add_modal_%d\"><span class=\"glyphicon glyphicon-plus\"></span></button>\n"
                 + "                        </div>"
-                + "                        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                + "                        <div class=\"modal fade\" id=\"add_modal_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                            <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                <div class=\"modal-content\">\n"
                 + "                                    <div class=\"modal-header\">\n"
@@ -121,9 +121,9 @@ public class ProductCard extends SimpleTagSupport {
                 + "                    <div class=\"row\">\n "
                 + "                         <div class=\"add-lista\">\n"
                 + "                             <label class=\"aggiungi\"> Share: </label>\n"
-                + "                             <button class=\"myButton\" text=\"S\" data-toggle=\"modal\" data-target=\"#exampleModal1\"><span class=\"glyphicon glyphicon-share-alt\"></span></button>\n"
+                + "                             <button class=\"myButton\" text=\"S\" data-toggle=\"modal\" data-target=\"#share_modal_%d\"><span class=\"glyphicon glyphicon-share-alt\"></span></button>\n"
                 + "                         </div>"
-                + "                         <div class=\"modal fade\" id=\"exampleModal1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                + "                         <div class=\"modal fade\" id=\"share_modal_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                             <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                  <div class=\"modal-content\">\n"
                 + "                                        <div class=\"modal-header\">\n"
@@ -165,7 +165,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                    </div>\n "
                 + "                </div>\n"
                 + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/100/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
-                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId()
+                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), getProduct().getId(),  getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId(),  getProduct().getId(),  getProduct().getId()
         );
         getJspContext().getOut().write(html);
     }
