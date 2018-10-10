@@ -57,13 +57,12 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	public List<ENTITY_CLASS> getAll() throws DAOException;
 		
 	/**
-	 * Updates the entity of type {@code ENTITY_CLASS} in the persistence
+	 * Insert the entity of type {@code ENTITY_CLASS} in the persistence
 	 * layer
 	 *
 	 * @param entity the entity to insert
-	 * @return the updated entity
-	 * @throws DAOException if an error occurred during the information
-	 * retrieving.
+	 * @return the status of the insertion
+	 * @throws DAOException if an error occurred during the action.
 	 */
 	public Boolean insert(ENTITY_CLASS entity) throws DAOException;
 	
@@ -89,4 +88,14 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	 * @throws DAOFactoryException if an error occurred.
 	 */
     public <DAO_CLASS extends DAO> DAO_CLASS getDAO(Class<DAO_CLASS> daoClass) throws DAOFactoryException;
+	
+	/**
+	 * Deletes the entity determined by the primaryKey passed
+	 * from the persistence layer
+	 *
+	 * @param primaryKey the primary key of the entity to remove.
+	 * @return the status of the deletion
+	 * @throws DAOException if an error occurred during the action
+	 */
+	public Boolean delete(PRIMARY_KEY_CLASS primaryKey) throws DAOException;
 }

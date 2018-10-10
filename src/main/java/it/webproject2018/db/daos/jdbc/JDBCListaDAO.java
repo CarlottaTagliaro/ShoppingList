@@ -244,4 +244,19 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             throw new DAOException("Impossible to update the list", ex);
         }
     }
+	
+	@Override
+	public Boolean delete(Integer primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Lista is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste WHERE ID = ? ")) {
+			stm.setInt(1, primaryKey);
+			try (ResultSet rs = stm.executeQuery()) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

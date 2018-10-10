@@ -12,9 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletContext;
-
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
@@ -137,7 +135,6 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         
         return prodotti;
     }
-    
     
     public ArrayList<Prodotto> getAllProductsByCategory(String catName) throws DAOException{
         ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -332,4 +329,19 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             return null;
         }
     }
+	
+	@Override
+	public Boolean delete(Integer primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Prodotto is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti where ID = ? ")) {
+			stm.setInt(1, primaryKey);
+			try (ResultSet rs = stm.executeQuery()) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }
