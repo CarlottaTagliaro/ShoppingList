@@ -166,7 +166,7 @@ public class NewList extends SimpleTagSupport {
                 + "                                             </div>\n"
                 + "                                         </div>\n"
                 + "                                     </div>\n"
-                + "                                    <a type=\"button\" title=\"Delete list\" class=\"btn btn-default btn-xs small\">\n"
+                + "                                    <a type=\"button\" title=\"Delete list\" class=\"btn btn-default btn-xs small\" href=\"DeleteListServlet?List=%d\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-trash\"></span>\n"
                 + "                                    </a>\n"
                 + "                                    <button type=\"button\" title=\"Show list\" id=\"prova\" class=\"btn btn-default btn-xs small\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse%s\" onclick=\"scendi(this)\">\n"
@@ -185,7 +185,7 @@ public class NewList extends SimpleTagSupport {
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), listaHtml);
+                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), lista.getId(), listaHtml);
 
         getJspContext().getOut().write(html);
     }

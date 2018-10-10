@@ -196,9 +196,11 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 			stm.setString(1, primaryKey.first());
 			stm.setInt(2, primaryKey.second());
 			stm.setTimestamp(3, primaryKey.third());
-			try (ResultSet rs = stm.executeQuery()) {
+			int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
 			return false;
 		}

@@ -199,9 +199,11 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 		}
 		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti_categorie WHERE Nome = ? ")) {
 			stm.setString(1, primaryKey);
-			try (ResultSet rs = stm.executeQuery()) {
+			int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
 			return false;
 		}

@@ -254,9 +254,11 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
 		}
 		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste WHERE ID = ? ")) {
 			stm.setInt(1, primaryKey);
-			try (ResultSet rs = stm.executeQuery()) {
+			int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
 			return false;
 		}

@@ -190,9 +190,11 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 		}
 		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Notifiche where ID = ? ")) {
 			stm.setInt(1, primaryKey);
-			try (ResultSet rs = stm.executeQuery()) {
+			int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
 			return false;
 		}

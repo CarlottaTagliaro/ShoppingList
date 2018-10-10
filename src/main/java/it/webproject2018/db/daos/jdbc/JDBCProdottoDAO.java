@@ -381,9 +381,11 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
         try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti where ID = ? ")) {
             stm.setInt(1, primaryKey);
-            try (ResultSet rs = stm.executeQuery()) {
+            int res = stm.executeUpdate();
+			if (res >= 1) {
                 return true;
             }
+			return false;
         } catch (SQLException ex) {
             return false;
         }

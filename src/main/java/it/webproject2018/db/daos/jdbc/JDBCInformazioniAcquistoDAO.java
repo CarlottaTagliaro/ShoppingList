@@ -129,11 +129,14 @@ public class JDBCInformazioniAcquistoDAO  extends JDBCDAO<InformazioniAcquisto, 
 		}
 		/*try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_Prodotti_Acquistati WHERE ? = ? ")) {
 			stm.setInt(1, primaryKey);
-			try (ResultSet rs = stm.executeQuery()) {
+			
+		int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
-			throw new DAOException("Impossible to delete the passed primary key", ex);
+			return false;
 		}*/
 		return false;
 	}
