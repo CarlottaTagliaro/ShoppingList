@@ -184,9 +184,11 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
 		}
 		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_categorie WHERE Nome = ? ")) {
 			stm.setString(1, primaryKey);
-			try (ResultSet rs = stm.executeQuery()) {
+			int res = stm.executeUpdate();
+			if (res >= 1) {
 				return true;
 			}
+			return false;
 		} catch (SQLException ex) {
 			return false;
 		}
