@@ -42,10 +42,11 @@
             </c:if>
 
 
-
-            <c:forEach items="${userLists}" var="lista">
-                <newList:newList lista="${lista}"/>
-            </c:forEach>
+            <div class="row">
+                <c:forEach items="${userLists}" var="lista">
+                    <newList:newList lista="${lista}"/>
+                </c:forEach>
+            </div>
 
 
             <!--<div class="col-md-4 liste">
@@ -76,58 +77,58 @@
                             </div>
                         </div>
 
-                        <!-- controllare se devo aggiungere anche la categoria della lista, in più vedere se necessaria la foto dell'oggetto e mettere la spunta per dire che è stato comprato-->
-                        <!--<div class="collapse" id="collapseOne">
-                            <div class="panel-body">
-                                <ul class="lista">
-                                    <li class="left clearfix"><span class="list-img pull-left">
-                                            <img src="http://placehold.it/50/55C1E7/fff&text=T" alt="object" class="img-circle" />
-                                        </span>
-                                        <div class="list-body clearfix">
-                                            <div class="header">
-                                                <strong class="primary-font" >Tosaerba</strong> 
-                                                <button class="myButton3 addTo" text="+" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+            <!-- controllare se devo aggiungere anche la categoria della lista, in più vedere se necessaria la foto dell'oggetto e mettere la spunta per dire che è stato comprato-->
+            <!--<div class="collapse" id="collapseOne">
+                <div class="panel-body">
+                    <ul class="lista">
+                        <li class="left clearfix"><span class="list-img pull-left">
+                                <img src="http://placehold.it/50/55C1E7/fff&text=T" alt="object" class="img-circle" />
+                            </span>
+                            <div class="list-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font" >Tosaerba</strong> 
+                                    <button class="myButton3 addTo" text="+" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
 
-                                                <button class="myButton3 addTo" title="Delete product" class="btn btn-default btn-xs small">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </button>
+                                    <button class="myButton3 addTo" title="Delete product" class="btn btn-default btn-xs small">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </div>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="exampleModalLabel"><b>Choose the quantity:</b></h3>
                                             </div>
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title" id="exampleModalLabel"><b>Choose the quantity:</b></h3>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-sm-4">
+                                                        <div class="row"> 
+                                                            <div class="amount"><label>Amount:</label></div>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-xs-6 col-sm-4">
-                                                                    <div class="row"> 
-                                                                        <div class="amount"><label>Amount:</label></div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <input id="demo3" type="text" value="" name="demo3">
-                                                                    </div>
-                                                                    <script>
-                                                                        $("input[name='demo3']").TouchSpin();
-                                                                    </script>
-                                                                </div>
-                                                            </div>
+                                                        <div class="row">
+                                                            <input id="demo3" type="text" value="" name="demo3">
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class=" btn btn-secondary" data-dismiss="modal"><b>Close</b></button>
-                                                            <button type="button" class="myButton3 btn btn-primary"> <b>Add</b></button>"
-                                                        </div>
+                                                        <script>
+                                                            $("input[name='demo3']").TouchSpin();
+                                                        </script>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class=" btn btn-secondary" data-dismiss="modal"><b>Close</b></button>
+                                                <button type="button" class="myButton3 btn btn-primary"> <b>Add</b></button>"
+                                            </div>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>-->
+            </div>
+        </div>
+    </div>
+</div>-->
 
         </div>  
     </body>
