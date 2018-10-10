@@ -5,16 +5,16 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
-import it.webproject2018.db.entities.Lista;
-import it.webproject2018.db.exceptions.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.exceptions.DAOException;
 
 /**
  *

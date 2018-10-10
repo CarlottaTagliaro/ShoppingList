@@ -5,19 +5,20 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
-import it.webproject2018.db.entities.Prodotto;
-import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 
 /**
  *

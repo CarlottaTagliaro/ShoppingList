@@ -5,13 +5,13 @@
  */
 package it.webproject2018.customtags;
 
-import it.webproject2018.db.entities.CategoriaListe;
-import it.webproject2018.db.entities.Lista;
 import java.io.IOException;
 import java.net.URLEncoder;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import it.webproject2018.db.entities.CategoriaListe;
 
 /**
  *
