@@ -391,4 +391,22 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             return false;
         }
     }
+	
+	public Boolean deleteFromList(Integer ID_product, Integer ID_list) throws DAOException {
+		if (ID_product == null || ID_list == null) {
+			throw new DAOException("Something is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_Prodotti "
+				+ "where ID_prodotto = ? and ID_lista = ? ")) {
+            stm.setInt(1, ID_product);
+            stm.setInt(2, ID_list);
+            int res = stm.executeUpdate();
+			if (res >= 1) {
+                return true;
+            }
+			return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+	}
 }
