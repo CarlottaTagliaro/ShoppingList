@@ -4,8 +4,6 @@
     <context-param>
         <param-name>dburl</param-name>
         <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
-        <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
-				ma anche no, funziona uguale-->
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
@@ -75,6 +73,14 @@
     <servlet>
         <servlet-name>DeleteListServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.DeleteListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShareGetUsers</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareGetUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.DeleteProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
@@ -186,6 +192,14 @@
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>
         <url-pattern>/DeleteListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareGetUsers</servlet-name>
+        <url-pattern>/ShareGetUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <url-pattern>/DeleteProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
