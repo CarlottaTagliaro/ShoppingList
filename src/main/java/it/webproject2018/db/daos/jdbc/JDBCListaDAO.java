@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
+import de.scravy.pair.Pairs;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import org.glassfish.gmbal.generic.Triple;
@@ -69,7 +69,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                     Lista lista = new Lista(id, nome, descrizione, immagine, categoria, owner);
 
                     JDBCListaPermessiDAO listaPermessiDao = new JDBCListaPermessiDAO(CON);
-                    lista.setListPermission(listaPermessiDao.getByPrimaryKey(new Pair<>(userEmail, id)));
+                    lista.setListPermission(listaPermessiDao.getByPrimaryKey(Pairs.from(userEmail, id)));
 
                     lista.addAll(getListProducts(id));
 
