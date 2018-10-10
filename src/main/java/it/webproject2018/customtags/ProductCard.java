@@ -56,7 +56,7 @@ public class ProductCard extends SimpleTagSupport {
         }
 
         String html = String.format(" \n"
-                + "<div class=\"row card\">\n"
+                + "<div class=\"row card productRow\">\n"
                 + "                <div class=\"col-xs-3\">\n"
                 + "                    <img class=\"imageList img-responsive\" src=\"%s\"/>\n"
                 + "                </div>\n"
@@ -66,7 +66,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                    <p> %s </p>\n"
                 + "                </div>\n"
                 + "\n"
-                + "                <div class=\"col-xs-3 myColumn\">\n"
+                + "                <div class=\"col-xs-3\">\n"
                 + "                    <div>\n"
                 + "                         <div class=\"add-lista\">\n"
                 + "                             <label class=\"aggiungi\"> Add: </label>\n"

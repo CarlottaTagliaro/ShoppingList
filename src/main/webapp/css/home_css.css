@@ -157,3 +157,8 @@ select {
 .pageFrom {
     font-size: 30px;
 }
+
+.productRow{
+    display: flex;
+    align-items: center;
+}
