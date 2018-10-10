@@ -33,7 +33,6 @@ public class CreateListServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        //Connection conn = (Connection) super.getServletContext().getAttribute("connection");
         JDBCLista = new JDBCListaDAO(super.getServletContext());
         JDBCCategoriaListe = new JDBCCategoriaListeDAO(super.getServletContext());
         JDBCListaPermessi = new JDBCListaPermessiDAO(super.getServletContext());

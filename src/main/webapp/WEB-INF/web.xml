@@ -71,6 +71,10 @@
         <servlet-name>newProduct</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.newProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteListServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.DeleteListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -90,7 +94,7 @@
     <servlet>
         <servlet-name>CreateProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
-        <multipart-config></multipart-config>
+        <multipart-config/>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateProductServlet</servlet-name>
@@ -148,8 +152,8 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>it.webproject2018.filters.AuthenticationFilter</filter-class>
         <init-param>
-            <param-name></param-name>
-            <param-value></param-value>
+            <param-name/>
+            <param-value/>
         </init-param>
     </filter>
     <filter-mapping>
@@ -168,11 +172,11 @@
         <url-pattern>/newList</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
-        <url-pattern>/shopCategories.jsp</url-pattern>
-        <url-pattern>/shopCategories</url-pattern>
-        <url-pattern>/prodotti.jsp</url-pattern>
-        <url-pattern>/prodotti</url-pattern>
     </filter-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteListServlet</servlet-name>
+        <url-pattern>/DeleteListServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -196,7 +200,6 @@
             <taglib-location>/tlds/shopCategoriesCard.tld</taglib-location>
         </taglib>
     </jsp-config>
-    
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>

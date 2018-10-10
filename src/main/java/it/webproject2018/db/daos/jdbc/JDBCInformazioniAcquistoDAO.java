@@ -172,7 +172,7 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
             throw new DAOException("Impossible to update the InformazioniAcquisto", ex);
         }
     }
-
+	
     @Override
     public Boolean delete(Triple<Integer, Integer, Date> primarykey) throws DAOException {
         if (primarykey == null) {
@@ -182,9 +182,11 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
             stm.setInt(1, primarykey.first());
             stm.setInt(2, primarykey.second());
             stm.setDate(3, primarykey.third());
-            try (ResultSet rs = stm.executeQuery()) {
-                return true;
-            }
+            int res = stm.executeUpdate();
+			if (res >= 1) {
+				return true;
+			}
+			return false;
         } catch (SQLException ex) {
             throw new DAOException("Impossible to delete the passed primary key", ex);
         }
