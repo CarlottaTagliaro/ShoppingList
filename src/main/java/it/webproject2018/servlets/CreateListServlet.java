@@ -37,21 +37,21 @@ public class CreateListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter w = response.getWriter();
-		try {
-			Utente user = (Utente)request.getSession().getAttribute("User");
-			
-			String name = request.getParameter("name");
+        PrintWriter w = response.getWriter();
+        try {
+            Utente user = (Utente) request.getSession().getAttribute("User");
+
+            String name = request.getParameter("name");
             String description = request.getParameter("description");
-			String category = request.getParameter("category");
+            String category = request.getParameter("category");
             String owner = user.getEmail();
             //String picture = request.getParameter("file");
 
             CategoriaListe cat = JDBCCategoriaListe.getByPrimaryKey(category);
             //Lista list = new Lista(false, false, false, false, null, name, description, picture, cat, owner);
-            Lista list = new Lista(false, false, false, false, null, name, description, "", cat, owner);
+            Lista list = new Lista(true, true, true, true, null, name, description, "", cat, owner);
 
-			Boolean ok = JDBCLista.insert(list);
+            Boolean ok = JDBCLista.insert(list);
             response.sendRedirect(request.getContextPath() + (!ok ? "/newList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());
