@@ -119,7 +119,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                        </div>\n"
                 + "                    </div>\n"
                 + "                </div>\n"
-                + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/50/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
+                + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/100/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
                 getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId()
         );
         getJspContext().getOut().write(html);
