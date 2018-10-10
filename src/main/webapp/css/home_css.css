@@ -124,7 +124,6 @@ select {
     border-radius: 4px;
     width: fit-content;
     width: -moz-fit-content;
-    margin-top: 10px;
 }
 
 .aggiungi {
@@ -161,4 +160,31 @@ select {
 .productRow{
     display: flex;
     align-items: center;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+td, th {
+    border: 1px solid;
+    border-color: #CCC;
+    text-align: left;
+    padding: 8px;
+    color: #222;
+}
+
+th, td {
+    text-align: center !important;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.add-lista{
+    margin-bottom: 5px;
 }
