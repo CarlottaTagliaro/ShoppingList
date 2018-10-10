@@ -174,10 +174,6 @@
         <url-pattern>/newList</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
-        <url-pattern>/shopCategories.jsp</url-pattern>
-        <url-pattern>/shopCategories</url-pattern>
-        <url-pattern>/prodotti.jsp</url-pattern>
-        <url-pattern>/prodotti</url-pattern>
     </filter-mapping>
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>
