@@ -25,7 +25,7 @@
                 selectMenuEl("profile");
             });
         </script>
-        
+
         <div class="main">
             <div class="card">
                 <img src="${user.getPicture()}" alt="${user.getName()}" class="img-responsive">
@@ -54,12 +54,12 @@
                                         <label class="search">Name:</label> 
                                         <input type="text" class="form-control inserisci" aria-label="..." placeholder="Insert new name">
                                     </div>
-                                    
+
                                     <div class="row cambia-dati">
                                         <label class="search">Surname:</label> 
                                         <input type="text" class="form-control inserisci" aria-label="..." placeholder="Insert new surname">
                                     </div>
-                                    
+
                                     <div class="row cambia-dati">
                                         <label class="search">Password:</label> 
                                         <input type="password" id="password" name="password" class="form-control inserisci" aria-label="..." placeholder="Insert new password"
