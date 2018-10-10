@@ -142,8 +142,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Nome like '%?%' order by ?")) {
-            stm.setString(1, filter);
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Nome like ? order by ?")) {
+            stm.setString(1, "%" + filter + "%");
             stm.setString(2, orderBy);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -160,11 +160,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
-    public ArrayList<Prodotto> getAllProductsByCategory(String catName) throws DAOException {
+    public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Categoria = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Categoria = ? and Nome like ?")) {
             stm.setString(1, catName);
+            stm.setString(2, "%" + qry + "%");
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
