@@ -94,13 +94,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return user;
     }
 
-    /**
-     * Returns the number of {@link Utente utenti} stored on the persistence
-     * system of the application.
-     *
-     * @return the number of records present into the storage system.
-     * @throws DAOException if an error occurred during the information
-     */
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -116,14 +109,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return 0L;
     }
 
-    /**
-     * Returns the list of all the valid {@link Utente utenti} stored by the
-     * storage system.
-     *
-     * @return the list of all the valid {@code utenti}.
-     * @throws DAOException if an error occurred during the information
-     * retrieving.
-     */
     @Override
     public List<Utente> getAll() throws DAOException {
         List<Utente> utenti = new ArrayList<>();
@@ -152,15 +137,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return utenti;
     }
 
-    /**
-     * Update the user passed as parameter and returns it. Senza email perchè
-     * primary key
-     *
-     * @param user the user used to update the persistence system.
-     * @return the updated user.
-     * @throws DAOException if an error occurred during the action.
-     */
-    
 	@Override
     public Utente update(Utente user) throws DAOException {
         if (user == null) {
@@ -216,4 +192,19 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         //TODO: pensare come sistemarlo
         return null;
     }
+	
+	@Override
+	public Boolean delete(String primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Utente is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti where Email = ? ")) {
+			stm.setString(1, primaryKey);
+			try (ResultSet rs = stm.executeQuery()) {
+				return true;
+			}
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

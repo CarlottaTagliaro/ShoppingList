@@ -12,9 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletContext;
-
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
@@ -114,15 +112,13 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
-    
-    
     public List<Triple<Integer, String, Integer>> getProductListAmount(Prodotto entity, Utente user) throws DAOException {
         ArrayList<Triple<Integer, String, Integer>> lista = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT DISTINCT * FROM (SELECT distinct Liste.ID, Liste.Nome FROM Liste, Utenti_Liste, Utenti" +
-"                WHERE Liste.ID = Utenti_Liste.ID" +
-"                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?) as a" +
-"                LEFT JOIN (SELECT * FROM Liste_Prodotti WHERE ID_prodotto = ?) as b ON a.ID = b.ID_lista;")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT DISTINCT * FROM (SELECT distinct Liste.ID, Liste.Nome FROM Liste, Utenti_Liste, Utenti"
+                + "                WHERE Liste.ID = Utenti_Liste.ID"
+                + "                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?) as a"
+                + "                LEFT JOIN (SELECT * FROM Liste_Prodotti WHERE ID_prodotto = ?) as b ON a.ID = b.ID_lista;")) {
             stm.setString(1, user.getEmail());
             stm.setInt(2, entity.getId());
             try (ResultSet rs = stm.executeQuery()) {
@@ -131,7 +127,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
                     Integer id_lista = rs.getInt("ID");
                     String nome = rs.getString("Nome");
                     Integer quantità = rs.getInt("Quantita");
-                    
+
                     lista.add(new Triple(id_lista, nome, quantità));
                 }
             }
@@ -141,7 +137,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return lista;
     }
-    
+
     @Override
     public ArrayList<Prodotto> getAllProducts(String filter, String orderBy) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
@@ -341,7 +337,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             throw new DAOException("product parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?)",  Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getNote());
             stm.setString(3, "");
@@ -359,7 +355,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             e.printStackTrace();
             return null;
         }
-    }    
+    }
 
     public Boolean insertImage(Prodotto entity, String img) throws DAOException {
         if (entity == null || img == null) {
@@ -371,10 +367,25 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             stm.setString(2, img);
             Integer rs = stm.executeUpdate();
 
-            return (rs > 0); 
+            return (rs > 0);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public Boolean delete(Integer primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Prodotto is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti where ID = ? ")) {
+            stm.setInt(1, primaryKey);
+            try (ResultSet rs = stm.executeQuery()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            return false;
         }
     }
 }

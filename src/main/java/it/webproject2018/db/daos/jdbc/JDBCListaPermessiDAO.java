@@ -153,4 +153,20 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             throw new DAOException("Impossible to update the list", ex);
         }
     }
+
+    @Override
+    public Boolean delete(Pair<String, Integer> primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Prodotto is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti_Liste where ID = ? AND Email = ?")) {
+            stm.setInt(1, primaryKey.getValue());
+            stm.setString(2, primaryKey.getKey());
+            try (ResultSet rs = stm.executeQuery()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

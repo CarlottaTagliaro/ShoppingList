@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -54,8 +53,7 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
 
         }
     }
-    
-    
+        
     protected JDBCDAO(Connection conn) {
         super();
         
