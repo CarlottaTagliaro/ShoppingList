@@ -23,6 +23,36 @@
                     $(bottone).find(".scendi").removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
                 }
             }
+
+            function shareGetUsers(idLista) {
+                $.post("ShareGetUsers", {idLista: idLista}, function (data) {
+                    var elem = "#table_share_" + idLista;
+
+                    $(elem).children().empty();
+                    $(elem).append('<tr>' +
+                            '<th>Name Surname</th>' +
+                            '<th>Add/delete products</th>' +
+                            '<th>Modify list details</th>' +
+                            '<th>Delete list</th>' +
+                            '</tr>');
+
+                    for (var i = 0; i < data.length; i++) {
+                        var html = '<tr email="' + data[i].Email + '">' +
+                                '<td>' + data[i].Nome + '</td>' +
+                                '<td>' +
+                                '<input type="checkbox" name="perm_add_rem" value="' + data[i].perm_add_rem + '" required="true">' +
+                                '</td>' +
+                                '<td>' +
+                                '<input type="checkbox" name="perm_edit" value="' + data[i].perm_edit + '" required="true">' +
+                                '</td>' +
+                                '<td>' +
+                                '<input type="checkbox" name="perm_del" value="' + data[i].perm_del + '" required="true">' +
+                                '</td>' +
+                                '</tr>';
+                        $(elem).append(html);
+                    }
+                });
+            }
         </script>
 
         <script>

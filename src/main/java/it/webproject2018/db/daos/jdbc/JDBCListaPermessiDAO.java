@@ -9,6 +9,7 @@ import de.scravy.pair.Pair;
 import de.scravy.pair.Pairs;
 import it.webproject2018.db.daos.ListaPermessiDAO;
 import it.webproject2018.db.entities.ListaPermessi;
+import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,6 +79,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
                     Integer id = rs.getInt("ID");
                     String email = rs.getString("Email");
                     
+                    
                     ListaPermessi lista_perm = new ListaPermessi(perm_edit, perm_add_rem, perm_del, accettato, email, id);
                     
                     return lista_perm;
@@ -109,6 +111,43 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         }
         catch (SQLException ex) {
             throw new DAOException("Error while getting all Products", ex);
+        }
+        
+        return liste;
+    }
+    
+    public List<Pair<Utente, ListaPermessi>> getShareUserList(Utente user, String qry, Integer idLista) throws DAOException {
+        ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();
+        JDBCUtenteDAO UtenteDao = new JDBCUtenteDAO(CON);
+        
+        try (PreparedStatement stm = CON.prepareStatement("select Utenti.Email, Nome, Cognome, Perm_edit, Perm_add_rem, Perm_del, Accettato, ID from Utenti LEFT JOIN Utenti_Liste on Utenti_Liste.Email = Utenti.Email"
+                + " WHERE (CONCAT(Nome, \" \", Cognome) LIKE ? OR Utenti.Email LIKE ?) AND Utenti.Email != ? AND (ID = ? OR ID IS NULL)")) {
+            stm.setString(1, "%" + qry + "%");
+            stm.setString(2, "%" + qry + "%");
+            stm.setString(3, user.getEmail());
+            stm.setInt(4, idLista);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){    
+                    String email = rs.getString("Email");
+                    Pair<String, Integer> primaryKey = Pairs.from(email, rs.getInt("ID"));
+                    ListaPermessi lista_perm;
+                    
+                    if(rs.wasNull()){
+                        lista_perm = new ListaPermessi(email, idLista);
+                    }
+                    else{
+                        lista_perm = getByPrimaryKey(primaryKey);
+                    }
+                    
+                    Utente utente = UtenteDao.getByPrimaryKey(primaryKey.getFirst());
+                    
+                    liste.add(Pairs.from(utente, lista_perm));
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting getShareUserList", ex);
         }
         
         return liste;

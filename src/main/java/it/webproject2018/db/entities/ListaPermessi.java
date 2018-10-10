@@ -10,23 +10,50 @@ package it.webproject2018.db.entities;
  * @author davide
  */
 public class ListaPermessi {
+
     private Boolean perm_edit; // permesso di modificare le caratteristiche della lista
     private Boolean perm_add_rem; // permesso di aggiungere o rimuovere prodotti dalla lista
     private Boolean perm_del; // permesso di eliminare la lista
     private Boolean accettato;
-    
+
     private String email;
     private Integer id_lista;
-    
-    public ListaPermessi(Boolean perm_edit, Boolean perm_add_rem, Boolean perm_del, Boolean accettato, String email, Integer id_lista){
+
+    public ListaPermessi(Boolean perm_edit, Boolean perm_add_rem, Boolean perm_del, Boolean accettato, String email, Integer id_lista) {
         this.perm_edit = perm_edit;
         this.perm_add_rem = perm_add_rem;
         this.perm_del = perm_del;
         this.accettato = accettato;
+
+        this.email = email;
+        this.id_lista = id_lista;
         
+        
+        if (this.perm_edit == null) {
+            this.perm_edit = false;
+        }
+        if (this.perm_add_rem == null) {
+            this.perm_add_rem = false;
+        }
+        if (this.perm_del == null) {
+            this.perm_del = false;
+        }
+        if (this.accettato == null) {
+            this.accettato = false;
+        }
+    }
+    
+
+    public ListaPermessi(String email, Integer id_lista) {
+        this.perm_edit = false;
+        this.perm_add_rem = false;
+        this.perm_del = false;
+        this.accettato = false;
+
         this.email = email;
         this.id_lista = id_lista;
     }
+
 
     /**
      * @return the perm_edit
@@ -111,5 +138,5 @@ public class ListaPermessi {
     public void setId_lista(Integer id_lista) {
         this.id_lista = id_lista;
     }
-    
+
 }
