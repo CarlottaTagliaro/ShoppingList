@@ -150,8 +150,25 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
             if (rs <= 0)
                 return getByPrimaryKey(entity.getNome());
             
-            return null;
+            return entity;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Boolean insertImage(CategoriaListe entity, String img) throws DAOException {
+        if (entity == null || img == null) {
+            throw new DAOException("product parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie_immagini (Nome, Immagine) VALUES (?, ?)");
+            stm.setString(1, entity.getNome());
+            stm.setString(2, img);
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

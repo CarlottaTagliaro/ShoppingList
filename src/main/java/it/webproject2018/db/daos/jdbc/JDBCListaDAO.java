@@ -211,12 +211,14 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             stm.setString(5, entity.getOwner());
             Integer rs = stm.executeUpdate();
 
-            ResultSet rsi = stm.getGeneratedKeys();
+            /*ResultSet rsi = stm.getGeneratedKeys();
             if (rsi.next()) {
                 return getByPrimaryKey(rsi.getInt(1));
-            }
-
-            return null;
+            }*/
+            if(rs>0)
+                return entity;
+            else
+                return null;
         } catch (Exception e) {
             return null;
         }
