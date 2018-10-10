@@ -21,13 +21,10 @@
     <script src="JS/uploadFile.js" type="text/javascript"></script>
     <div class="main">
         <div class="card">
-            <form action="CreateListServlet" method="POST">
-                <!--FIXME: Non si può utilizzare un subform(form dentro un altro form)
-                    <form id="upload_form" enctype="multipart/form-data" method="post">
-                    <input type="file" id="file" name="file" class="inputfile">
-                    <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose
-                        file </label>
-                </form>-->
+            <form action="CreateListServlet" id="upload_form" enctype="multipart/form-data" method="POST">
+                <input type="file" id="file" name="file" class="inputfile">
+                <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose
+                    file </label>
                 <div class="form-group elemento">
                     <label> Name: </label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Enter list name"
@@ -57,4 +54,5 @@
         </div>
     </div>
 </body>
+
 </html>
