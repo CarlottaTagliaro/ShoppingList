@@ -5,6 +5,8 @@
  */
 package it.webproject2018.db.daos.jdbc;
 
+import de.scravy.pair.Pair;
+import de.scravy.pair.Pairs;
 import it.webproject2018.db.daos.ListaPermessiDAO;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.exceptions.DAOException;
@@ -15,7 +17,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.util.Pair;
 import javax.servlet.ServletContext;
 
 /**
@@ -64,8 +65,8 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         }
         
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where Email = ? AND ID = ? ")) {
-            stm.setString(1, primaryKey.getKey());
-            stm.setInt(2, primaryKey.getValue());
+            stm.setString(1, primaryKey.getFirst());
+            stm.setInt(2, primaryKey.getSecond());
             try (ResultSet rs = stm.executeQuery()) {
 
                 if(rs.next()){
@@ -98,7 +99,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             try (ResultSet rs = stm.executeQuery()) {
 
                 while(rs.next()){    
-                    Pair<String, Integer> primaryKey = new Pair<>(rs.getString("Email"), rs.getInt("ID"));
+                    Pair<String, Integer> primaryKey = Pairs.from(rs.getString("Email"), rs.getInt("ID"));
                     
                     ListaPermessi lista_perm = getByPrimaryKey(primaryKey);
 
@@ -160,8 +161,8 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             throw new DAOException("Prodotto is null");
         }
         try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti_Liste where ID = ? AND Email = ?")) {
-            stm.setInt(1, primaryKey.getValue());
-            stm.setString(2, primaryKey.getKey());
+            stm.setInt(1, primaryKey.getSecond());
+            stm.setString(2, primaryKey.getFirst());
             try (ResultSet rs = stm.executeQuery()) {
                 return true;
             }
