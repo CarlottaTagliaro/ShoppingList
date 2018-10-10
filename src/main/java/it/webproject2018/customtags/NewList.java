@@ -36,12 +36,12 @@ public class NewList extends SimpleTagSupport {
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
                     + "                                 <strong class=\"primary-font\">%s</strong> \n"
-                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#exampleModal\"><b>+</b></button>\n"
+                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_%d_%d\"><b>+</b></button>\n"
                     + "                                 <button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
                     + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
                     + "                                 </button>\n"
                     + "                             </div>\n"
-                    + "                             <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                    + "                             <div class=\"modal fade\" id=\"modal_prod_%d_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                     + "                                 <div class=\"modal-dialog\" role=\"document\">\n"
                     + "                                     <div class=\"modal-content\">\n"
                     + "                                         <div class=\"modal-header\">\n"
@@ -70,7 +70,7 @@ public class NewList extends SimpleTagSupport {
                     + "                                 </div>\n"
                     + "                             </div>\n"
                     + "                         </div>\n"
-                    + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome());
+                    + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome(), lista.getId(), i, lista.getId(), i);
         }
 
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
@@ -87,10 +87,10 @@ public class NewList extends SimpleTagSupport {
                 + "                                    <span class=\"glyphicon glyphicon-shopping-cart\"></span> <b> %s </b> (%s)\n"
                 + "                                </div>"
                 + "                                <div class=\"btn-group panel-btn col\">\n"
-                + "                                    <a type=\"button\" title=\"Modify list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#exampleModal2\">\n"
+                + "                                    <a type=\"button\" title=\"Modify list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_mod_%d\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-pencil\"></span>\n"
                 + "                                    </a>\n"
-                + "                                     <div class=\"modal fade\" id=\"exampleModal2\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                + "                                     <div class=\"modal fade\" id=\"modal_mod_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                                         <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                             <div class=\"modal-content\">\n"
                 + "                                                 <div class=\"modal-header\">\n"
@@ -123,10 +123,10 @@ public class NewList extends SimpleTagSupport {
                 + "                                             </div>\n"
                 + "                                         </div>\n"
                 + "                                     </div>\n"
-                + "                                    <a type=\"button\" title=\"Share list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#exampleModal1\">\n"
+                + "                                    <a type=\"button\" title=\"Share list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_share_%d\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-share-alt\"></span>\n"
                 + "                                    </a>\n"
-                + "                                     <div class=\"modal fade\" id=\"exampleModal1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                + "                                     <div class=\"modal fade\" id=\"modal_share_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                                         <div class=\"modal-dialog\" role=\"document\">\n"
                 + "                                             <div class=\"modal-content\">\n"
                 + "                                                 <div class=\"modal-header\">\n"
@@ -192,7 +192,7 @@ public class NewList extends SimpleTagSupport {
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), lista.getId(), listaHtml);
+                + "                </div>", lista.getImmagine(), lista.getDescrizione(), lista.getNome(), lista.getCategoria().getNome(), lista.getId(), lista.getId(), lista.getId(), lista.getId(), lista.getId(), lista.getId(), lista.getId(), listaHtml);
 
         getJspContext().getOut().write(html);
     }
