@@ -38,6 +38,7 @@
     <servlet>
         <servlet-name>CreateListServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateListServlet</servlet-class>
+        <multipart-config/>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
@@ -99,6 +100,15 @@
     <servlet-mapping>
         <servlet-name>CreateProductServlet</servlet-name>
         <url-pattern>/CreateProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateShopsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.CreateShopsServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateShopsServlet</servlet-name>
+        <url-pattern>/CreateShopsServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
