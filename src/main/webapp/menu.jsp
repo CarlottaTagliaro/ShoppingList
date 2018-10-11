@@ -12,8 +12,10 @@
         <link href="Bootsrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
+        
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
+        <script src="JS/geolocationFunctions.js" type="text/javascript"></script>
         
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
         

@@ -82,6 +82,10 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.DeleteProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GeolocationServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.GeolocationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -200,6 +204,10 @@
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GeolocationServlet</servlet-name>
+        <url-pattern>/GeolocationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
