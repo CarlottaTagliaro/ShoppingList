@@ -40,13 +40,13 @@
                         var html = '<tr email="' + data[i].Email + '">' +
                                 '<td>' + data[i].Nome + '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_add_rem" value="' + data[i].perm_add_rem + '" required="true">' +
+                                '<input type="checkbox" name="perm_add_rem" ' + (data[i].perm_add_rem ? 'checked' : '') + ' required="true">' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_edit" value="' + data[i].perm_edit + '" required="true">' +
+                                '<input type="checkbox" name="perm_edit" ' + (data[i].perm_edit ? 'checked' : '')  + ' required="true">' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_del" value="' + data[i].perm_del + '" required="true">' +
+                                '<input type="checkbox" name="perm_del" ' + (data[i].perm_del ? 'checked' : '')  + ' required="true">' +
                                 '</td>' +
                                 '</tr>';
                         $(elem).append(html);
