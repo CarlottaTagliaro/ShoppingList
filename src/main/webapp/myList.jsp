@@ -24,8 +24,8 @@
                 }
             }
 
-            function shareGetUsers(idLista) {
-                $.post("ShareGetUsers", {idLista: idLista}, function (data) {
+            function shareGetUsers(idLista, qry) {
+                $.post("ShareGetUsers", {idLista: idLista, qry: qry}, function (data) {
                     var elem = "#table_share_" + idLista;
 
                     $(elem).children().empty();
@@ -43,10 +43,10 @@
                                 '<input type="checkbox" name="perm_add_rem" ' + (data[i].perm_add_rem ? 'checked' : '') + ' required="true">' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_edit" ' + (data[i].perm_edit ? 'checked' : '')  + ' required="true">' +
+                                '<input type="checkbox" name="perm_edit" ' + (data[i].perm_edit ? 'checked' : '') + ' required="true">' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_del" ' + (data[i].perm_del ? 'checked' : '')  + ' required="true">' +
+                                '<input type="checkbox" name="perm_del" ' + (data[i].perm_del ? 'checked' : '') + ' required="true">' +
                                 '</td>' +
                                 '</tr>';
                         $(elem).append(html);
