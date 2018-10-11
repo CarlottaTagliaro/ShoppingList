@@ -20,12 +20,12 @@ public class Prodotto {
     private CategoriaProdotti categoria;
     public ArrayList<String> Fotografie;
     public ArrayList<InformazioniAcquisto> Acquisti;
-    public Utente owner;
+    private String owner;
 
     public Prodotto() {
     }
 
-    public Prodotto(Integer id, String nome, String note, String logo, ArrayList<String> fotografie, CategoriaProdotti categoria) {
+    public Prodotto(Integer id, String nome, String note, String logo, ArrayList<String> fotografie, CategoriaProdotti categoria, String owner) {
         this.id = id;
         this.nome = nome;
         this.note = note;
@@ -33,6 +33,7 @@ public class Prodotto {
         this.Fotografie = fotografie;
         this.categoria = categoria;
         this.Acquisti = new ArrayList<>();
+        this.owner = owner;
     }
 
     /**
@@ -101,14 +102,14 @@ public class Prodotto {
     /**
      * @return the owner
      */
-    public Utente getOwner() {
+    public String getOwner() {
         return owner;
     }
 
     /**
      * @param owner the owner of the product
      */
-    public void setOwner(Utente owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 }

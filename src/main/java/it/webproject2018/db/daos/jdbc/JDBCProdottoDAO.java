@@ -50,11 +50,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
                     String nome = rs.getString("Nome");
                     String note = rs.getString("Note");
                     String logo = rs.getString("Logo");
+                    String owner = rs.getString("Owner");
                     ArrayList<String> fotografie = getProductImages(productID);
                     JDBCCategoriaProdottiDAO categoriaProdottiDao = new JDBCCategoriaProdottiDAO(CON);
                     CategoriaProdotti categoria = categoriaProdottiDao.getByPrimaryKey(rs.getString("Categoria"));
 
-                    Prodotto product = new Prodotto(id, nome, note, logo, fotografie, categoria);
+                    Prodotto product = new Prodotto(id, nome, note, logo, fotografie, categoria, owner);
 
                     return product;
                 }
@@ -320,7 +321,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             std.setString(2, product.getNote());
             std.setString(3, product.getLogo());
             std.setString(4, product.getCategoria().getNome());
-            std.setString(5, product.getOwner().getEmail());
+            std.setString(5, product.getOwner());
             std.setInt(6, product.getId());
             if (std.executeUpdate() == 1) {
                 return product;
@@ -343,7 +344,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             stm.setString(2, entity.getNote());
             stm.setString(3, "");
             stm.setString(4, entity.getCategoria().getNome());
-            stm.setString(5, entity.getOwner().getEmail());
+            stm.setString(5, entity.getOwner());
             Integer rs = stm.executeUpdate();
 
             ResultSet rsi = stm.getGeneratedKeys();
