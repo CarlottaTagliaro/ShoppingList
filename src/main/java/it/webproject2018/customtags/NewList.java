@@ -31,17 +31,17 @@ public class NewList extends SimpleTagSupport {
         for (int i = 0; i < lista.size(); i++) {
             listaHtml += String.format("<li class=\"left clearfix\">"
                     + "                         <span class=\"list-img pull-left\">\n"
-                    + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text=%c\" alt=\"object\" class=\"img-circle\" />\n"
+                    + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text=" + lista.get(i).getNome().charAt(0) + "\" alt=\"object\" class=\"img-circle\" />\n"
                     + "                         </span>\n"
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
-                    + "                                 <strong class=\"primary-font\">%s</strong> \n"
-                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_%d_%d\"><b>+</b></button>\n"
-                    + "                                 <button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
+                    + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong> \n"
+                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n"
+                    + "                                 <a href=\"DeleteProductServlet?Product=" + lista.get(i).getId() + "&List=" + lista.getId() + "\"><button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
                     + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
-                    + "                                 </button>\n"
+                    + "                                 </button></a>\n"
                     + "                             </div>\n"
-                    + "                             <div class=\"modal fade\" id=\"modal_prod_%d_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                    + "                             <div class=\"modal fade\" id=\"modal_prod_" + lista.getId() + "_" + i + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                     + "                                 <div class=\"modal-dialog\" role=\"document\">\n"
                     + "                                     <div class=\"modal-content\">\n"
                     + "                                         <div class=\"modal-header\">\n"
@@ -70,7 +70,7 @@ public class NewList extends SimpleTagSupport {
                     + "                                 </div>\n"
                     + "                             </div>\n"
                     + "                         </div>\n"
-                    + "                     </li>\n", lista.get(i).getNome().charAt(0), lista.get(i).getNome(), lista.getId(), i, lista.getId(), i);
+                    + "                     </li>\n");
         }
 
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
@@ -127,9 +127,9 @@ public class NewList extends SimpleTagSupport {
                 + "                                        <span class=\"glyphicon glyphicon-share-alt\"></span>\n"
                 + "                                    </a>\n"
                 + "<script>"
-                + "$(document).ready(function(){$(\"#modal_share_" + lista.getId() + "\").on('shown.bs.modal', function() {\n" +
-                    "    shareGetUsers(" + lista.getId() + ");\n" +
-                    "})});"
+                + "$(document).ready(function(){$(\"#modal_share_" + lista.getId() + "\").on('shown.bs.modal', function() {\n"
+                + "    shareGetUsers(" + lista.getId() + ");\n"
+                + "})});"
                 + "</script>"
                 + "                                     <div class=\"modal fade\" id=\"modal_share_" + lista.getId() + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                 + "                                         <div class=\"modal-dialog\" role=\"document\">\n"
@@ -179,7 +179,7 @@ public class NewList extends SimpleTagSupport {
                 + "                            <div class=\"collapse\" id=\"collapse" + lista.getId() + "\">\n"
                 + "                                <div class=\"panel-body\">\n"
                 + "                                    <ul class=\"lista\">\n"
-                +                                         listaHtml
+                + listaHtml
                 + "                                    </ul>\n"
                 + "                                </div>\n"
                 + "                            </div>\n"
