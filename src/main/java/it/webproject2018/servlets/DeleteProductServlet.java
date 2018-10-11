@@ -20,39 +20,38 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DeleteProductServlet extends HttpServlet {
 
-	private JDBCProdottoDAO JDBCProdotto;
+    private JDBCProdottoDAO JDBCProdotto;
 
-	@Override
-	public void init() throws ServletException {
-		JDBCProdotto = new JDBCProdottoDAO(super.getServletContext());
-	}
-	
-	/**
-	 * Processes requests for HTTP GET methods for deleting products form 
-	 * a certain list
-	 *
-	 * @param request servlet request
-	 * @param response servlet response
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter w = response.getWriter();
-		try {
-			String ID_product = request.getParameter("Product");
-			String ID_list = request.getParameter("List");
+    @Override
+    public void init() throws ServletException {
+        JDBCProdotto = new JDBCProdottoDAO(super.getServletContext());
+    }
 
-			Integer product = Integer.parseInt(ID_product);
-			Integer list = Integer.parseInt(ID_list);
-			
-			Boolean ok = JDBCProdotto.deleteFromList(product, list);
+    /**
+     * Processes requests for HTTP GET methods for deleting products form a
+     * certain list
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter w = response.getWriter();
+        try {
+            String ID_product = request.getParameter("Product");
+            String ID_list = request.getParameter("List");
+
+            Integer product = Integer.parseInt(ID_product);
+            Integer list = Integer.parseInt(ID_list);
+
+            Boolean ok = JDBCProdotto.deleteFromList(product, list);
             response.sendRedirect(request.getContextPath().concat("/myList"));
-		}
-		catch (DAOException e) {
-			w.println(e.getMessage());
-		}
-	}
+        } catch (DAOException e) {
+            w.println(e.getMessage());
+        }
+    }
 }

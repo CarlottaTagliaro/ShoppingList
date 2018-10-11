@@ -33,7 +33,7 @@ public class AdviceSender implements Runnable {
             ArrayList<Prodotto> products = new ArrayList<>();
             ArrayList<String> images = new ArrayList<>();
             products.add(new Prodotto(Integer.SIZE, "rastrello", "rastrella", 
-                                      "a", images, new CategoriaProdotti("cose", "", "", null) ));
+                                      "a", images, new CategoriaProdotti("cose", "", "", null), "g.s@agg.it"));
             this.sendMailTo(new Utente("pippo","aaa", dest_mail, "lalala", false), products);
         }
         this.run = false;

@@ -20,9 +20,6 @@ import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import java.io.File;
 import java.nio.file.Path;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
@@ -48,8 +45,7 @@ public class CreateProductServlet extends HttpServlet {
             String category = request.getParameter("selectCategory");
             String description = request.getParameter("description");
 
-            Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category));
-            prod.setOwner(user);
+            Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category), user.getEmail());
             prod = JDBCProdotto.insert(prod);
             Boolean ok = prod != null;
             if (ok) {

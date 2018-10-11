@@ -12,15 +12,25 @@
         <link href="Bootsrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
+
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
-        
+        <script src="JS/geolocationFunctions.js" type="text/javascript"></script>
+
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-        
+
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <title>Shopping List</title>
     </head>
     <body>
+        <c:if test="${not empty sessionScope.User}">
+            <script>
+                $(document).ready(function () {
+                    startLocating();
+                });
+            </script>
+        </c:if>
+
         <div class="title">     
             <img class="img-responsive banner" src="images/Senzanome.png" alt=""/> 
             <a href="#" class="dropdown-toggle notifiche" onclick="$('.dropdown-menu1').toggle();" > 
@@ -89,15 +99,15 @@
                         <li data="home"><a href="home">Home<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
                         <li data="shops"><a href="shops">Shops<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-usd"></span></a></li>
                         <li data="myList"><a href="myList">My Lists<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-shopping-cart"></span></a></li>
-                        <c:if test="${not empty sessionScope.User}">
+                                <c:if test="${not empty sessionScope.User}">
                             <li data="myProducts"><a href="myProducts">My Products<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-pencil"></span></a></li>
                             <li data="messages"><a href="messages.jsp">Messages<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-comment"></span></a></li>
                             <li data="profile"><a href="profile">Profile<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a></li>
                             <li data="logout"><a href="<%=request.getContextPath()%>/LogoutServlet">Log out<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
-                        </c:if>
-                        <c:if test="${empty sessionScope.User}">
+                                </c:if>
+                                <c:if test="${empty sessionScope.User}">
                             <li data="login"><a href="login.jsp">Sign In<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-cog"></span></a></li>
-                        </c:if>
+                                </c:if>
                     </ul>
                 </div>
             </div>

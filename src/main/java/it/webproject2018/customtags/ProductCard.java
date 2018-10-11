@@ -5,12 +5,10 @@
  */
 package it.webproject2018.customtags;
 
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +40,13 @@ public class ProductCard extends SimpleTagSupport {
         JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(servletContext);
         Utente user = (Utente) request.getSession().getAttribute("User");
 
+        Boolean isMine = false;
+        
         String listeHtml = "";
         try {
             if (user != null) {
+                isMine = product.getOwner().equals(user.getEmail());
+
                 List<Triple<Integer, String, Integer>> lista = JdbcProdottoDao.getProductListAmount(product, user);
                 
                 for (int i = 0; i < lista.size(); i++) {
@@ -54,7 +56,7 @@ public class ProductCard extends SimpleTagSupport {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         String html = String.format(" \n"
                 + "<div class=\"row card productRow\">\n"
                 + "                <div class=\"col-xs-3\">\n"
@@ -118,7 +120,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                            </div>\n"
                 + "                        </div>\n"
                 + "                    </div>\n"
-                + "                    <div class=\"row\">\n "
+                + (isMine ? "          <div class=\"row\">\n "
                 + "                         <div class=\"add-lista\">\n"
                 + "                             <label class=\"aggiungi\"> Share: </label>\n"
                 + "                             <button class=\"myButton\" text=\"S\" data-toggle=\"modal\" data-target=\"#share_modal_%d\"><span class=\"glyphicon glyphicon-share-alt\"></span></button>\n"
@@ -162,7 +164,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                </div>\n"
                 + "                            </div>\n"
                 + "                        </div>\n"
-                + "                    </div>\n "
+                + "                    </div>\n " : "")
                 + "                </div>\n"
                 + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/100/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
                 getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), getProduct().getId(),  getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId(),  getProduct().getId(),  getProduct().getId()
