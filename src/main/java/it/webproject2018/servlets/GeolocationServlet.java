@@ -5,9 +5,13 @@
  */
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.maps.SearchPlaces;
 import java.io.IOException;
+import static java.lang.Integer.min;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,24 +26,33 @@ public class GeolocationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utente user = (Utente) request.getSession().getAttribute("User");
-        
+
         String latitudine = request.getParameter("lat");
         String longitudine = request.getParameter("long");
-        
-        if(latitudine == null || longitudine == null)
+
+        if (latitudine == null || longitudine == null) {
             response.setStatus(400); // bad request
-        
+        }
         Float lat = Float.parseFloat(latitudine);
         Float lon = Float.parseFloat(longitudine);
-        
-        SearchPlaces p = SearchPlaces.GetPlaces(lat, lon, 900, "farmacia");
-        
-        for(int i = 0; i < p.size(); i++){
-            System.out.println(p.get(i).Name);
-            System.out.println(p.get(i).Distance);
-            System.out.println("-------");
+
+        try {
+            JDBCListaDAO listaDao = new JDBCListaDAO(super.getServletContext());
+            ArrayList<Lista> liste = listaDao.getUserLists(user.getEmail());
+
+            for (Lista l : liste) {
+                SearchPlaces p = SearchPlaces.GetPlaces(lat, lon, 1000, l.getCategoria().getNome());
+
+                for (int i = 0; i < min(p.size(), 1); i++) {
+                    System.out.println("Negozio vicino: " + p.get(i).Name + " - " + l.getCategoria().getNome() + " a " + p.get(i).Distance + " m");
+                    System.out.println("-------");
+
+                    //send notification
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        
+
     }
 }

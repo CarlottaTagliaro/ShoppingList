@@ -192,6 +192,7 @@
         <url-pattern>/newList</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
+        <url-pattern>/GeolocationServlet</url-pattern>
     </filter-mapping>
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>
