@@ -21,7 +21,6 @@ public class Utente {
     private String email;
     private String immagine;
     private Boolean isAdmin;
-    public ArrayList<Lista> Liste;
     
     public Utente(){}
     

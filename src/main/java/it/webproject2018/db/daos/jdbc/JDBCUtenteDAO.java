@@ -50,9 +50,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setPicture(rs.getString("Immagine"));;
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                    user.Liste = listaDao.getUserLists(user.getEmail());
-
                     return user;
                 }
             }
@@ -84,9 +81,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                 user.setEmail(rs.getString("Email"));
                 user.setPicture(rs.getString("Immagine"));
                 user.setIsAdmin(rs.getBoolean("IsAdmin"));
-
-                JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                user.Liste = listaDao.getUserLists(user.getEmail());
             }
         } catch (SQLException ex) {
             throw new DAOException("Error while authenticating User", ex);
@@ -124,9 +118,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setEmail(rs.getString("Email"));
                     user.setPicture(rs.getString("Immagine"));
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
-
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                    user.Liste = listaDao.getUserLists(user.getEmail());
 
                     utenti.add(user);
                 }
