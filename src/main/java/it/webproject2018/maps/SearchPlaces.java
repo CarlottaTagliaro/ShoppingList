@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL; 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Locale;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
@@ -42,7 +43,7 @@ public class SearchPlaces extends ArrayList<Place> {
         SearchPlaces list = new SearchPlaces();
         
         try{
-            String url = String.format(BASE_URL, latitude, longitude, URLEncoder.encode(keyword));
+            String url = String.format(Locale.US, BASE_URL, latitude, longitude, URLEncoder.encode(keyword));
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
