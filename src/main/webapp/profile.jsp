@@ -34,28 +34,16 @@
             <div style="height:0px;overflow:hidden">
                 <input type="file" id="fileInput" name="fileInput" />
             </div>
-            <form action="ChangeUserPicServlet" enctype="multipart/form-data" method="POST">
-                <input type="file" id="file" name="file" style="margin: 0; display: none;" data-toggle="modal" class="inputfile button1">
-                <label for="file" onclick="chooseFile('OK', 'Cancel');" style="margin-left: 0px; margin-bottom: 20px !important;" class="button1"><span class="glyphicon glyphicon-open"></span>Change profile pic</label>
-                <button type="button" id="Cancel" style="display: none;" onclick="cancel('OK', 'Cancel')" clicked="false" class="modal-btn btn btn-primary myButton3"><b>Cancel</b></button>
-                <button type="submit" id="OK" style="display: none;" clicked="false" class="modal-btn btn btn-primary myButton3"><b>OK</b></button>
+            <form id="form_change_pic" action="ChangeUserPicServlet" enctype="multipart/form-data" method="POST">
+                <input type="file" id="file" name="file" onchange="chooseFile()" data-toggle="modal" class="inputfile">
+                <label for="file" class="button1">
+                    <span class="glyphicon glyphicon-open"></span>Change profile pic
+                </label>
             </form>
             
             <script>
-                function chooseFile(ok, cancel) {
-                    if(document.getElementById("file").value != "") {
-                        document.getElementById(ok).style.display = 'block';
-                        document.getElementById(cancel).style.display = 'block';
-                    }
-                    else {
-                        document.getElementById(ok).style.display = 'none';
-                        document.getElementById(cancel).style.display = 'none';
-                    }
-                }
-
-                function cancel(ok, cancel) {
-                    document.getElementById(ok).style.display = 'none';
-                    document.getElementById(cancel).style.display = 'none';
+                function chooseFile() {
+                    $("#form_change_pic").submit();
                 }
             </script>
 
