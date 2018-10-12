@@ -107,6 +107,23 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ChangeUserDetailsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeUserDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeUserDetailsServlet</servlet-name>
+        <url-pattern>/ChangeUserDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ChangeUserPicServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeUserPicServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeUserPicServlet</servlet-name>
+        <url-pattern>/ChangeUserPicServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>CreateProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
         <multipart-config/>
