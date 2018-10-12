@@ -25,10 +25,10 @@
             }
 
             function shareGetUsers(idLista, qry) {
-                $.post("ShareGetUsers", {idLista: idLista, qry: qry}, function (data) {
-                    var elem = "#table_share_" + idLista;
+                var elem = "#table_share_" + idLista;
 
-                    $(elem).children().empty();
+                $(elem).children().empty();
+                $.post("ShareGetUsers", {idLista: idLista, qry: qry}, function (data) {
                     $(elem).append('<tr>' +
                             '<input type="hidden" name="idLista" value="' + idLista +'">' +
                             '<th>Name Surname</th>' +

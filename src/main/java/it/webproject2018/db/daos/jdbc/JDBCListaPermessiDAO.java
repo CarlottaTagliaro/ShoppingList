@@ -144,12 +144,12 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();
         JDBCUtenteDAO UtenteDao = new JDBCUtenteDAO(CON);
         
-        try (PreparedStatement stm = CON.prepareStatement("select Utenti.Email, Nome, Cognome, Perm_edit, Perm_add_rem, Perm_del, Accettato, ID from Utenti LEFT JOIN Utenti_Liste on Utenti_Liste.Email = Utenti.Email"
-                + " WHERE (CONCAT(Nome, \" \", Cognome) LIKE ? OR Utenti.Email LIKE ?) AND Utenti.Email != ? AND (ID = ? OR ID IS NULL)")) {
-            stm.setString(1, "%" + qry + "%");
+        try (PreparedStatement stm = CON.prepareStatement("select Utenti.Email, Nome, Cognome, Perm_edit, Perm_add_rem, Perm_del, Accettato, ID from Utenti LEFT JOIN (select * from Utenti_Liste where ID = ?) as a on a.Email = Utenti.Email"
+                + " WHERE (CONCAT(Nome, \" \", Cognome) LIKE ? OR Utenti.Email LIKE ?) AND Utenti.Email != ?")) {
+            stm.setInt(1, idLista);
             stm.setString(2, "%" + qry + "%");
-            stm.setString(3, user.getEmail());
-            stm.setInt(4, idLista);
+            stm.setString(3, "%" + qry + "%");
+            stm.setString(4, user.getEmail());
             try (ResultSet rs = stm.executeQuery()) {
 
                 while(rs.next()){    
