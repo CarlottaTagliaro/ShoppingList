@@ -43,14 +43,14 @@
                 <div class="drop-content">
                     <li>
                         <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
-                        <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="#">Testo notifica</a><a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                        <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="" data-toggle="modal" data-target="#modal_accept" >Testo notifica</a><a href=""  class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
                             <p>Lorem ipsum sit dolor amet consilium.</p>
                             <p class="time">18-09-2018 15:00</p>
                         </div>
                     </li>
                     <li>
                         <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
-                        <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="">Testo notifica 2</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
+                        <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="" >Testo notifica 2</a> <a href="" class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
                             <p>Lorem ipsum sit dolor amet consilium.</p>
                             <p class="time">1 Saat önce</p>
                         </div>
@@ -112,5 +112,21 @@
                 </div>
             </div>
         </nav>
+        <div class="modal fade" id="modal_accept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel"><b>Accept share:</b></h3>
+                    </div>
+                    <div class="modal-body">
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="myButton3 btn btn-primary"> <b>Accept</b></button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><b>Decline</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
