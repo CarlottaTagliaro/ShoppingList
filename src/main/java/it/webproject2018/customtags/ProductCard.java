@@ -41,14 +41,14 @@ public class ProductCard extends SimpleTagSupport {
         Utente user = (Utente) request.getSession().getAttribute("User");
 
         Boolean isMine = false;
-        
+
         String listeHtml = "";
         try {
             if (user != null) {
                 isMine = product.getOwner().equals(user.getEmail());
 
                 List<Triple<Integer, String, Integer>> lista = JdbcProdottoDao.getProductListAmount(product, user);
-                
+
                 for (int i = 0; i < lista.size(); i++) {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", lista.get(i).first(), lista.get(i).third(), lista.get(i).second());
                 }
@@ -56,7 +56,7 @@ public class ProductCard extends SimpleTagSupport {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         String html = String.format(" \n"
                 + "<div class=\"row card productRow\">\n"
                 + "                <div class=\"col-xs-3\">\n"
@@ -108,6 +108,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                                         var value = $(this).val();"
                 + "                                                         $(\"#amount_%d\").text($(this).find(\"option[value=\"+value+\"]\").attr(\"amount\"));"
                 + "                                                     });"
+                + "                                                     $( \"#selList_" + getProduct().getId() + "\" ).change();"
                 + "                                                 </script>\n"
                 + "                                             </div>\n"
                 + "                                         </div>"
@@ -121,53 +122,53 @@ public class ProductCard extends SimpleTagSupport {
                 + "                        </div>\n"
                 + "                    </div>\n"
                 + (isMine ? "          <div class=\"row\">\n "
-                + "                         <div class=\"add-lista\">\n"
-                + "                             <label class=\"aggiungi\"> Share: </label>\n"
-                + "                             <button class=\"myButton\" text=\"S\" data-toggle=\"modal\" data-target=\"#share_modal_%d\"><span class=\"glyphicon glyphicon-share-alt\"></span></button>\n"
-                + "                         </div>"
-                + "                         <div class=\"modal fade\" id=\"share_modal_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
-                + "                             <div class=\"modal-dialog\" role=\"document\">\n"
-                + "                                  <div class=\"modal-content\">\n"
-                + "                                        <div class=\"modal-header\">\n"
-                + "                                            <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Choose the user</b></h3>\n"
-                + "                                        </div>\n"
-                + "                                    <div class=\"modal-body\">\n"
-                + "                                         <div class=\"row\">\n"
-                + "                                             <div class=\"input-group\">\n"
-                + "                                                 <input type=\"text\" class=\"form-control form-control1\" name=\"qry\" aria-label=\"...\" placeholder=\"Search user by email or name\" value=\"\">\n"
-                + "                                                 <div class=\"input-group-btn\">\n"
-                + "                                                     <button type=\"submit\" class=\"btn bottone-cerca btn-default\">\n"
-                + "                                                         <span class=\"glyphicon glyphicon-search\"/>\n"
-                + "                                                     </button>\n"
-                + "                                                 </div>\n"
-                + "                                             </div>\n"
-                + "                                         </div>"
-                + "                                         <div class=\"row\">\n"
-                + "                                             <table>\n"
-                + "                                                 <tr>\n"
-                + "                                                     <th>Name Surname</th>\n"
-                + "                                                     <th>Share</th>\n"
-                + "                                                 </tr>\n"
-                + "                                                 <tr>\n"
-                + "                                                     <td>Giovanni Storti</td>\n"
-                + "                                                     <td>\n"
-                + "                                                         <input type=\"checkbox\" name=\"permission1\" value=\"true\" required=\"true\">\n"
-                + "                                                     </td>\n"
-                + "                                                 </tr>\n"
-                + "                                             </table>\n"
-                + "                                         </div>"
-                + "                                    </div>\n"
-                + "                                    <div class=\"modal-footer\">\n"
-                + "                                         <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
-                + "                                         <button type=\"button\" class=\"myButton3 btn btn-primary\"> <b>Share</b></button>"
-                + "                                    </div>\n"
-                + "                                </div>\n"
-                + "                            </div>\n"
-                + "                        </div>\n"
-                + "                    </div>\n " : "")
+                        + "                         <div class=\"add-lista\">\n"
+                        + "                             <label class=\"aggiungi\"> Share: </label>\n"
+                        + "                             <button class=\"myButton\" text=\"S\" data-toggle=\"modal\" data-target=\"#share_modal_%d\"><span class=\"glyphicon glyphicon-share-alt\"></span></button>\n"
+                        + "                         </div>"
+                        + "                         <div class=\"modal fade\" id=\"share_modal_%d\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                        + "                             <div class=\"modal-dialog\" role=\"document\">\n"
+                        + "                                  <div class=\"modal-content\">\n"
+                        + "                                        <div class=\"modal-header\">\n"
+                        + "                                            <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Choose the user</b></h3>\n"
+                        + "                                        </div>\n"
+                        + "                                    <div class=\"modal-body\">\n"
+                        + "                                         <div class=\"row\">\n"
+                        + "                                             <div class=\"input-group\">\n"
+                        + "                                                 <input type=\"text\" class=\"form-control form-control1\" name=\"qry\" aria-label=\"...\" placeholder=\"Search user by email or name\" value=\"\">\n"
+                        + "                                                 <div class=\"input-group-btn\">\n"
+                        + "                                                     <button type=\"submit\" class=\"btn bottone-cerca btn-default\">\n"
+                        + "                                                         <span class=\"glyphicon glyphicon-search\"/>\n"
+                        + "                                                     </button>\n"
+                        + "                                                 </div>\n"
+                        + "                                             </div>\n"
+                        + "                                         </div>"
+                        + "                                         <div class=\"row\">\n"
+                        + "                                             <table>\n"
+                        + "                                                 <tr>\n"
+                        + "                                                     <th>Name Surname</th>\n"
+                        + "                                                     <th>Share</th>\n"
+                        + "                                                 </tr>\n"
+                        + "                                                 <tr>\n"
+                        + "                                                     <td>Giovanni Storti</td>\n"
+                        + "                                                     <td>\n"
+                        + "                                                         <input type=\"checkbox\" name=\"permission1\" value=\"true\" required=\"true\">\n"
+                        + "                                                     </td>\n"
+                        + "                                                 </tr>\n"
+                        + "                                             </table>\n"
+                        + "                                         </div>"
+                        + "                                    </div>\n"
+                        + "                                    <div class=\"modal-footer\">\n"
+                        + "                                         <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
+                        + "                                         <button type=\"button\" class=\"myButton3 btn btn-primary\"> <b>Share</b></button>"
+                        + "                                    </div>\n"
+                        + "                                </div>\n"
+                        + "                            </div>\n"
+                        + "                        </div>\n"
+                        + "                    </div>\n " : "")
                 + "                </div>\n"
                 + "            </div>", getProduct().Fotografie.size() > 0 ? getProduct().Fotografie.get(0) : "http://placehold.it/100/55C1E7/fff&text=" + getProduct().getNome().charAt(0),
-                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), getProduct().getId(),  getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId(),  getProduct().getId(),  getProduct().getId()
+                getProduct().getNome(), getProduct().getCategoria().getNome(), getProduct().getNote(), getProduct().getId(), getProduct().getId(), getProduct().getId(), listeHtml, getProduct().getId(), getProduct().getId(), getProduct().getId(), getProduct().getId(), getProduct().getId()
         );
         getJspContext().getOut().write(html);
     }
