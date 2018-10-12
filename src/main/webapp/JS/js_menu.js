@@ -30,10 +30,35 @@ $(document).ready(function () {
 });
 
 
-function selectMenuEl(dataId){
+function selectMenuEl(dataId) {
     //reset all menu active state
     $(".navbar-nav li").removeClass("active");
-    
+
     //enable only the active menu element
     $(".navbar-nav li[data='" + dataId + "']").addClass("active");
+}
+
+
+
+function shareProductGetUsers(idProduct, qry) {
+    var elem = "#table_shareprod_" + idProduct;
+
+    $(elem).children().empty();
+    $.post("ShareProductGetUsers", {idProdotto: idProduct, qry: qry}, function (data) {
+        $(elem).append('<tr>' +
+                '<input type="hidden" name="idProdotto" value="' + idProduct + '">' +
+                '<th>Name Surname</th>' +
+                '<th>Share</th>' +
+            '</tr>');
+
+        for (var i = 0; i < data.length; i++) {
+            var html = '<tr>' +
+                    '<td>' + data[i].nome + '</td>' +
+                    '<td>' +
+                        '<input type="checkbox" name="share" value="' + data[i].email + '" ' + (data[i].shared ? 'checked' : '') + '>' +
+                    '</td>' +
+                '</tr>';
+            $(elem).append(html);
+        }
+    });
 }

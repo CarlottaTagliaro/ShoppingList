@@ -5,6 +5,8 @@
  */
 package it.webproject2018.db.daos.jdbc;
 
+import de.scravy.pair.Pair;
+import de.scravy.pair.Pairs;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -376,6 +378,50 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+    public Boolean shareProduct(Prodotto entity, String email) throws DAOException {
+        if (entity == null || email == null) {
+            throw new DAOException("product parameter is null");
+        }
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (Email, ID_prodotto) VALUES (?, ?)");
+            stm.setInt(1, entity.getId());
+            stm.setString(2, email);
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public ArrayList<Pair<Utente, Boolean>> getUserToShareWith(Integer idProdotto, Utente user, String qry) throws DAOException {
+        ArrayList<Pair<Utente, Boolean>> lista = new ArrayList<>();
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT Utenti.Email, (ID_prodotto IS NOT NULL) as Condiviso FROM Utenti LEFT JOIN (SELECT * FROM Utenti_Prodotti WHERE ID_prodotto = ?) as a ON Utenti.Email = a.Email\n" +
+                "WHERE Utenti.Email != ? AND (Utenti.Email LIKE ? OR CONCAT(Nome, \" \", Cognome) LIKE ?);")) {
+            stm.setInt(1, idProdotto);
+            stm.setString(2, user.getEmail());
+            stm.setString(3, "%" + qry + "%");
+            stm.setString(4, "%" + qry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    String email = rs.getString("Email");
+                    JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(CON);
+                    Utente u = JdbcUtenteDao.getByPrimaryKey(email);
+                    Boolean condiviso = rs.getBoolean("Condiviso");
+                                        
+                    lista.add(Pairs.from(u, condiviso));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting all Products", ex);
+        }
+
+        return lista;
+    }
+
     @Override
     public Boolean delete(Integer primaryKey) throws DAOException {
         if (primaryKey == null) {
@@ -384,30 +430,30 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti where ID = ? ")) {
             stm.setInt(1, primaryKey);
             int res = stm.executeUpdate();
-			if (res >= 1) {
+            if (res >= 1) {
                 return true;
             }
-			return false;
+            return false;
         } catch (SQLException ex) {
             return false;
         }
     }
-	
-	public Boolean deleteFromList(Integer ID_product, Integer ID_list) throws DAOException {
-		if (ID_product == null || ID_list == null) {
-			throw new DAOException("Something is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_Prodotti "
-				+ "where ID_prodotto = ? and ID_lista = ? ")) {
+
+    public Boolean deleteFromList(Integer ID_product, Integer ID_list) throws DAOException {
+        if (ID_product == null || ID_list == null) {
+            throw new DAOException("Something is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_Prodotti "
+                + "where ID_prodotto = ? and ID_lista = ? ")) {
             stm.setInt(1, ID_product);
             stm.setInt(2, ID_list);
             int res = stm.executeUpdate();
-			if (res >= 1) {
+            if (res >= 1) {
                 return true;
             }
-			return false;
+            return false;
         } catch (SQLException ex) {
             return false;
         }
-	}
+    }
 }
