@@ -94,6 +94,10 @@
         <servlet-name>ShareProductGetUsers</servlet-name>
         <servlet-class>it.webproject2018.servlets.ShareProductGetUsers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShareProductInsertUser</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareProductInsertUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -242,6 +246,10 @@
     <servlet-mapping>
         <servlet-name>ShareProductGetUsers</servlet-name>
         <url-pattern>/ShareProductGetUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareProductInsertUser</servlet-name>
+        <url-pattern>/ShareProductInsertUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

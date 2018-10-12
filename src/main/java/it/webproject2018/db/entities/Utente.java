@@ -32,6 +32,23 @@ public class Utente {
         this.isAdmin = isAdmin;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ListaPermessi)) {
+            return false;
+        }
+        
+        Utente u = (Utente) other;
+        
+        return u.getEmail().equals(getEmail());
+    }
+
     public String getName() {
         return nome;
     }
