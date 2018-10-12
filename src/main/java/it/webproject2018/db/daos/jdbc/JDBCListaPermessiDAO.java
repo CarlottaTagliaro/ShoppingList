@@ -115,6 +115,30 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         
         return liste;
     }
+        
+    public ArrayList<ListaPermessi> getAllByList(Integer idList, String emailUser) throws DAOException {
+        ArrayList<ListaPermessi> liste = new ArrayList<>();
+        
+        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where ID = ? and Email != ?")) {
+            stm.setInt(1, idList);
+            stm.setString(2, emailUser);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next()){    
+                    Pair<String, Integer> primaryKey = Pairs.from(rs.getString("Email"), rs.getInt("ID"));
+                    
+                    ListaPermessi lista_perm = getByPrimaryKey(primaryKey);
+
+                    liste.add(lista_perm);
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DAOException("Error while getting all Products", ex);
+        }
+        
+        return liste;
+    }
     
     public List<Pair<Utente, ListaPermessi>> getShareUserList(Utente user, String qry, Integer idLista) throws DAOException {
         ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();

@@ -27,8 +27,7 @@ public class ListaPermessi {
 
         this.email = email;
         this.id_lista = id_lista;
-        
-        
+
         if (this.perm_edit == null) {
             this.perm_edit = false;
         }
@@ -42,7 +41,6 @@ public class ListaPermessi {
             this.accettato = false;
         }
     }
-    
 
     public ListaPermessi(String email, Integer id_lista) {
         this.perm_edit = false;
@@ -54,6 +52,22 @@ public class ListaPermessi {
         this.id_lista = id_lista;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ListaPermessi)) {
+            return false;
+        }
+        
+        ListaPermessi l = (ListaPermessi) other;
+        
+        return l.getEmail().equals(getEmail()) && l.getId_lista().equals(getId_lista());
+    }
 
     /**
      * @return the perm_edit

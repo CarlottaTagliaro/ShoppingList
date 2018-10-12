@@ -30,6 +30,7 @@
 
                     $(elem).children().empty();
                     $(elem).append('<tr>' +
+                            '<input type="hidden" name="idLista" value="' + idLista +'">' +
                             '<th>Name Surname</th>' +
                             '<th>Add/delete products</th>' +
                             '<th>Modify list details</th>' +
@@ -37,16 +38,16 @@
                             '</tr>');
 
                     for (var i = 0; i < data.length; i++) {
-                        var html = '<tr email="' + data[i].Email + '">' +
+                        var html = '<tr>' +
                                 '<td>' + data[i].Nome + '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_add_rem" ' + (data[i].perm_add_rem ? 'checked' : '') + ' required="true">' +
+                                '<input type="checkbox" name="perm_add_rem" value="' + data[i].Email + '" ' + (data[i].perm_add_rem ? 'checked' : '') + '>' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_edit" ' + (data[i].perm_edit ? 'checked' : '') + ' required="true">' +
+                                '<input type="checkbox" name="perm_edit" value="' + data[i].Email + '" ' + (data[i].perm_edit ? 'checked' : '') + '>' +
                                 '</td>' +
                                 '<td>' +
-                                '<input type="checkbox" name="perm_del" ' + (data[i].perm_del ? 'checked' : '') + ' required="true">' +
+                                '<input type="checkbox" name="perm_del" value="' + data[i].Email + '" ' + (data[i].perm_del ? 'checked' : '') + '>' +
                                 '</td>' +
                                 '</tr>';
                         $(elem).append(html);

@@ -86,6 +86,10 @@
         <servlet-name>GeolocationServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.GeolocationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShareListInsertUser</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareListInsertUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -209,6 +213,10 @@
     <servlet-mapping>
         <servlet-name>GeolocationServlet</servlet-name>
         <url-pattern>/GeolocationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareListInsertUser</servlet-name>
+        <url-pattern>/ShareListInsertUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
