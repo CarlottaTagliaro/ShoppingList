@@ -5,11 +5,13 @@
  */
 package it.webproject2018.servlets;
 
+import com.google.gson.Gson;
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.maps.SearchPlaces;
 import java.io.IOException;
+import java.io.PrintWriter;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -35,6 +37,8 @@ public class GeolocationServlet extends HttpServlet {
         }
         Float lat = Float.parseFloat(latitudine);
         Float lon = Float.parseFloat(longitudine);
+        
+        ArrayList<GeoResponse> resp = new ArrayList<>();
 
         try {
             JDBCListaDAO listaDao = new JDBCListaDAO(super.getServletContext());
@@ -44,15 +48,34 @@ public class GeolocationServlet extends HttpServlet {
                 SearchPlaces p = SearchPlaces.GetPlaces(lat, lon, 1000, l.getCategoria().getNome());
 
                 for (int i = 0; i < min(p.size(), 1); i++) {
-                    System.out.println("Negozio vicino: " + p.get(i).Name + " - " + l.getCategoria().getNome() + " a " + p.get(i).Distance + " m");
-                    System.out.println("-------");
-
-                    //send notification
+                    resp.add(new GeoResponse(l.getNome(), l.getCategoria().getNome(), p.get(i).Name, p.get(i).Distance));
                 }
             }
+            
+            Gson gson = new Gson();
+            String json = gson.toJson(resp);
+
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    
+    class GeoResponse{
+        public String nomeLista;
+        public String tipoNegozio;
+        public String nomeNegozio;
+        public Integer distanza;
+        
+        public GeoResponse(String nomeLista, String tipoNegozio, String nomeNegozio, Integer distanza){
+            this.nomeLista = nomeLista;
+            this.tipoNegozio = tipoNegozio;
+            this.nomeNegozio = nomeNegozio;
+            this.distanza = distanza;
+        }
     }
 }

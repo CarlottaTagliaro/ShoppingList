@@ -15,6 +15,8 @@
 
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
+        
+        <script src="Bootsrap/bootstrap-notify.min.js" type="text/javascript"></script>
         <script src="JS/geolocationFunctions.js" type="text/javascript"></script>
 
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
