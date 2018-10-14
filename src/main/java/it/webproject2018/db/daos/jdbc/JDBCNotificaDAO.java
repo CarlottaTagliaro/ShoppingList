@@ -67,10 +67,10 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     Integer idProdotto = rs.getInt("ID_prodotto");
                     JDBCProdottoDAO prodottoDAO = new JDBCProdottoDAO(CON);
                     Prodotto product = prodottoDAO.getByPrimaryKey(idProdotto);
-                    Integer giorniMancanti = rs.getInt("giorniMancanti");
-                    Integer quantitaMancante = rs.getInt("quantitaMancanti");
+                    Integer giorniMancanti = rs.getInt("GiorniMancanti");
+                    Integer quantitaMancante = rs.getInt("QuantitaMancanti");
                     boolean mail = rs.getBoolean("Mail");
-                    boolean sito = rs.getBoolean("sito");
+                    boolean sito = rs.getBoolean("Sito");
 
                     Notifica notification = new Notifica(id, list, product, giorniMancanti, quantitaMancante, mail, sito);
                 }
