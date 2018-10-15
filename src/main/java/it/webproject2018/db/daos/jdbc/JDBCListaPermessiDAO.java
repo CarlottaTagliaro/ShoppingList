@@ -49,13 +49,12 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             stm.setBoolean(6, entity.getAccettato());
             Integer rs = stm.executeUpdate();
 
-            if (rs > 0) {
+            if (rs > 0)
                 return entity;
-            }
-
-            return null;
-        } catch (Exception e) {
-            return null;
+            else
+                return null;
+        } catch (SQLException e) {
+            throw new DAOException("Error while insert list permission " + e);
         }
     }
 
