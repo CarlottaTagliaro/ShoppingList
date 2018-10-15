@@ -384,7 +384,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             throw new DAOException("product parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email) VALUES (?, ?)");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email, Data_inserimento) VALUES (?, ?, NOW())");
             stm.setInt(1, idProduct);
             stm.setString(2, email);
             Integer rs = stm.executeUpdate();
