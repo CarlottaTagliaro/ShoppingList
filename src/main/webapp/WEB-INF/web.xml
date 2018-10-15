@@ -132,6 +132,15 @@
         <url-pattern>/ChangeUserPicServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ChangeListDetailsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeListDetailsServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeListDetailsServlet</servlet-name>
+        <url-pattern>/ChangeListDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>CreateProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
         <multipart-config/>
@@ -156,6 +165,14 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddProductToList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.AddProductToList</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductToList</servlet-name>
+        <url-pattern>/AddProductToList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
