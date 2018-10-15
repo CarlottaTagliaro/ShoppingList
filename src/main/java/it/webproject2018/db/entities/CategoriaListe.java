@@ -21,6 +21,8 @@ public class CategoriaListe {
         this.descrizione = descrizione;
         this.immagini = immagini;
     }
+    
+    public CategoriaListe(){}
 
     /**
      * @return the nome

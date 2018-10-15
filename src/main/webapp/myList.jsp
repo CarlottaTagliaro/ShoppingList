@@ -63,7 +63,7 @@
         </script>
 
         <div class="main">
-            <c:if test="${not empty sessionScope.User}">
+            <c:if test="${showNewList}">
                 <div class="row create addList">
                     <div class="crea-lista">
                         <label class="lista1" style="font-size: 20px;"> Create new List: </label>

@@ -217,11 +217,8 @@
         <url-pattern>/profile</url-pattern>
         <url-pattern>/logout.jsp</url-pattern>
         <url-pattern>/logout</url-pattern>
-        <url-pattern>/newList.jsp</url-pattern>
-        <url-pattern>/newList</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
-        <url-pattern>/GeolocationServlet</url-pattern>
     </filter-mapping>
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>

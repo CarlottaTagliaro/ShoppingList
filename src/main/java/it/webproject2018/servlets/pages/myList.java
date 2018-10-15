@@ -35,6 +35,7 @@ public class myList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            Boolean showNewList = true;
             JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
             List<Lista> userLists;
@@ -43,13 +44,26 @@ public class myList extends HttpServlet {
             } else {
                 userLists = new ArrayList<>();
                 
-                //creo una lista per l'utente non loggato
-                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultList");
-                
-                //Lista l = new Lista(1, "My List", "My List", "", );
-            }
+                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
 
+                Lista l = (Lista) request.getSession().getAttribute("DefaultList");
+                
+                if(l == null){
+                    //utente non ha già una lista -> può crearne una nuova
+                    showNewList = true;
+                }
+                else{
+                    showNewList = false;
+                    //creo lista da visualizzare
+                    for(Pair<Prodotto, Integer> p : defaultList){
+                        l.add(p.getFirst());
+                    }
+                    userLists.add(l);
+                }
+            }
+            
             request.setAttribute("userLists", userLists);
+            request.setAttribute("showNewList", showNewList);
             
             JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/myList.jsp").forward(request, response);
