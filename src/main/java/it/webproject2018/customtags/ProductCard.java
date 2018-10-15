@@ -5,10 +5,13 @@
  */
 package it.webproject2018.customtags;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +54,23 @@ public class ProductCard extends SimpleTagSupport {
 
                 for (int i = 0; i < lista.size(); i++) {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", lista.get(i).first(), lista.get(i).third(), lista.get(i).second());
+                }
+            } else {
+                //utente non loggato
+
+                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
+
+                Lista l = (Lista) request.getSession().getAttribute("DefaultList");
+                if (l != null) {
+                    Integer amount = 0;
+                    for (Pair<Prodotto, Integer> p : defaultList) {
+                        if (p.getFirst().getId().equals(product.getId())) {
+                            amount = p.getSecond();
+                            break;
+                        }
+                    }
+
+                    listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", l.getId(), amount, l.getNome());
                 }
             }
         } catch (Exception e) {
@@ -167,8 +187,7 @@ public class ProductCard extends SimpleTagSupport {
                         + "                        </div>\n"
                         + "                    </div>\n " : "")
                 + "                </div>\n"
-                + "            </div>"
-        );
+                + "            </div>");
         getJspContext().getOut().write(html);
     }
 

@@ -45,9 +45,6 @@ public class home extends HttpServlet {
             if (user != null) {
                 productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
             } else {
-                //creo una lista per l'utente non loggato
-                ArrayList<Pair<Prodotto, Integer>> defaultList = new ArrayList<>();
-                request.getSession().setAttribute("DefaultList", defaultList);
                 
                 productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
             }
