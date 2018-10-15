@@ -10,6 +10,7 @@ import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,10 +44,16 @@ public class home extends HttpServlet {
             if (user != null) {
                 productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
             } else {
+                //creo una lista per l'utente non loggato
+                ArrayList<Prodotto> defaultList = new ArrayList<>();
+                request.getSession().setAttribute("DefaultList", defaultList);
+                
                 productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
             }
 
             request.setAttribute("productList", productList);
+            
+            JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

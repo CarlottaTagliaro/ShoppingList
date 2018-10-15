@@ -18,9 +18,10 @@ import javax.servlet.ServletContext;
  *
  * @author davide
  * @param <ENTITY_CLASS>
- * @param <PRIMARY_KEY_CLASS> 
+ * @param <PRIMARY_KEY_CLASS>
  */
 public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
+
     /**
      * The JDBC {@link Connection} used to access the persistence system.
      */
@@ -30,8 +31,8 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
      * The list of other DAOs this DAO can interact with.
      */
     protected final HashMap<Class, DAO> FRIEND_DAOS;
-    
-    final private Connection CreateDbConn(ServletContext sc){
+
+    final private Connection CreateDbConn(ServletContext sc) {
         String dburl = sc.getInitParameter("dburl");
         String dbuser = sc.getInitParameter("dbuser");
         String dbpsw = sc.getInitParameter("dbpsw");
@@ -53,23 +54,31 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
 
         }
     }
-        
+
     protected JDBCDAO(Connection conn) {
         super();
-        
+
         this.SC = null;
         this.CON = conn;
         FRIEND_DAOS = new HashMap<>();
     }
-    
+
     protected JDBCDAO(ServletContext sc) {
         super();
-        
+
         this.SC = sc;
         this.CON = CreateDbConn(sc);
         FRIEND_DAOS = new HashMap<>();
     }
-    
+
+    public void Close() {
+        try {
+            this.CON.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public <DAO_CLASS extends DAO> DAO_CLASS getDAO(Class<DAO_CLASS> daoClass) throws DAOFactoryException {
         return (DAO_CLASS) FRIEND_DAOS.get(daoClass);

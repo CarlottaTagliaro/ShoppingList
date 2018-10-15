@@ -35,6 +35,8 @@ public class profile extends HttpServlet {
             Utente user = (Utente) request.getSession().getAttribute("User");
 
             request.setAttribute("user", user);
+            
+            JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

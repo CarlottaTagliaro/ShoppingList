@@ -36,6 +36,8 @@ public class newList extends HttpServlet {
             List<String> categories = JDBCCategoriaListeDAO.getAllNames();
 
             request.setAttribute("categories", categories);
+            
+            JDBCCategoriaListeDAO.Close();
             getServletContext().getRequestDispatcher("/newList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

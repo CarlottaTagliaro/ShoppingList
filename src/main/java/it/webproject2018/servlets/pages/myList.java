@@ -43,6 +43,8 @@ public class myList extends HttpServlet {
             }
 
             request.setAttribute("userLists", userLists);
+            
+            JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/myList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

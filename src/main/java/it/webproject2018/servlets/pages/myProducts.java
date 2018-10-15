@@ -44,6 +44,8 @@ public class myProducts extends HttpServlet {
             }
 
             request.setAttribute("productList", productList);
+            
+            JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/myProducts.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

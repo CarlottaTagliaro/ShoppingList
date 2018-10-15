@@ -38,6 +38,8 @@ public class shops extends HttpServlet {
             List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
 
             request.setAttribute("shops", shops);
+            
+            JdbcCategoriaListeDao.Close();
             getServletContext().getRequestDispatcher("/shops.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -35,6 +35,8 @@ public class newProduct extends HttpServlet {
             List<String> categories = JdbcCategoriaProdottiDao.getAllNames();
 
             request.setAttribute("CatProductList", categories);
+            
+            JdbcCategoriaProdottiDao.Close();
             getServletContext().getRequestDispatcher("/newProduct.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
