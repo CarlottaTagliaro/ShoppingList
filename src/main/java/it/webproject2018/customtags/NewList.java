@@ -5,10 +5,19 @@
  */
 package it.webproject2018.customtags;
 
+import de.scravy.pair.Pair;
+import de.scravy.pair.Pairs;
+import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
 import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.ListaPermessi;
+import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
@@ -25,7 +34,24 @@ public class NewList extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
-
+        
+        PageContext pageContext = (PageContext) getJspContext();
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        HttpSession session = request.getSession();
+        ServletContext servletContext = session.getServletContext();
+        JDBCListaPermessiDAO JdbcListaPermessiDao = new JDBCListaPermessiDAO(servletContext);
+        
+        Utente user = (Utente) request.getSession().getAttribute("User");
+        
+        Pair<String, Integer> primaryKey = Pairs.from(user.getEmail(), lista.getId());
+        ListaPermessi perm = new ListaPermessi(user.getEmail(), lista.getId());
+        try{
+            perm = JdbcListaPermessiDao.getByPrimaryKey(primaryKey);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
         String listaHtml = "";
 
         for (int i = 0; i < lista.size(); i++) {
@@ -36,10 +62,10 @@ public class NewList extends SimpleTagSupport {
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
                     + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong> \n"
-                    + "                                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n"
+                    + (perm.getPerm_add_rem() ? "       <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n"
                     + "                                 <a href=\"DeleteProductServlet?Product=" + lista.get(i).getId() + "&List=" + lista.getId() + "\"><button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
                     + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
-                    + "                                 </button></a>\n"
+                    + "                                 </button></a>\n" : "")
                     + "                             </div>\n"
                     + "                             <div class=\"modal fade\" id=\"modal_prod_" + lista.getId() + "_" + i + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                     + "                                 <div class=\"modal-dialog\" role=\"document\">\n"
@@ -87,7 +113,7 @@ public class NewList extends SimpleTagSupport {
                 + "                                    <span class=\"glyphicon glyphicon-shopping-cart\"></span> <b> " + lista.getNome() + " </b> (" + lista.getCategoria().getNome() + ")\n"
                 + "                                </div>"
                 + "                                <div class=\"btn-group panel-btn col\">\n"
-                + "                                    <a type=\"button\" title=\"Modify list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_mod_" + lista.getId() + "\">\n"
+                + (perm.getPerm_edit()? "              <a type=\"button\" title=\"Modify list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_mod_" + lista.getId() + "\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-pencil\"></span>\n"
                 + "                                    </a>\n"
                 + "                                     <div class=\"modal fade\" id=\"modal_mod_" + lista.getId() + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
@@ -122,7 +148,7 @@ public class NewList extends SimpleTagSupport {
                 + "                                                 </div>\n"
                 + "                                             </div>\n"
                 + "                                         </div>\n"
-                + "                                     </div>\n"
+                + "                                     </div>\n" : "")
                 + "                                    <a type=\"button\" title=\"Share list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_share_" + lista.getId() + "\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-share-alt\"></span>\n"
                 + "                                    </a>\n"
@@ -168,9 +194,9 @@ public class NewList extends SimpleTagSupport {
                 + "                                             </div>\n"
                 + "                                         </div>\n"
                 + "                                     </div>\n"
-                + "                                    <a type=\"button\" title=\"Delete list\" class=\"btn btn-default btn-xs small\" href=\"DeleteListServlet?List=" + lista.getId() + "\">\n"
+                + (perm.getPerm_del() ? "              <a type=\"button\" title=\"Delete list\" class=\"btn btn-default btn-xs small\" href=\"DeleteListServlet?List=" + lista.getId() + "\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-trash\"></span>\n"
-                + "                                    </a>\n"
+                + "                                    </a>\n" : "")
                 + "                                    <button type=\"button\" title=\"Show list\" id=\"prova\" class=\"btn btn-default btn-xs small\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + lista.getId() + "\" onclick=\"scendi(this)\">\n"
                 + "                                        <span class=\"scendi glyphicon glyphicon-chevron-down\"></span>\n"
                 + "                                    </button>\n"

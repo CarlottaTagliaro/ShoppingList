@@ -120,7 +120,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         try (PreparedStatement stm = CON.prepareStatement("SELECT DISTINCT * FROM (SELECT distinct Liste.ID, Liste.Nome FROM Liste, Utenti_Liste, Utenti"
                 + "                WHERE Liste.ID = Utenti_Liste.ID"
-                + "                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?) as a"
+                + "                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?"
+                + "                AND Utenti_Liste.Perm_add_rem = 1) as a"
                 + "                LEFT JOIN (SELECT * FROM Liste_Prodotti WHERE ID_prodotto = ?) as b ON a.ID = b.ID_lista;")) {
             stm.setString(1, user.getEmail());
             stm.setInt(2, entity.getId());
@@ -415,8 +416,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     public ArrayList<Pair<Utente, Boolean>> getUserToShareWith(Integer idProdotto, Utente user, String qry) throws DAOException {
         ArrayList<Pair<Utente, Boolean>> lista = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT Utenti.Email, (ID_prodotto IS NOT NULL) as Condiviso FROM Utenti LEFT JOIN (SELECT * FROM Utenti_Prodotti WHERE ID_prodotto = ?) as a ON Utenti.Email = a.Email\n" +
-                "WHERE Utenti.Email != ? AND (Utenti.Email LIKE ? OR CONCAT(Nome, \" \", Cognome) LIKE ?);")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT Utenti.Email, (ID_prodotto IS NOT NULL) as Condiviso FROM Utenti LEFT JOIN (SELECT * FROM Utenti_Prodotti WHERE ID_prodotto = ?) as a ON Utenti.Email = a.Email\n"
+                + "WHERE Utenti.Email != ? AND (Utenti.Email LIKE ? OR CONCAT(Nome, \" \", Cognome) LIKE ?);")) {
             stm.setInt(1, idProdotto);
             stm.setString(2, user.getEmail());
             stm.setString(3, "%" + qry + "%");
@@ -428,7 +429,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
                     JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(CON);
                     Utente u = JdbcUtenteDao.getByPrimaryKey(email);
                     Boolean condiviso = rs.getBoolean("Condiviso");
-                                        
+
                     lista.add(Pairs.from(u, condiviso));
                 }
             }
@@ -438,7 +439,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return lista;
     }
-    
+
     public ArrayList<Utente> getUserSharedProduct(Integer idProdotto) throws DAOException {
         ArrayList<Utente> lista = new ArrayList<>();
 
@@ -450,7 +451,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
                     String email = rs.getString("Email");
                     JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(CON);
                     Utente u = JdbcUtenteDao.getByPrimaryKey(email);
-                                        
+
                     lista.add(u);
                 }
             }

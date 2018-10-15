@@ -215,10 +215,11 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             if (rsi.next()) {
                 return getByPrimaryKey(rsi.getInt(1));
             }*/
-            if(rs>0)
+            if (rs > 0) {
                 return entity;
-            else
+            } else {
                 return null;
+            }
         } catch (Exception e) {
             return null;
         }
@@ -248,21 +249,21 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             throw new DAOException("Impossible to update the list", ex);
         }
     }
-	
-	@Override
-	public Boolean delete(Integer primaryKey) throws DAOException {
-		if (primaryKey == null) {
-			throw new DAOException("Lista is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste WHERE ID = ? ")) {
-			stm.setInt(1, primaryKey);
-			int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException ex) {
-			return false;
-		}
-	}
+
+    @Override
+    public Boolean delete(Integer primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Lista is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste WHERE ID = ? ")) {
+            stm.setInt(1, primaryKey);
+            int res = stm.executeUpdate();
+            if (res >= 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

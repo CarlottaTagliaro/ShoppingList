@@ -25,17 +25,17 @@ import javax.servlet.ServletContext;
  * @author davide
  */
 public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, Integer>> implements ListaPermessiDAO {
-    
+
     public JDBCListaPermessiDAO(Connection conn) {
         super(conn);
-    }    
-    
+    }
+
     public JDBCListaPermessiDAO(ServletContext sc) {
         super(sc);
-    }    
-    
+    }
+
     @Override
-    public ListaPermessi insert(ListaPermessi entity) throws DAOException{
+    public ListaPermessi insert(ListaPermessi entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("list permission parameter is null");
         }
@@ -48,29 +48,29 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             stm.setBoolean(5, entity.getPerm_del());
             stm.setBoolean(6, entity.getAccettato());
             Integer rs = stm.executeUpdate();
-            
-            if (rs > 0)
+
+            if (rs > 0) {
                 return entity;
-            
+            }
+
             return null;
         } catch (Exception e) {
             return null;
         }
     }
-    
-    
+
     @Override
-    public ListaPermessi getByPrimaryKey(Pair<String, Integer> primaryKey) throws DAOException{
+    public ListaPermessi getByPrimaryKey(Pair<String, Integer> primaryKey) throws DAOException {
         if (primaryKey == null) {
             throw new DAOException("lista ID is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where Email = ? AND ID = ? ")) {
             stm.setString(1, primaryKey.getFirst());
             stm.setInt(2, primaryKey.getSecond());
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                if (rs.next()) {
 
                     Boolean perm_edit = rs.getBoolean("perm_edit");
                     Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
@@ -78,72 +78,68 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
                     Boolean accettato = rs.getBoolean("accettato");
                     Integer id = rs.getInt("ID");
                     String email = rs.getString("Email");
-                    
-                    
+
                     ListaPermessi lista_perm = new ListaPermessi(perm_edit, perm_add_rem, perm_del, accettato, email, id);
-                    
+
                     return lista_perm;
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting Product by ID", ex);
         }
-        
+
         return null;
     }
-    
+
     @Override
     public List<ListaPermessi> getAll() throws DAOException {
         ArrayList<ListaPermessi> liste = new ArrayList<>();
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste")) {
             try (ResultSet rs = stm.executeQuery()) {
 
-                while(rs.next()){    
+                while (rs.next()) {
                     Pair<String, Integer> primaryKey = Pairs.from(rs.getString("Email"), rs.getInt("ID"));
-                    
+
                     ListaPermessi lista_perm = getByPrimaryKey(primaryKey);
 
                     liste.add(lista_perm);
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting all Products", ex);
         }
-        
+
         return liste;
     }
-        
+
     public ArrayList<ListaPermessi> getAllByList(Integer idList, String emailUser) throws DAOException {
         ArrayList<ListaPermessi> liste = new ArrayList<>();
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where ID = ? and Email != ?")) {
             stm.setInt(1, idList);
             stm.setString(2, emailUser);
             try (ResultSet rs = stm.executeQuery()) {
 
-                while(rs.next()){    
+                while (rs.next()) {
                     Pair<String, Integer> primaryKey = Pairs.from(rs.getString("Email"), rs.getInt("ID"));
-                    
+
                     ListaPermessi lista_perm = getByPrimaryKey(primaryKey);
 
                     liste.add(lista_perm);
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting all Products", ex);
         }
-        
+
         return liste;
     }
-    
+
     public List<Pair<Utente, ListaPermessi>> getShareUserList(Utente user, String qry, Integer idLista) throws DAOException {
         ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();
         JDBCUtenteDAO UtenteDao = new JDBCUtenteDAO(CON);
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select Utenti.Email, Nome, Cognome, Perm_edit, Perm_add_rem, Perm_del, Accettato, ID from Utenti LEFT JOIN (select * from Utenti_Liste where ID = ?) as a on a.Email = Utenti.Email"
                 + " WHERE (CONCAT(Nome, \" \", Cognome) LIKE ? OR Utenti.Email LIKE ?) AND Utenti.Email != ?")) {
             stm.setInt(1, idLista);
@@ -152,31 +148,29 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             stm.setString(4, user.getEmail());
             try (ResultSet rs = stm.executeQuery()) {
 
-                while(rs.next()){    
+                while (rs.next()) {
                     String email = rs.getString("Email");
                     Pair<String, Integer> primaryKey = Pairs.from(email, rs.getInt("ID"));
                     ListaPermessi lista_perm;
-                    
-                    if(rs.wasNull()){
+
+                    if (rs.wasNull()) {
                         lista_perm = new ListaPermessi(email, idLista);
-                    }
-                    else{
+                    } else {
                         lista_perm = getByPrimaryKey(primaryKey);
                     }
-                    
+
                     Utente utente = UtenteDao.getByPrimaryKey(primaryKey.getFirst());
-                    
+
                     liste.add(Pairs.from(utente, lista_perm));
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting getShareUserList", ex);
         }
-        
+
         return liste;
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -191,9 +185,9 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
 
         return 0L;
     }
-    
+
     @Override
-    public ListaPermessi update(ListaPermessi entity) throws DAOException{
+    public ListaPermessi update(ListaPermessi entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("Parameter 'list' not valid for update",
                     new IllegalArgumentException("The passed list is null"));
@@ -227,10 +221,10 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             stm.setInt(1, primaryKey.getSecond());
             stm.setString(2, primaryKey.getFirst());
             int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
+            if (res >= 1) {
+                return true;
+            }
+            return false;
         } catch (SQLException ex) {
             return false;
         }
