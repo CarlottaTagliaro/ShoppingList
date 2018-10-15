@@ -73,6 +73,8 @@ public class CreateProductServlet extends HttpServlet {
                     JDBCProdotto.insertImage(prod, img);
                 }
             }
+        
+            JDBCProdotto.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct" : "/myProducts"));
         } catch (DAOException e) {
             w.println(e.getMessage());

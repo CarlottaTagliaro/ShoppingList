@@ -80,6 +80,8 @@ public class ShareListInsertUser extends HttpServlet {
             e.printStackTrace();
         }
                 
+        JdbcListaPermessiDao.Close();
+        
         response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 

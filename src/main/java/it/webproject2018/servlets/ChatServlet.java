@@ -75,6 +75,9 @@ public class ChatServlet extends HttpServlet {
             e.printStackTrace();
             response.setStatus(500);
         }
+            
+        JdbcListaDao.Close();
+        JdbcMessaggioChatDao.Close();
     }
 
     protected void getChatList(Utente user, HttpServletResponse response) {

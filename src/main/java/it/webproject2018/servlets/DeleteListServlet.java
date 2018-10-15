@@ -22,34 +22,34 @@ import it.webproject2018.db.exceptions.DAOException;
  */
 public class DeleteListServlet extends HttpServlet {
 
-	private JDBCListaDAO JDBCLista;
+    private JDBCListaDAO JDBCLista;
 
     @Override
     public void init() throws ServletException {
         JDBCLista = new JDBCListaDAO(super.getServletContext());
     }
-	
-	/**
-	 * Processes requests for HTTP GET methods for deleting lists
-	 *
-	 * @param request servlet request
-	 * @param response servlet response
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter w = response.getWriter();
-		try {
-			String ID = request.getParameter("List");
-			Integer list = Integer.parseInt(ID);			
-			Boolean ok = JDBCLista.delete(list);
+
+    /**
+     * Processes requests for HTTP GET methods for deleting lists
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter w = response.getWriter();
+        try {
+            String ID = request.getParameter("List");
+            Integer list = Integer.parseInt(ID);
+            Boolean ok = JDBCLista.delete(list);
+
+            JDBCLista.Close();
             response.sendRedirect(request.getContextPath().concat("/myList"));
-		}
-		catch (DAOException e) {
-			w.println(e.getMessage());
-		}
-	}
+        } catch (DAOException e) {
+            w.println(e.getMessage());
+        }
+    }
 }

@@ -40,5 +40,7 @@ public class RegisterServlet extends HttpServlet {
         } catch (Exception e) {
             w.println(e.getMessage());
         }
+        
+        JdbcUtenteDao.Close();
     }
 }

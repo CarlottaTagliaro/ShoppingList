@@ -5,9 +5,11 @@
  */
 package it.webproject2018.servlets.pages;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.Prodotto;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,11 @@ public class myList extends HttpServlet {
                 userLists = JdbcListaDao.getUserLists(user.getEmail());
             } else {
                 userLists = new ArrayList<>();
+                
+                //creo una lista per l'utente non loggato
+                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultList");
+                
+                //Lista l = new Lista(1, "My List", "My List", "", );
             }
 
             request.setAttribute("userLists", userLists);

@@ -63,6 +63,8 @@ public class ShareProductGetUsers extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        JdbcProdottoDao.Close();
     }
     
     class UtenteShare{

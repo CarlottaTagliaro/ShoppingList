@@ -69,6 +69,8 @@ public class ShareProductInsertUser extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        JdbcProdottoDao.Close();
         //response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }

@@ -49,6 +49,8 @@ public class DeleteProductServlet extends HttpServlet {
             Integer list = Integer.parseInt(ID_list);
 
             Boolean ok = JDBCProdotto.deleteFromList(product, list);
+        
+            JDBCProdotto.Close();
             response.sendRedirect(request.getContextPath().concat("/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());

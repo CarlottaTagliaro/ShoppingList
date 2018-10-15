@@ -64,6 +64,8 @@ public class ShareGetUsers extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        JdbcListaPermessiDao.Close();
     }
     
     class UtentePermesso{

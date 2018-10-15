@@ -105,6 +105,10 @@ public class CreateListServlet extends HttpServlet {
         } catch (DAOException e) {
             w.println(e.getMessage());
         }
+        
+        JDBCLista.Close();
+        JDBCListaPermessi.Close();
+        JDBCCategoriaListe.Close();
     }
 
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

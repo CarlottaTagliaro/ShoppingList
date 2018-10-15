@@ -41,6 +41,7 @@ public class ChangeUserDetailsServlet extends HttpServlet {
             user = JDBCUtente.update(user);
             Boolean ok = user != null;
             
+            JDBCUtente.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/profile" : "/profile"));
         } catch (DAOException e) {
             w.println(e.getMessage());

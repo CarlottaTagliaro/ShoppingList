@@ -76,6 +76,8 @@ public class CreateShopsServlet extends HttpServlet {
                     JDBCCategoriaListe.insertImage(CatListe, x);
                 }
             }
+        
+            JDBCCategoriaListe.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/newShop" : "/shops"));
         } catch (DAOException e) {
             w.println(e.getMessage());

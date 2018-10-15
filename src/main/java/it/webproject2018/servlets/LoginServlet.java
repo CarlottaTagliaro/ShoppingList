@@ -42,5 +42,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             w.println(e.getMessage());
         }
+        
+        JdbcUtenteDao.Close();
     }
 }

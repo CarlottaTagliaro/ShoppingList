@@ -5,6 +5,7 @@
  */
 package it.webproject2018.servlets.pages;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
@@ -45,7 +46,7 @@ public class home extends HttpServlet {
                 productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
             } else {
                 //creo una lista per l'utente non loggato
-                ArrayList<Prodotto> defaultList = new ArrayList<>();
+                ArrayList<Pair<Prodotto, Integer>> defaultList = new ArrayList<>();
                 request.getSession().setAttribute("DefaultList", defaultList);
                 
                 productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
