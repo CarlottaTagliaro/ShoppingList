@@ -57,7 +57,7 @@ public class AdviceSender implements Runnable {
         }
         
         try {
-            List<Notifica> notifications = notificationDao.getAllNotificationNotSentByEmail();
+            List<Notifica> notifications = notificationDao.getAllNotificationsNotSentByEmail();
             /* TODO: continua qui */
         } catch (DAOException ex) {
             System.err.println(ex.getMessage());
