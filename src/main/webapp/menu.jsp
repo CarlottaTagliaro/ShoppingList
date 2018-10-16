@@ -36,14 +36,14 @@
         <div class="title">     
             <img class="img-responsive banner" src="images/Senzanome.png" alt=""/> 
             <a href="#" class="dropdown-toggle notifiche" onclick="getNotifications(false)" > 
-                <img class="img-responsive notification-bell" src="images/notification_bell1.png" alt=""/> 
+                <img class="img-responsive notification-bell" src="images/notification_bell.png" alt=""/> 
             </a>
         </div>
 
         <div>
             <ul class="dropdown-menu dropdown-menu1 notify-drop" style="display:none;">
                 <div class="drop-content" id="notificationsContent">
-                    <li>
+                    <!--<li>
                         <div class="col-md-3 col-sm-3 col-xs-3"><div class="notify-img"><img src="http://placehold.it/45x45" alt=""></div></div>
                         <div class="col-md-9 col-sm-9 col-xs-9 pd-l0"><a href="" data-toggle="modal" data-target="#modal_accept" >Testo notifica</a><a href=""  class="rIcon"><i class="fa fa-dot-circle-o"></i></a>
                             <p>Lorem ipsum sit dolor amet consilium.</p>
@@ -77,7 +77,7 @@
                             <p>Lorem ipsum sit dolor amet consilium.</p>
                             <p class="time">2 Hafta önce</p>
                         </div>
-                    </li>
+                    </li>-->
                 </div>
             </ul>
         </div>
@@ -93,7 +93,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a href="#" class="dropdown-toggle " onclick="getNotifications(true)" > 
-                        <img class="img-responsive notif-mobile" src="images/notification_bell1.png" alt=""/> 
+                        <img class="img-responsive notif-mobile" src="images/notification_bell.png" alt=""/> 
                     </a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->

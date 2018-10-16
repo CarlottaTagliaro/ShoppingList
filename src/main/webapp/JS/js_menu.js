@@ -65,11 +65,11 @@ function shareProductGetUsers(idProduct, qry) {
 
 function getNotifications(mobile){
     $('.dropdown-menu1').toggle();
-    
+    /*
     if(mobile){
         $('.navbar-toggle').toggle(); 
         $('.main').toggle();
-    }
+    }*/
     
     $.post("GetWebNotifications").done(function (data) {
         $("#notificationsContent").empty();
@@ -84,14 +84,14 @@ function getNotifications(mobile){
                 tipo = "Product shared with you!";
             
             var elem = "<li>" +
-                            "<div class=\"col-md-3 col-sm-3 col-xs-3\">" +
+                            /*"<div class=\"col-md-3 col-sm-3 col-xs-3\">" +
                                 "<div class=\"notify-img\"><img src=\"http://placehold.it/45x45\"></div>" +
-                            "</div>" +
-                            "<div class=\"col-md-9 col-sm-9 col-xs-9 pd-l0\">" +
+                            "</div>" +*/
+                            "<div class=\"col-md-12 col-sm-12 col-xs-12\">" +
                                 "<a href=\"\" data-toggle=\"modal\" data-target=\"#modal_accept\">" + tipo + "</a>" +
                                 "<a href=\"\"  class=\"rIcon\"><i class=\"fa fa-dot-circle-o\"></i></a>" +
                                 "<p>" + data[i].testo + "</p>" +
-                                "<p class=\"time\">18-09-2018 15:00</p>" +
+                                "<p class=\"time\">" + data[i].data + "</p>" +
                             "</div>" +
                         "</li>";
                 
