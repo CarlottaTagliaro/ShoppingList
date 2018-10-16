@@ -41,7 +41,7 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
             stm.setString(1, email);
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                while (rs.next()) {
                     String testo = rs.getString("testo");
                     String tipo = rs.getString("tipo");
                     Timestamp data = rs.getTimestamp("data");

@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
                 // Logged-in user found, so just continue request.
             }
         } catch (Exception e) {
+            e.printStackTrace();
             w.println(e.getMessage());
         }
         

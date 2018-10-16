@@ -62,3 +62,40 @@ function shareProductGetUsers(idProduct, qry) {
         }
     });
 }
+
+function getNotifications(mobile){
+    $('.dropdown-menu1').toggle();
+    
+    if(mobile){
+        $('.navbar-toggle').toggle(); 
+        $('.main').toggle();
+    }
+    
+    $.post("GetWebNotifications").done(function (data) {
+        $("#notificationsContent").empty();
+        
+        for(var i = 0; i < data.length; i++){
+            var tipo = "";
+            if(data[i].tipo === "chat")
+                tipo = "New chat message";
+            else if(data[i].tipo === "list_share")
+                tipo = "List shared with you!";
+            else if(data[i].tipo === "product_share")
+                tipo = "Product shared with you!";
+            
+            var elem = "<li>" +
+                            "<div class=\"col-md-3 col-sm-3 col-xs-3\">" +
+                                "<div class=\"notify-img\"><img src=\"http://placehold.it/45x45\"></div>" +
+                            "</div>" +
+                            "<div class=\"col-md-9 col-sm-9 col-xs-9 pd-l0\">" +
+                                "<a href=\"\" data-toggle=\"modal\" data-target=\"#modal_accept\">" + tipo + "</a>" +
+                                "<a href=\"\"  class=\"rIcon\"><i class=\"fa fa-dot-circle-o\"></i></a>" +
+                                "<p>" + data[i].testo + "</p>" +
+                                "<p class=\"time\">18-09-2018 15:00</p>" +
+                            "</div>" +
+                        "</li>";
+                
+            $("#notificationsContent").append(elem);
+        }
+    });
+}
