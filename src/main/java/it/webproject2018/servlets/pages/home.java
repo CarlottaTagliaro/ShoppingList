@@ -5,11 +5,13 @@
  */
 package it.webproject2018.servlets.pages;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,10 +45,13 @@ public class home extends HttpServlet {
             if (user != null) {
                 productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
             } else {
+                
                 productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
             }
 
             request.setAttribute("productList", productList);
+            
+            JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

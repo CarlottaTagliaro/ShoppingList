@@ -4,8 +4,6 @@
     <context-param>
         <param-name>dburl</param-name>
         <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
-        <!--in Services creare connessione in Drivers con MySQL(Connector/J driver)
-				ma anche no, funziona uguale-->
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
@@ -38,6 +36,7 @@
     <servlet>
         <servlet-name>CreateListServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateListServlet</servlet-class>
+        <multipart-config/>
     </servlet>
     <servlet>
         <servlet-name>home</servlet-name>
@@ -71,6 +70,38 @@
         <servlet-name>newProduct</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.newProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteListServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.DeleteListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShareGetUsers</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareGetUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GeolocationServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.GeolocationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShareListInsertUser</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareListInsertUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShareProductGetUsers</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareProductGetUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShareProductInsertUser</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ShareProductInsertUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetWebNotifications</servlet-name>
+        <servlet-class>it.webproject2018.servlets.GetWebNotifications</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -88,12 +119,48 @@
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ChangeUserDetailsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeUserDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeUserDetailsServlet</servlet-name>
+        <url-pattern>/ChangeUserDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ChangeUserPicServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeUserPicServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeUserPicServlet</servlet-name>
+        <url-pattern>/ChangeUserPicServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ChangeListDetailsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeListDetailsServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeListDetailsServlet</servlet-name>
+        <url-pattern>/ChangeListDetailsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>CreateProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.CreateProductServlet</servlet-class>
+        <multipart-config/>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateProductServlet</servlet-name>
         <url-pattern>/CreateProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateShopsServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.CreateShopsServlet</servlet-class>
+        <multipart-config/>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateShopsServlet</servlet-name>
+        <url-pattern>/CreateShopsServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
@@ -102,6 +169,14 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddProductToList</servlet-name>
+        <servlet-class>it.webproject2018.servlets.AddProductToList</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProductToList</servlet-name>
+        <url-pattern>/AddProductToList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
@@ -147,8 +222,8 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>it.webproject2018.filters.AuthenticationFilter</filter-class>
         <init-param>
-            <param-name></param-name>
-            <param-value></param-value>
+            <param-name/>
+            <param-value/>
         </init-param>
     </filter>
     <filter-mapping>
@@ -163,15 +238,41 @@
         <url-pattern>/profile</url-pattern>
         <url-pattern>/logout.jsp</url-pattern>
         <url-pattern>/logout</url-pattern>
-        <url-pattern>/newList.jsp</url-pattern>
-        <url-pattern>/newList</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
-        <url-pattern>/shopCategories.jsp</url-pattern>
-        <url-pattern>/shopCategories</url-pattern>
-        <url-pattern>/prodotti.jsp</url-pattern>
-        <url-pattern>/prodotti</url-pattern>
     </filter-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteListServlet</servlet-name>
+        <url-pattern>/DeleteListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareGetUsers</servlet-name>
+        <url-pattern>/ShareGetUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <url-pattern>/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GeolocationServlet</servlet-name>
+        <url-pattern>/GeolocationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareListInsertUser</servlet-name>
+        <url-pattern>/ShareListInsertUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareProductGetUsers</servlet-name>
+        <url-pattern>/ShareProductGetUsers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShareProductInsertUser</servlet-name>
+        <url-pattern>/ShareProductInsertUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetWebNotifications</servlet-name>
+        <url-pattern>/GetWebNotifications</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -195,7 +296,6 @@
             <taglib-location>/tlds/shopCategoriesCard.tld</taglib-location>
         </taglib>
     </jsp-config>
-    
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>

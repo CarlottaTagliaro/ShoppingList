@@ -60,8 +60,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         
         return null;
     }
-    
-    
+	
     @Override
     public List<CategoriaProdotti> getAll() throws DAOException {
         List<CategoriaProdotti> lista = new ArrayList<>();
@@ -87,8 +86,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return lista;
     }
-    
-    
+	
     public List<CategoriaProdotti> getAllByShop(String catName) throws DAOException {
         List<CategoriaProdotti> lista = new ArrayList<>();
 
@@ -114,7 +112,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return lista;
     }
-
+	
     public List<String> getAllNames() throws DAOException {
         List<String> names = new ArrayList<>();
 
@@ -148,10 +146,9 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return 0L;
     }
-    
-    
+	
     @Override
-    public Boolean insert(CategoriaProdotti entity) throws DAOException{
+    public CategoriaProdotti insert(CategoriaProdotti entity) throws DAOException{
         if (entity == null) {
             throw new DAOException("CategoriaProdotti parameter is null");
         }
@@ -163,7 +160,10 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
             stm.setString(4, entity.getCategoriaLista().getNome());
             Integer rs = stm.executeUpdate();
             
-            return (rs > 0);
+            if (rs > 0)
+                return getByPrimaryKey(entity.getNome());
+            
+            return null;
         } catch (Exception e) {
             return null;
         }
@@ -191,4 +191,21 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
             throw new DAOException("Impossible to update the CategoriaProdotti", ex);
         }
     }
+	
+	@Override
+	public Boolean delete(String primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Categoria prodotti is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti_categorie WHERE Nome = ? ")) {
+			stm.setString(1, primaryKey);
+			int res = stm.executeUpdate();
+			if (res >= 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

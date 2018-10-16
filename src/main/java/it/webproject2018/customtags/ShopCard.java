@@ -5,13 +5,13 @@
  */
 package it.webproject2018.customtags;
 
-import it.webproject2018.db.entities.CategoriaListe;
-import it.webproject2018.db.entities.Lista;
 import java.io.IOException;
 import java.net.URLEncoder;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+
+import it.webproject2018.db.entities.CategoriaListe;
 
 /**
  *
@@ -34,19 +34,21 @@ public class ShopCard  extends SimpleTagSupport {
 "                                    <img class=\"img-responsive center-block\" src=\"%s\">\n" +
 "                                </div>\n", (i == 0 ? "active" : ""), i, getShop().getImmagini().get(i));
         }
-                
+               
+        String enc_name = URLEncoder.encode(shop.getNome());
+        
         String html = String.format("<div class=\"col-md-4 liste\">\n" +
 "                    <div class=\"row center shop-header\">\n" +
-"                        <div class=\"carousel slide newLista\" id=\"myCarousel1\">\n" +
+"                        <div class=\"carousel slide newLista\" id=\"car_%s\">\n" +
 "                            <!-- Carousel items -->\n" +
 "                            <div class=\"carousel-inner\">\n" +
 "                               %s" +
 "                            </div><!-- Carousel nav -->\n" +
-"                            <a class=\"left carousel-control\" href=\"#myCarousel1\" data-slide=\"prev\">\n" +
+"                            <a class=\"left carousel-control\" href=\"#car_%s\" data-slide=\"prev\">\n" +
 "                                <span class=\"glyphicon glyphicon-chevron-left\"></span>  \n" +
 "                                <span class=\"sr-only\">Previous</span>\n" +
 "                            </a>\n" +
-"                            <a class=\"right carousel-control\" href=\"#myCarousel1\" data-slide=\"next\">\n" +
+"                            <a class=\"right carousel-control\" href=\"#car_%s\" data-slide=\"next\">\n" +
 "                                <span class=\"glyphicon glyphicon-chevron-right\"></span>\n" +
 "                                <span class=\"sr-only\">Next</span>\n" +
 "                            </a>                                 \n" +
@@ -59,7 +61,7 @@ public class ShopCard  extends SimpleTagSupport {
 "                            </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
-"                </div>", imgHtml, URLEncoder.encode(shop.getNome()), shop.getNome());
+"                </div>", enc_name, imgHtml, enc_name, enc_name, enc_name, shop.getNome());
         getJspContext().getOut().write(html);
     }
 

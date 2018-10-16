@@ -39,6 +39,8 @@ public class shopCategories extends HttpServlet {
 
             request.setAttribute("categories", categories);
             request.setAttribute("titolo", catName);
+            
+            JdbcCategoriaProdottiDao.Close();
             getServletContext().getRequestDispatcher("/shopCategories.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

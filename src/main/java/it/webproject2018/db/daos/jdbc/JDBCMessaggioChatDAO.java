@@ -15,11 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
@@ -31,12 +29,11 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
     public JDBCMessaggioChatDAO(Connection con) {
         super(con);
     }
-
-
+	
     public JDBCMessaggioChatDAO(ServletContext sc) {
         super(sc);
     }
-
+	
     @Override
     public MessaggioChat getByPrimaryKey(Triple<String, Integer, Timestamp> primaryKey) throws DAOException {
         if (primaryKey == null) {
@@ -70,7 +67,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             throw new DAOException("Error while getting Product by ID", ex);
         }
     }
-
+	
     @Override
     public List<MessaggioChat> getAll() throws DAOException {
         ArrayList<MessaggioChat> chat = new ArrayList<>();
@@ -94,7 +91,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
         return chat;
     }
-
+	
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -109,9 +106,9 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
         return 0L;
     }
-
+	
     @Override
-    public Boolean insert(MessaggioChat entity) throws DAOException {
+    public MessaggioChat insert(MessaggioChat entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("message parameter is null");
         }
@@ -124,12 +121,15 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             stm.setTimestamp(4, entity.getDate());
             Integer rs = stm.executeUpdate();
 
-            return (rs > 0);
+            if (rs > 0)
+                return entity;
+            
+            return null;
         } catch (SQLException e) {
-            return false;
+            return null;
         }
     }
-
+	
     @Override
     public MessaggioChat update(MessaggioChat entity) throws DAOException {
         if (entity == null) {
@@ -152,7 +152,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             throw new DAOException("Impossible to update the message", ex);
         }
     }
-
+	
     @Override
     public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat, Timestamp lasttime) throws DAOException{
         if (id_list_chat == null) {
@@ -185,4 +185,24 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
         
         return messages;
     }
+	
+	@Override
+	public Boolean delete(Triple<String, Integer, Timestamp> primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Messaggio chat is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Chat "
+				+ "WHERE Email_sender = ? and ID_list = ? and Data = ? ")) {
+			stm.setString(1, primaryKey.first());
+			stm.setInt(2, primaryKey.second());
+			stm.setTimestamp(3, primaryKey.third());
+			int res = stm.executeUpdate();
+			if (res >= 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

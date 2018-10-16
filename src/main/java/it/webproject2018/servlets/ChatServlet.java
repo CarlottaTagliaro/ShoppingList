@@ -75,6 +75,9 @@ public class ChatServlet extends HttpServlet {
             e.printStackTrace();
             response.setStatus(500);
         }
+            
+        JdbcListaDao.Close();
+        JdbcMessaggioChatDao.Close();
     }
 
     protected void getChatList(Utente user, HttpServletResponse response) {
@@ -126,7 +129,7 @@ public class ChatServlet extends HttpServlet {
         Boolean res;
         try {
             MessaggioChat msg = new MessaggioChat(user, chat_list_id, text, new Timestamp(System.currentTimeMillis()));
-            res = JdbcMessaggioChatDao.insert(msg);
+            res = JdbcMessaggioChatDao.insert(msg) != null;
         } catch (Exception ex) {
             res = false;
         }

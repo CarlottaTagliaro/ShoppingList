@@ -5,15 +5,15 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaProdottiDAO;
-import it.webproject2018.db.entities.CategoriaProdotti;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
 
 /**
  *
@@ -32,10 +32,12 @@ public class newList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {            
-            JDBCCategoriaProdottiDAO JdbcCategoriaProdottiDao = new JDBCCategoriaProdottiDAO(super.getServletContext());
-            List<String> categories = JdbcCategoriaProdottiDao.getAllNames();
+            JDBCCategoriaListeDAO JDBCCategoriaListeDAO = new JDBCCategoriaListeDAO(super.getServletContext());
+            List<String> categories = JDBCCategoriaListeDAO.getAllNames();
 
             request.setAttribute("categories", categories);
+            
+            JDBCCategoriaListeDAO.Close();
             getServletContext().getRequestDispatcher("/newList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

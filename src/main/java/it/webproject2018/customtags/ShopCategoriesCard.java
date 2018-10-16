@@ -25,11 +25,12 @@ public class ShopCategoriesCard  extends SimpleTagSupport {
     
     @Override
     public void doTag() throws JspException, IOException {
-                        
+        String enc_name = URLEncoder.encode(category.getNome());
+        
         String html = String.format("<div class=\"col-md-4 liste\">\n" +
 "                    <div class=\"row\">\n" +
 "                        <div class=\"img_wrapper\">\n" +
-"                            <img class=\"immagine_liste\" src=\"http://placehold.it/770x300&text=boh\">\n" +
+"                            <img class=\"immagine_liste\" src=\"http://placehold.it/770x300&text=%s\">\n" +
 "                            <div class=\"img_description\"> <p class=\"descrizione\" > %s </p> </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
@@ -40,7 +41,7 @@ public class ShopCategoriesCard  extends SimpleTagSupport {
 "                            </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
-"                </div>", category.getDescrizione(), URLEncoder.encode(category.getNome()), category.getNome());
+"                </div>", enc_name, category.getDescrizione(), enc_name, category.getNome());
         getJspContext().getOut().write(html);
     }
 

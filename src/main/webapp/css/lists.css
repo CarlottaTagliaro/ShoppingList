@@ -57,6 +57,7 @@ div.liste:nth-child(3n+1) {
     width: 30px;
     max-width: 40px;
     font-size: 20px;
+    border-color: transparent;
 }
 
 .myButton3 {
@@ -68,6 +69,7 @@ div.liste:nth-child(3n+1) {
     background-color: #222 !important;
     text-align: center;
     cursor: pointer;
+    border-color: transparent !important;
 }
 
 .myButton:hover {
@@ -227,4 +229,75 @@ div.liste:nth-child(3n+1) {
 
 .pageFrom {
     font-size: 30px;
+}
+
+.modal-title {
+    color: #222;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+td, th {
+    border: 1px solid;
+    border-color: #CCC;
+    text-align: left;
+    padding: 8px;
+    color: #222;
+}
+
+th, td {
+    text-align: center !important;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.search {
+    color: #222;
+    float: left;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.descrizione {
+    margin-left: 0;
+}
+
+.inputfile {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: white;
+}
+
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.btn-secondary {
+    color: #222 !important;
 }

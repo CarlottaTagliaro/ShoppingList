@@ -50,7 +50,7 @@
                         required>
                 </div>
                 <div class="spacing">
-                    <input type="checkbox" name="Privacy" value="true" required="true"> <b>I accept the privacy normatives</b>
+                    <input type="checkbox" name="Privacy" value="true" required="true"> <b>I accept the <a href="privacy.jsp">privacy normatives</a></b>
                 </div>
                 <button class="button1" type="submit"> <b> Register </b> </button>
                 <button class="button1" onclick="goBack()"> <b> Cancel </b> </button>

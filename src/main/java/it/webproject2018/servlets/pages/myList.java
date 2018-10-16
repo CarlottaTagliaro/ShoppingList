@@ -5,9 +5,11 @@
  */
 package it.webproject2018.servlets.pages;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.Prodotto;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class myList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            Boolean showNewList = true;
             JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
             List<Lista> userLists;
@@ -40,9 +43,29 @@ public class myList extends HttpServlet {
                 userLists = JdbcListaDao.getUserLists(user.getEmail());
             } else {
                 userLists = new ArrayList<>();
-            }
+                
+                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
 
+                Lista l = (Lista) request.getSession().getAttribute("DefaultList");
+                
+                if(l == null){
+                    //utente non ha già una lista -> può crearne una nuova
+                    showNewList = true;
+                }
+                else{
+                    showNewList = false;
+                    //creo lista da visualizzare
+                    for(Pair<Prodotto, Integer> p : defaultList){
+                        l.add(p.getFirst());
+                    }
+                    userLists.add(l);
+                }
+            }
+            
             request.setAttribute("userLists", userLists);
+            request.setAttribute("showNewList", showNewList);
+            
+            JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/myList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

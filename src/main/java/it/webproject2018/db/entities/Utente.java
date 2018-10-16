@@ -21,7 +21,6 @@ public class Utente {
     private String email;
     private String immagine;
     private Boolean isAdmin;
-    public ArrayList<Lista> Liste;
     
     public Utente(){}
     
@@ -31,6 +30,23 @@ public class Utente {
         this.email = email;
         this.immagine = immagine;
         this.isAdmin = isAdmin;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ListaPermessi)) {
+            return false;
+        }
+        
+        Utente u = (Utente) other;
+        
+        return u.getEmail().equals(getEmail());
     }
 
     public String getName() {

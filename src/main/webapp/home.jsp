@@ -23,6 +23,9 @@
         <script>
             $(document).ready(function () {
                 selectMenuEl("home");
+                
+                //submit form when order selection changed
+                $("#search-select").change(function(){$(".search-form").submit()});
             });
         </script>
 

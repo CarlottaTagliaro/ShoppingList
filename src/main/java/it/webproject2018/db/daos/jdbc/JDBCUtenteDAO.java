@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -50,9 +49,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setPicture(rs.getString("Immagine"));;
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                    user.Liste = listaDao.getUserLists(user.getEmail());
-
                     return user;
                 }
             }
@@ -84,9 +80,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                 user.setEmail(rs.getString("Email"));
                 user.setPicture(rs.getString("Immagine"));
                 user.setIsAdmin(rs.getBoolean("IsAdmin"));
-
-                JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                user.Liste = listaDao.getUserLists(user.getEmail());
             }
         } catch (SQLException ex) {
             throw new DAOException("Error while authenticating User", ex);
@@ -94,13 +87,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return user;
     }
 
-    /**
-     * Returns the number of {@link Utente utenti} stored on the persistence
-     * system of the application.
-     *
-     * @return the number of records present into the storage system.
-     * @throws DAOException if an error occurred during the information
-     */
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -116,14 +102,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return 0L;
     }
 
-    /**
-     * Returns the list of all the valid {@link Utente utenti} stored by the
-     * storage system.
-     *
-     * @return the list of all the valid {@code utenti}.
-     * @throws DAOException if an error occurred during the information
-     * retrieving.
-     */
     @Override
     public List<Utente> getAll() throws DAOException {
         List<Utente> utenti = new ArrayList<>();
@@ -140,9 +118,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
                     user.setPicture(rs.getString("Immagine"));
                     user.setIsAdmin(rs.getBoolean("IsAdmin"));
 
-                    JDBCListaDAO listaDao = new JDBCListaDAO(CON);
-                    user.Liste = listaDao.getUserLists(user.getEmail());
-
                     utenti.add(user);
                 }
             }
@@ -152,15 +127,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return utenti;
     }
 
-    /**
-     * Update the user passed as parameter and returns it. Senza email perchè
-     * primary key
-     *
-     * @param user the user used to update the persistence system.
-     * @return the updated user.
-     * @throws DAOException if an error occurred during the action.
-     */
-    
 	@Override
     public Utente update(Utente user) throws DAOException {
         if (user == null) {
@@ -191,7 +157,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             throw new DAOException("userEmail or password or name or surname is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) VALUES (?, ?, ?, ?, SHA2(?, 256), ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW());");
             stm.setString(1, name);
             stm.setString(2, surname);
             stm.setString(3, userEmail);
@@ -212,8 +178,25 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
     }
     
     @Override
-    public Boolean insert(Utente entity) throws DAOException{
+    public Utente insert(Utente entity) throws DAOException{
         //TODO: pensare come sistemarlo
-        return false;
+        return null;
     }
+	
+	@Override
+	public Boolean delete(String primaryKey) throws DAOException {
+		if (primaryKey == null) {
+			throw new DAOException("Utente is null");
+		}
+		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti where Email = ? ")) {
+			stm.setString(1, primaryKey);
+			int res = stm.executeUpdate();
+			if (res >= 1) {
+				return true;
+			}
+			return false;
+		} catch (SQLException ex) {
+			return false;
+		}
+	}
 }

@@ -1,15 +1,15 @@
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
-import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.entities.Utente;
 
 /**
  *
@@ -40,7 +40,10 @@ public class LoginServlet extends HttpServlet {
                 // Logged-in user found, so just continue request.
             }
         } catch (Exception e) {
+            e.printStackTrace();
             w.println(e.getMessage());
         }
+        
+        JdbcUtenteDao.Close();
     }
 }
