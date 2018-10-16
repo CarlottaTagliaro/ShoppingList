@@ -15,7 +15,7 @@ import it.webproject2018.job_scheduler.AdviceSender;
 /**
  * Web application lifecycle listener.
  *
- * @author caramellaio
+ * @author alberto
  */
 @WebListener
 public class JobScheduler implements ServletContextListener {
@@ -24,7 +24,8 @@ public class JobScheduler implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new AdviceSender(), 0, 1, TimeUnit.SECONDS);
+        /* TODO [alberto] adatta anche sta parte */
+        // scheduler.scheduleAtFixedRate(new AdviceSender(), 0, 1, TimeUnit.SECONDS);
     }
 
     @Override

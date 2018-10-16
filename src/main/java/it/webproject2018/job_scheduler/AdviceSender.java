@@ -13,19 +13,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import it.webproject2018.job_scheduler.MailSender;
+import it.webproject2018.db.daos.jdbc.JDBCNotificaDAO;
+import it.webproject2018.db.entities.Notifica;
+import it.webproject2018.db.exceptions.DAOException;
+import java.sql.Connection;
+import java.util.List;
 /**
  *
- * @author caramellaio
+ * @author alberto
  */
 public class AdviceSender implements Runnable {
     
-    private String mail;
+    private String senderMail;
     private String password;
-    private boolean run = true;
+    private Connection conn;
+    
+    public AdviceSender(String senderMail, String password, Connection conn) {
+        this.senderMail = senderMail;
+        this.password = password;
+        this.conn = conn;
+    }
+
     @Override
     public void run() {
         /* qui c'e' solo codice esempio che ho usato per testare, va.*/
-        String dest_mail = "";
+        /*String dest_mail = "";
         if (this.run) {
             System.out.println("porco dio!");
             mail = "web2018unitn@gmail.com";
@@ -36,14 +48,27 @@ public class AdviceSender implements Runnable {
                                       "a", images, new CategoriaProdotti("cose", "", "", null), "g.s@agg.it"));
             this.sendMailTo(new Utente("pippo","aaa", dest_mail, "lalala", false), products);
         }
-        this.run = false;
+        this.run = false;*/
+        JDBCNotificaDAO notificationDao = new JDBCNotificaDAO(conn);
+        try {
+            notificationDao.generateNotificationsByProducts();
+        } catch (DAOException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
+        try {
+            List<Notifica> notifications = notificationDao.getAllNotificationNotSentByEmail();
+            /* TODO: continua qui */
+        } catch (DAOException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
     
     void sendMailTo(Utente user, ArrayList<Prodotto> products) {
         String email = user.getEmail();
         String header = "SHOPPING LIST: prodotti in scadenza";
         try {
-            MailSender.Send(mail, password, user.getEmail(), header,
+            MailSender.Send(this.senderMail, this.password, user.getEmail(), header,
                     this.generateMessage(user, products));
         } catch (MessagingException ex) {
             System.err.println("Fail sending email");
@@ -62,10 +87,5 @@ public class AdviceSender implements Runnable {
         
         messageBuilder.append("Buona Giornata da SHOPPING LIST.");
         return messageBuilder.toString();
-    }
-    
-    public void setMailSender(String mail, String password) {
-        this.mail = mail;
-        this.password = password;
     }
 }
