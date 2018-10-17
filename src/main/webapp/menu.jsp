@@ -29,6 +29,9 @@
             <script>
                 $(document).ready(function () {
                     startLocating();
+                });                
+                $(document).ready(function () {
+                    startCheckNotifications();
                 });
             </script>
         </c:if>

@@ -97,5 +97,30 @@ function getNotifications(mobile){
                 
             $("#notificationsContent").append(elem);
         }
+        if(data.length === 0) {
+            $("#notificationsContent").append("<li class='center'>No notifications</li>");
+        }
+        
+        var img = "images/notification_bell.png";
+        
+        $(".notif-mobile").attr("src", img);
+        $(".notification-bell").attr("src", img);
     });
+}
+
+function checkNotifications(){
+    $.post("GetWebNotifications", {onlyNews: true}).done(function (data) {
+        var img = "images/notification_bell.png";
+        if(data){
+            img = "images/notification_bell1.png";
+        }
+        
+        $(".notif-mobile").attr("src", img);
+        $(".notification-bell").attr("src", img);
+    });
+}
+
+function startCheckNotifications(){
+    checkNotifications();
+    setInterval(checkNotifications, 60 * 1000);
 }
