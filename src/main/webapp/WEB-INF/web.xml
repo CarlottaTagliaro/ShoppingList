@@ -178,6 +178,14 @@
         <servlet-name>AddProductToList</servlet-name>
         <url-pattern>/AddProductToList</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>BuyProductServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.BuyProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuyProductServlet</servlet-name>
+        <url-pattern>/BuyProductServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChatServlet</servlet-name>
         <url-pattern>/ChatServlet</url-pattern>
