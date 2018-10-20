@@ -61,7 +61,7 @@ public class ProductCard extends SimpleTagSupport {
                 ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
 
                 Lista l = (Lista) request.getSession().getAttribute("DefaultList");
-                if (l != null) {
+                if (l != null && l.getCategoria().getNome().equals(product.getCategoria().getCategoriaLista().getNome())) {
                     Integer amount = 0;
                     for (Pair<Prodotto, Integer> p : defaultList) {
                         if (p.getFirst().getId().equals(product.getId())) {
