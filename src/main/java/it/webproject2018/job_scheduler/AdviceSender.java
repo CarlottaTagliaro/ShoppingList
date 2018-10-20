@@ -14,10 +14,14 @@ import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import it.webproject2018.job_scheduler.MailSender;
 import it.webproject2018.db.daos.jdbc.JDBCNotificaDAO;
+import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Notifica;
 import it.webproject2018.db.exceptions.DAOException;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletContext;
 /**
  *
  * @author alberto
@@ -26,12 +30,12 @@ public class AdviceSender implements Runnable {
     
     private String senderMail;
     private String password;
-    private Connection conn;
+    private ServletContext servletContext;
     
-    public AdviceSender(String senderMail, String password, Connection conn) {
+    public AdviceSender(String senderMail, String password, ServletContext servletContext) {
         this.senderMail = senderMail;
         this.password = password;
-        this.conn = conn;
+        this.servletContext = servletContext;
     }
 
     @Override
@@ -49,23 +53,41 @@ public class AdviceSender implements Runnable {
             this.sendMailTo(new Utente("pippo","aaa", dest_mail, "lalala", false), products);
         }
         this.run = false;*/
-        JDBCNotificaDAO notificationDao = new JDBCNotificaDAO(conn);
-        try {
-            notificationDao.generateNotificationsByProducts();
-        } catch (DAOException ex) {
-            System.err.println(ex.getMessage());
-        }
+        JDBCNotificaDAO notificationDao = new JDBCNotificaDAO(servletContext);
+        JDBCUtenteDAO userDao = new JDBCUtenteDAO(servletContext);
         
         try {
-            List<Notifica> notifications = notificationDao.getAllNotificationsNotSentByEmail();
-            /* TODO: continua qui */
+            ArrayList<Notifica> notifications = null;
+            Map<String, ArrayList<Prodotto>> userProductsMap = null;
+            
+            userProductsMap = new HashMap<>();
+            notificationDao.generateNotificationsByProducts();
+            notifications = notificationDao.getAllNotificationsNotSentByEmail();
+            
+            /* group the notifications by user email */
+            for (Notifica notification : notifications) {
+                String userEmail = notification.getLista().getOwner();
+                
+                if (userProductsMap.containsKey(userEmail)) {
+                
+                }
+                else {
+                    ArrayList<Prodotto> toAdd = new ArrayList<>();
+                    toAdd.add(notification.getProdotto());
+                    userProductsMap.put(userEmail, toAdd);
+                }
+            }
+            
+            for (Map.Entry<String, ArrayList<Prodotto>> entry : userProductsMap.entrySet()) {
+                /* not efficient... */
+                sendMailTo(userDao.getByPrimaryKey(entry.getKey()), entry.getValue());
+            }
         } catch (DAOException ex) {
             System.err.println(ex.getMessage());
         }
     }
     
     void sendMailTo(Utente user, ArrayList<Prodotto> products) {
-        String email = user.getEmail();
         String header = "SHOPPING LIST: prodotti in scadenza";
         try {
             MailSender.Send(this.senderMail, this.password, user.getEmail(), header,
