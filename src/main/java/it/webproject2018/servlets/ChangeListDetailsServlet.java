@@ -41,6 +41,7 @@ public class ChangeListDetailsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        init();
         PrintWriter w = response.getWriter();
         try {
             Utente user = (Utente) request.getSession().getAttribute("User");
@@ -91,6 +92,8 @@ public class ChangeListDetailsServlet extends HttpServlet {
             Boolean ok = list != null;
             w.println(ok);
             
+            JDBCLista.Close();
+            JDBCCategoriaListe.Close();
             //response.sendRedirect(request.getContextPath() + (!ok ? "/myList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());

@@ -37,6 +37,7 @@ public class ChangeUserPicServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        init();
         PrintWriter w = response.getWriter();
         try {
             Utente user = (Utente) request.getSession().getAttribute("User");

@@ -52,6 +52,7 @@ public class NewList extends SimpleTagSupport {
             perm = new ListaPermessi(user.getEmail(), lista.getId());
             try {
                 perm = JdbcListaPermessiDao.getByPrimaryKey(primaryKey);
+                JdbcListaPermessiDao.Close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
