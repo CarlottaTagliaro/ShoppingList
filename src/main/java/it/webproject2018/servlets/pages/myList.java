@@ -55,6 +55,7 @@ public class myList extends HttpServlet {
                 else{
                     showNewList = false;
                     //creo lista da visualizzare
+                    l.clear();
                     for(Pair<Prodotto, Integer> p : defaultList){
                         l.add(p.getFirst());
                     }

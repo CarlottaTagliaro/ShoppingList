@@ -73,6 +73,7 @@ public class ProductCard extends SimpleTagSupport {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", l.getId(), amount, l.getNome());
                 }
             }
+            JdbcProdottoDao.Close();
         } catch (Exception e) {
             e.printStackTrace();
         }

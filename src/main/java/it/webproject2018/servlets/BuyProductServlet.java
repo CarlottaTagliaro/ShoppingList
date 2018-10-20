@@ -26,6 +26,7 @@ public class BuyProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        init();
         PrintWriter w = response.getWriter();
         try {
             Integer idProduct = Integer.parseInt(request.getParameter("idProduct"));
@@ -46,6 +47,7 @@ public class BuyProductServlet extends HttpServlet {
                 ok2 = JDBCLista.buyProduct(idList, idProduct, amount);
             }
             
+            JDBCLista.Close();
             response.sendRedirect(request.getContextPath() + (!ok2 ? "/myList" : "/myList"));
         } catch (Exception e) {
             w.println(e.getMessage());
