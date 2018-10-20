@@ -43,7 +43,8 @@ public class ShareProductGetUsers extends HttpServlet {
         }
         
         try {
-            ArrayList<Pair<Utente, Boolean>> lista = JdbcProdottoDao.getUserToShareWith(idProdotto, user, qry);
+            ArrayList<Pair<Utente, Boolean>> lista = JdbcProdottoDao.getUserToShareWith(idProdotto, user, qry);        
+            JdbcProdottoDao.Close();
             
             ArrayList<UtenteShare> users = new ArrayList<>();
             
@@ -63,8 +64,6 @@ public class ShareProductGetUsers extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        JdbcProdottoDao.Close();
     }
     
     class UtenteShare{

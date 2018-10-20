@@ -46,6 +46,7 @@ public class ShareGetUsers extends HttpServlet {
         
         try {
             List<Pair<Utente, ListaPermessi>> liste = JdbcListaPermessiDao.getShareUserList(user, qry, idLista);
+            JdbcListaPermessiDao.Close();
             ArrayList<UtentePermesso> resp_list = new ArrayList<>();
             
             for(Pair<Utente, ListaPermessi> el : liste){
@@ -65,7 +66,6 @@ public class ShareGetUsers extends HttpServlet {
             e.printStackTrace();
         }
         
-        JdbcListaPermessiDao.Close();
     }
     
     class UtentePermesso{
