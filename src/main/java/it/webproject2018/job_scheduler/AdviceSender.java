@@ -5,21 +5,17 @@
  */
 package it.webproject2018.job_scheduler;
 
-import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import it.webproject2018.job_scheduler.MailSender;
 import it.webproject2018.db.daos.jdbc.JDBCNotificaDAO;
 import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Notifica;
 import it.webproject2018.db.exceptions.DAOException;
-import java.sql.Connection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
 /**
@@ -28,9 +24,9 @@ import javax.servlet.ServletContext;
  */
 public class AdviceSender implements Runnable {
     
-    private String senderMail;
-    private String password;
-    private ServletContext servletContext;
+    private final String senderMail;
+    private final String password;
+    private final ServletContext servletContext;
     
     public AdviceSender(String senderMail, String password, ServletContext servletContext) {
         this.senderMail = senderMail;
