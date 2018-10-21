@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
         try {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            
+
             Utente user = JdbcUtenteDao.getUserAuthentication(username, password);
             if (user == null || !user.getEmail().equals(username)) {
                 request.getSession().removeAttribute("User");
@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
         } catch (Exception e) {
             w.println(e.getMessage());
         }
-        
+
         JdbcUtenteDao.Close();
     }
 }
