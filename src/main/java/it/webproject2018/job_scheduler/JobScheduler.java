@@ -12,10 +12,11 @@ import javax.servlet.annotation.WebListener;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import it.webproject2018.job_scheduler.AdviceSender;
+import java.util.concurrent.ScheduledFuture;
 /**
  * Web application lifecycle listener.
  *
- * @author caramellaio
+ * @author alberto
  */
 @WebListener
 public class JobScheduler implements ServletContextListener {
@@ -24,7 +25,8 @@ public class JobScheduler implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new AdviceSender(), 0, 1, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new AdviceSender("", "", sce.getServletContext()), 0, 10000, TimeUnit.DAYS);
+        // scheduler.scheduleAtFixedRate(new AdviceSender(), 0, 1, TimeUnit.SECONDS);
     }
 
     @Override

@@ -22,14 +22,17 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         JdbcUtenteDao = new JDBCUtenteDAO(super.getServletContext());
     }
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        init();
+        
         PrintWriter w = response.getWriter();
         try {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-
-            Utente user = JdbcUtenteDao.getUserAuthentication(username, password);
+            Utente user = JdbcUtenteDao.getUserAuthentication(username, password);        
+            JdbcUtenteDao.Close();
             if (user == null || !user.getEmail().equals(username)) {
                 request.getSession().removeAttribute("User");
                 response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login page.
@@ -40,9 +43,8 @@ public class LoginServlet extends HttpServlet {
                 // Logged-in user found, so just continue request.
             }
         } catch (Exception e) {
+            e.printStackTrace();
             w.println(e.getMessage());
         }
-
-        JdbcUtenteDao.Close();
     }
 }

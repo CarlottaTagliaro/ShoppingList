@@ -5,12 +5,6 @@
  */
 package it.webproject2018.db.daos.jdbc;
 
-import it.webproject2018.db.daos.ListaDAO;
-import it.webproject2018.db.exceptions.DAOException;
-import it.webproject2018.db.entities.CategoriaListe;
-import it.webproject2018.db.entities.Lista;
-import it.webproject2018.db.entities.Prodotto;
-import it.webproject2018.db.entities.Utente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +12,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import de.scravy.pair.Pairs;
+import java.lang.Long;
+import java.lang.Integer;
+
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import org.glassfish.gmbal.generic.Triple;
+
+import de.scravy.pair.Pairs;
+import it.webproject2018.db.daos.ListaDAO;
+import it.webproject2018.db.entities.CategoriaListe;
+import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.exceptions.DAOException;
 
 /**
  *
@@ -112,6 +113,116 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         return prodotti;
     }
 
+    public Boolean insertListProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
+        if (listID == null) {
+            throw new DAOException("listID is null");
+        }
+
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti (ID_lista, ID_prodotto, Quantita) VALUES (?, ?, ?);");
+            stm.setInt(1, listID);
+            stm.setInt(2, prodID);
+            stm.setInt(3, amount);
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Integer getProductQuantity(Integer listID, Integer prodID, Integer amount) throws DAOException {
+        if (listID == null) {
+            throw new DAOException("listID is null");
+        }
+
+        try {
+            PreparedStatement stm = CON.prepareStatement("select Quantita from Liste_Prodotti where ID_lista = ? AND ID_prodotto = ?");
+            stm.setInt(1, listID);
+            stm.setInt(2, prodID);
+            Integer quantity = -1;
+            
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    quantity = rs.getInt("Quantita");
+                }
+            }
+
+            return quantity;
+        } catch (Exception e) {
+            throw new DAOException("Error while getting product quantity " + e);
+            //return null;
+        }
+    }
+
+    public Boolean buyProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
+        if (listID == null) {
+            throw new DAOException("listID is null");
+        }
+
+        try {
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, NOW(), ?);");
+            stm.setInt(1, listID);
+            stm.setInt(2, prodID);
+            stm.setInt(3, amount);
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            throw new DAOException("Error while buy product " + e);
+            //return null;
+        }
+    }
+
+    public Boolean updateListProductToBuy(Integer listID, Integer prodID, Integer amount, Integer quantity) throws DAOException {
+        if (listID == null) {
+            throw new DAOException("listID is null");
+        }
+
+        try {
+            PreparedStatement stm;
+            if(quantity == amount) {
+                stm = CON.prepareStatement("DELETE FROM Liste_Prodotti WHERE (ID_lista = ? AND ID_prodotto = ?)");
+
+                stm.setInt(1, listID);
+                stm.setInt(2, prodID);
+            }
+            else {
+                stm = CON.prepareStatement("UPDATE Liste_Prodotti SET Quantita = ? WHERE (ID_lista = ? AND ID_prodotto = ?)");
+
+                stm.setInt(1, amount);
+                stm.setInt(2, listID);
+                stm.setInt(3, prodID);
+            }
+            
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            throw new DAOException("Error while update product to buy " + e);
+            //return null;
+        }
+    }
+
+    public Boolean updateListProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
+        if (listID == null) {
+            throw new DAOException("listID is null");
+        }
+
+        try {
+            PreparedStatement stm = CON.prepareStatement("UPDATE Liste_Prodotti SET Quantita = ? WHERE (ID_lista = ? AND ID_prodotto = ?)");
+            stm.setInt(1, amount);
+            stm.setInt(2, listID);
+            stm.setInt(3, prodID);
+            Integer rs = stm.executeUpdate();
+
+            return (rs > 0);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @Override
     public Lista getByPrimaryKey(Integer primaryKey) throws DAOException {
         if (primaryKey == null) {
@@ -123,11 +234,10 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             try (ResultSet rs = stm.executeQuery()) {
 
                 if (rs.next()) {
-
-                    Boolean perm_edit = rs.getBoolean("perm_edit");
-                    Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
-                    Boolean perm_del = rs.getBoolean("perm_del");
-                    Boolean accettato = rs.getBoolean("accettato");
+                    //Boolean perm_edit = rs.getBoolean("perm_edit");
+                    //Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
+                    //Boolean perm_del = rs.getBoolean("perm_del");
+                    //Boolean accettato = rs.getBoolean("accettato");
                     Integer id = rs.getInt("ID");
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");
@@ -211,14 +321,16 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             stm.setString(5, entity.getOwner());
             Integer rs = stm.executeUpdate();
 
-            /*ResultSet rsi = stm.getGeneratedKeys();
-            if (rsi.next()) {
-                return getByPrimaryKey(rsi.getInt(1));
-            }*/
-            if (rs > 0) {
-                return entity;
-            } else {
-                return null;
+            try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    Long x = (generatedKeys.getLong(1));
+                    Integer i = Integer.valueOf(x.intValue());
+                    Lista l = new Lista(i, entity.getNome(), entity.getDescrizione(), entity.getImmagine(), null, entity.getOwner());
+                    return l;
+                }
+                else {
+                    return null;
+                }
             }
         } catch (Exception e) {
             return null;

@@ -121,10 +121,13 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         try (PreparedStatement stm = CON.prepareStatement("SELECT DISTINCT * FROM (SELECT distinct Liste.ID, Liste.Nome FROM Liste, Utenti_Liste, Utenti"
                 + "                WHERE Liste.ID = Utenti_Liste.ID"
                 + "                AND Utenti.Email = Utenti_Liste.Email AND Utenti.Email = ?"
-                + "                AND Utenti_Liste.Perm_add_rem = 1) as a"
+                + "                AND Utenti_Liste.Perm_add_rem = 1"
+                + "                AND Liste.Categoria = "
+                + "                     (SELECT Nome_liste_cat FROM Prodotti_categorie JOIN Prodotti ON Categoria = Prodotti_categorie.Nome WHERE ID = ?)) as a"
                 + "                LEFT JOIN (SELECT * FROM Liste_Prodotti WHERE ID_prodotto = ?) as b ON a.ID = b.ID_lista;")) {
             stm.setString(1, user.getEmail());
             stm.setInt(2, entity.getId());
+            stm.setInt(3, entity.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -384,7 +387,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             throw new DAOException("product parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email) VALUES (?, ?)");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email, Data_inserimento) VALUES (?, ?, NOW())");
             stm.setInt(1, idProduct);
             stm.setString(2, email);
             Integer rs = stm.executeUpdate();

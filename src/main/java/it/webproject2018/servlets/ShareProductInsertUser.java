@@ -63,6 +63,7 @@ public class ShareProductInsertUser extends HttpServlet {
             for(Utente u : old_share){
                 JdbcProdottoDao.deleteShareProduct(idProdotto, u.getEmail());
             }
+            JdbcProdottoDao.Close();
                         
             //TODO: redirect to correct origin page
             response.sendRedirect(request.getContextPath().concat("/home"));
@@ -70,7 +71,6 @@ public class ShareProductInsertUser extends HttpServlet {
             e.printStackTrace();
         }
         
-        JdbcProdottoDao.Close();
         //response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }

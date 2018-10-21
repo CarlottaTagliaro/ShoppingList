@@ -40,7 +40,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             throw new DAOException("list permission parameter is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Liste (Email, ID, Perm_edit, Perm_add_rem, Perm_del, Accettato) VALUES (?, ?, ?, ?, ?, ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Liste (Email, ID, Perm_edit, Perm_add_rem, Perm_del, Accettato, Data_inserimento) VALUES (?, ?, ?, ?, ?, ?, NOW());");
             stm.setString(1, entity.getEmail());
             stm.setInt(2, entity.getId_lista());
             stm.setBoolean(3, entity.getPerm_edit());
@@ -49,13 +49,12 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
             stm.setBoolean(6, entity.getAccettato());
             Integer rs = stm.executeUpdate();
 
-            if (rs > 0) {
+            if (rs > 0)
                 return entity;
-            }
-
-            return null;
-        } catch (Exception e) {
-            return null;
+            else
+                return null;
+        } catch (SQLException e) {
+            throw new DAOException("Error while insert list permission " + e);
         }
     }
 

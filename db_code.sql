@@ -18,6 +18,7 @@ CREATE TABLE Utenti(
     Immagine varchar(150) not null,
     Password varchar(256) not null,
     IsAdmin boolean not null,
+    Ultima_visualizzazione Timestamp,
     primary key(Email)
 );
 
@@ -66,6 +67,7 @@ CREATE TABLE Utenti_Liste(
     Perm_add_rem boolean not null, -- permesso di aggiungere o rimuovere prodotti dalla lista
     Perm_del boolean not null, -- permesso di eliminare la lista
     Accettato boolean not null, -- per capire se utente ha accettato l invito o è in attesa
+    Data_inserimento Timestamp not null,
     primary key(Email, ID),
     foreign key(Email) references Utenti(Email),
     foreign key(ID) references Liste(ID)
@@ -124,6 +126,7 @@ CREATE TABLE Chat(
 CREATE TABLE Utenti_Prodotti(
     Email varchar(100) not null,
     ID_prodotto integer not null,
+    Data_inserimento Timestamp not null,
     primary key(Email, ID_prodotto),
     foreign key(Email) references Utenti(Email),
     foreign key(ID_prodotto) references Prodotti(ID)

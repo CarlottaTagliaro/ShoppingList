@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
 
 /**
  *
@@ -128,7 +127,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         return utenti;
     }
 
-	@Override
+    @Override
     public Utente update(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
@@ -152,13 +151,32 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
     
+    public Boolean updateUserLastAccess(Utente user) throws DAOException {
+        if (user == null) {
+            throw new DAOException("Parameter 'user' not valid for update",
+                    new IllegalArgumentException("The passed user is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
+                + "SET Ultima_visualizzazione = NOW() WHERE Email = ?")) {
+            std.setString(1, user.getEmail());
+            if (std.executeUpdate() == 1) {
+                return true;
+            } else {
+                throw new DAOException("Impossible to update the  the user");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the user", ex);
+        }
+    }
+    
     @Override
     public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException {
         if (userEmail == null || password == null || name == null || surname == null) {
             throw new DAOException("userEmail or password or name or surname is null");
         }
         try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin) VALUES (?, ?, ?, ?, SHA2(?, 256), ?);");
+            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW());");
             stm.setString(1, name);
             stm.setString(2, surname);
             stm.setString(3, userEmail);
@@ -166,38 +184,37 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             stm.setString(5, password);
             stm.setInt(6, 0);
             Integer rs = stm.executeUpdate();
-            
-            if(rs <= 0) {
+
+            if (rs <= 0) {
                 return false;
-            }
-            else {
+            } else {
                 return true;
             }
         } catch (Exception e) {
             return false;
         }
     }
-    
+
     @Override
-    public Utente insert(Utente entity) throws DAOException{
+    public Utente insert(Utente entity) throws DAOException {
         //TODO: pensare come sistemarlo
         return null;
     }
-	
-	@Override
-	public Boolean delete(String primaryKey) throws DAOException {
-		if (primaryKey == null) {
-			throw new DAOException("Utente is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti where Email = ? ")) {
-			stm.setString(1, primaryKey);
-			int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException ex) {
-			return false;
-		}
-	}
+
+    @Override
+    public Boolean delete(String primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Utente is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti where Email = ? ")) {
+            stm.setString(1, primaryKey);
+            int res = stm.executeUpdate();
+            if (res >= 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

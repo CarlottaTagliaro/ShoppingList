@@ -61,7 +61,7 @@ public class ProductCard extends SimpleTagSupport {
                 ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
 
                 Lista l = (Lista) request.getSession().getAttribute("DefaultList");
-                if (l != null) {
+                if (l != null && l.getCategoria().getNome().equals(product.getCategoria().getCategoriaLista().getNome())) {
                     Integer amount = 0;
                     for (Pair<Prodotto, Integer> p : defaultList) {
                         if (p.getFirst().getId().equals(product.getId())) {
@@ -73,6 +73,7 @@ public class ProductCard extends SimpleTagSupport {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", l.getId(), amount, l.getNome());
                 }
             }
+            JdbcProdottoDao.Close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,20 +103,22 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                    <div class=\"modal-header\">\n"
                 + "                                        <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Choose the list</b></h3>\n"
                 + "                                    </div>\n"
+                + "                                    <form action=\"AddProductToList\" method=\"POST\">\n"
                 + "                                    <div class=\"modal-body\">\n"
+                + "                                         <input type=\"text\" name=\"idProduct\" value=\"" + getProduct().getId() + "\" style=\"display: none;\">\n"
                 + "                                         <div class=\"row\">\n"
                 + "                                             <div class=\"col-xs-12 col-sm-4 scegliLista\">\n"
                 + "                                                 <div class=\"row amount\">\n"
                 + "                                                     <label> Choose: </label>\n"
                 + "                                                 </div>\n"
                 + "                                                 <div class=\"row\"> \n"
-                + "                                                     <select id=\"selList_" + getProduct().getId() + "\" class=\"form-control\">\n"
+                + "                                                     <select id=\"selList_" + getProduct().getId() + "\" name=\"list\" class=\"form-control\">\n"
                 + "                                                         " + listeHtml
                 + "                                                     </select>\n"
                 + "                                                 </div>"
                 + "                                             </div>\n"
                 + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
-                + "                                                 <div class=\"text-info\"><b> Already added: </b><input class=\"amount_added\" type=\"text\" id=\"amount_" + getProduct().getId() + "\" readonly></div>\n"
+                + "                                                 <div class=\"text-info\"><b> Already added: </b><input class=\"amount_added\" name=\"alreadyAdd\" type=\"text\" id=\"amount_" + getProduct().getId() + "\" readonly></div>\n"
                 + "                                             </div>\n"
                 + "                                             <div class=\"col-xs-6 col-sm-4\">\n"
                 + "                                                 <div class=\"row\"> \n"
@@ -137,8 +140,9 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                    </div>\n"
                 + "                                    <div class=\"modal-footer\">\n"
                 + "                                         <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
-                + "                                         <button type=\"button\" class=\"myButton3 btn btn-primary\"> <b>Add</b></button>"
+                + "                                         <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Add</b></button>"
                 + "                                    </div>\n"
+                + "                                    </form>\n"
                 + "                                </div>\n"
                 + "                            </div>\n"
                 + "                        </div>\n"

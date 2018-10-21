@@ -16,5 +16,9 @@ import java.util.ArrayList;
 public interface NotificaDAO extends DAO<Notifica, Integer> {
     
     public ArrayList<Notifica> getNotificationByUserEmail(String userEmail) throws DAOException;
+    
+    public void generateNotificationsByProducts() throws DAOException;
+    
+    public ArrayList<Notifica> getAllNotificationsNotSentByEmail() throws DAOException;
 }
 
