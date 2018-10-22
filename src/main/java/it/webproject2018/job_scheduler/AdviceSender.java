@@ -82,6 +82,9 @@ public class AdviceSender implements Runnable {
                 /* not efficient... */
                 sendMailTo(userDao.getByPrimaryKey(entry.getKey()), entry.getValue());
             }
+            
+            notificationDao.Close();
+            userDao.Close();
         } catch (DAOException ex) {
             System.err.println(ex.getMessage());
         }
