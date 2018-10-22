@@ -66,6 +66,7 @@ public class GetWebNotifications extends HttpServlet {
         }
 
         JdbcNotificaWebDao.Close();
+        JdbcUtenteDao.Close();
     }
 
 }

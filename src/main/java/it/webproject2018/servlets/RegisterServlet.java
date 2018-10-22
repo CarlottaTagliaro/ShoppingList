@@ -31,6 +31,8 @@ public class RegisterServlet extends HttpServlet {
             String password = request.getParameter("password");
             
             Boolean ok = JdbcUtenteDao.RegisterUser(name, surname, username, password);
+        
+            JdbcUtenteDao.Close();
             if (!ok) {
                 response.sendRedirect(request.getContextPath() + "/register.jsp");
             }
@@ -40,7 +42,5 @@ public class RegisterServlet extends HttpServlet {
         } catch (Exception e) {
             w.println(e.getMessage());
         }
-        
-        JdbcUtenteDao.Close();
     }
 }

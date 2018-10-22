@@ -63,10 +63,7 @@ public class AddProductToList extends HttpServlet {
                     //update
                     Pair<Prodotto, Integer> elem = (Pair<Prodotto, Integer>)optional.get();
                     int i = defaultList.indexOf(elem);
-                    System.out.println(i);
-                    System.out.println(defaultList.size());
                     defaultList.set(i, Pairs.from(elem.getFirst(), amount)); 
-                    System.out.println(defaultList.size());                   
                 }
                 else{
                     //insert
