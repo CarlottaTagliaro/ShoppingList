@@ -29,11 +29,11 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
     public JDBCMessaggioChatDAO(Connection con) {
         super(con);
     }
-	
+
     public JDBCMessaggioChatDAO(ServletContext sc) {
         super(sc);
     }
-	
+
     @Override
     public MessaggioChat getByPrimaryKey(Triple<String, Integer, Timestamp> primaryKey) throws DAOException {
         if (primaryKey == null) {
@@ -45,10 +45,10 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             stm.setString(1, primaryKey.first());
             stm.setInt(2, primaryKey.second());
             stm.setTimestamp(3, primaryKey.third());
-            
+
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                if (rs.next()) {
                     String email_sender = rs.getString("Email_sender");
                     Integer id_list = rs.getInt("ID_list");
                     String message = rs.getString("Message");
@@ -59,15 +59,15 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
                     MessaggioChat mex = new MessaggioChat(user, id_list, message, date);
                     return mex;
-                }
-                else 
+                } else {
                     return null;
+                }
             }
         } catch (SQLException ex) {
             throw new DAOException("Error while getting Product by ID", ex);
         }
     }
-	
+
     @Override
     public List<MessaggioChat> getAll() throws DAOException {
         ArrayList<MessaggioChat> chat = new ArrayList<>();
@@ -91,7 +91,7 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
         return chat;
     }
-	
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -106,30 +106,30 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
 
         return 0L;
     }
-	
+
     @Override
     public MessaggioChat insert(MessaggioChat entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("message parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Chat (Email_sender, ID_list, Message, Data)"
-                    + "VALUES (?, ?, ?, ?);");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Chat (Email_sender, ID_list, Message, Data)"
+                + "VALUES (?, ?, ?, ?);")) {
             stm.setString(1, entity.getSender().getEmail());
             stm.setInt(2, entity.getId_list());
             stm.setString(3, entity.getMessage());
             stm.setTimestamp(4, entity.getDate());
             Integer rs = stm.executeUpdate();
 
-            if (rs > 0)
+            if (rs > 0) {
                 return entity;
-            
+            }
+
             return null;
         } catch (SQLException e) {
             return null;
         }
     }
-	
+
     @Override
     public MessaggioChat update(MessaggioChat entity) throws DAOException {
         if (entity == null) {
@@ -152,18 +152,18 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
             throw new DAOException("Impossible to update the message", ex);
         }
     }
-	
+
     @Override
-    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat, Timestamp lasttime) throws DAOException{
+    public ArrayList<MessaggioChat> getChatLastMessages(Integer id_list_chat, Timestamp lasttime) throws DAOException {
         if (id_list_chat == null) {
             throw new DAOException("id_list of the chat is null");
         }
-        
+
         ArrayList<MessaggioChat> messages = new ArrayList<>();
 
         try (PreparedStatement stm = CON.prepareStatement("select * from "
-                    + "(select * from Chat "
-                    + "where ID_list = ? and (Data > ? OR ?) ORDER BY Data DESC LIMIT 15) as a order by a.Data")) {
+                + "(select * from Chat "
+                + "where ID_list = ? and (Data > ? OR ?) ORDER BY Data DESC LIMIT 15) as a order by a.Data")) {
             stm.setInt(1, id_list_chat);
             stm.setTimestamp(2, lasttime);
             stm.setBoolean(3, lasttime == null);
@@ -175,34 +175,34 @@ public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, 
                 Timestamp date = rs.getTimestamp("Data");
 
                 Triple<String, Integer, Timestamp> primaryKey = new Triple<>(email_sender, id_list, date);
-                
+
                 MessaggioChat mex = getByPrimaryKey(primaryKey);
                 messages.add(mex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Error while getting Product by ID", ex);
         }
-        
+
         return messages;
     }
-	
-	@Override
-	public Boolean delete(Triple<String, Integer, Timestamp> primaryKey) throws DAOException {
-		if (primaryKey == null) {
-			throw new DAOException("Messaggio chat is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Chat "
-				+ "WHERE Email_sender = ? and ID_list = ? and Data = ? ")) {
-			stm.setString(1, primaryKey.first());
-			stm.setInt(2, primaryKey.second());
-			stm.setTimestamp(3, primaryKey.third());
-			int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException ex) {
-			return false;
-		}
-	}
+
+    @Override
+    public Boolean delete(Triple<String, Integer, Timestamp> primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Messaggio chat is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Chat "
+                + "WHERE Email_sender = ? and ID_list = ? and Data = ? ")) {
+            stm.setString(1, primaryKey.first());
+            stm.setInt(2, primaryKey.second());
+            stm.setTimestamp(3, primaryKey.third());
+            int res = stm.executeUpdate();
+            if (res >= 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

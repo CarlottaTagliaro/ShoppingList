@@ -29,14 +29,14 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
 
     public JDBCNotificaWebDAO(ServletContext sc) {
         super(sc);
-    } 
+    }
 
     public List<NotificaWeb> getAllUserNotifications(String email) throws DAOException {
         ArrayList<NotificaWeb> lista = new ArrayList<>();
         if (email == null) {
             throw new DAOException("email is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("CALL getNotifications(?)")) {
             stm.setString(1, email);
             try (ResultSet rs = stm.executeQuery()) {
@@ -46,24 +46,23 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
                     String tipo = rs.getString("tipo");
                     Timestamp data = rs.getTimestamp("data");
                     Integer id_elem = rs.getInt("id_elem");
-                    
+
                     NotificaWeb notification = new NotificaWeb(testo, tipo, data, id_elem);
                     lista.add(notification);
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting Product by ID", ex);
         }
-        
-        return lista;    
+
+        return lista;
     }
-    
+
     @Override
-    public NotificaWeb getByPrimaryKey(String email) throws DAOException {  
+    public NotificaWeb getByPrimaryKey(String email) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -83,9 +82,9 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
     public NotificaWeb update(NotificaWeb entity) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
-    public Boolean delete(String email){
+    public Boolean delete(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

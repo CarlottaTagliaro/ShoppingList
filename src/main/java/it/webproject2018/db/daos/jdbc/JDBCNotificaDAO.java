@@ -31,8 +31,8 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 
     public JDBCNotificaDAO(ServletContext sc) {
         super(sc);
-    } 
-    
+    }
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -45,7 +45,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
             throw new DAOException("Impossible to count products", ex);
         }
 
-        return 0L;    
+        return 0L;
     }
 
     @Override
@@ -53,12 +53,12 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         if (primaryKey == null) {
             throw new DAOException("notificationID is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Notifiche where ID = ? ")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                if (rs.next()) {
 
                     Integer id = rs.getInt("ID");
                     Integer idList = rs.getInt("ID_list");
@@ -76,12 +76,11 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     return notification;
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting Product by ID", ex);
         }
-        
-        return null;    
+
+        return null;
     }
 
     @Override
@@ -90,17 +89,16 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         try (PreparedStatement stm = CON.prepareStatement("select * from Notifiche")) {
             try (ResultSet rs = stm.executeQuery()) {
 
-                while(rs.next()){                
+                while (rs.next()) {
                     Integer id_notifica = rs.getInt("ID");
                     Notifica notification = getByPrimaryKey(id_notifica);
                     notificationList.add(notification);
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting all notifications", ex);
-        } 
-        
+        }
+
         return notificationList;
     }
 
@@ -109,8 +107,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         if (entity == null) {
             throw new DAOException("notication parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)) {
             stm.setInt(1, entity.getId());
             stm.setInt(2, entity.getLista().getId());
             stm.setInt(3, entity.getProdotto().getId());
@@ -120,7 +117,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
             stm.setBoolean(7, entity.getSito());
 
             Integer rs = stm.executeUpdate();
-            
+
             ResultSet rsi = stm.getGeneratedKeys();
             if (rsi.next()) {
                 return getByPrimaryKey(rsi.getInt(1));
@@ -130,7 +127,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }    
+        }
     }
 
     @Override
@@ -141,8 +138,8 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         }
 
         try (PreparedStatement std = CON.prepareStatement("UPDATE Notifiche "
-                + "SET ID = ?, ID_list = ?, ID_prodotto = ?, GiorniMancanti = ?, " +
-                "QuantitaMancanti = ? Mail = ? Sito = ? WHERE ID = ?")) {
+                + "SET ID = ?, ID_list = ?, ID_prodotto = ?, GiorniMancanti = ?, "
+                + "QuantitaMancanti = ? Mail = ? Sito = ? WHERE ID = ?")) {
             std.setInt(1, entity.getId());
             std.setInt(2, entity.getLista().getId());
             std.setInt(3, entity.getProdotto().getId());
@@ -159,51 +156,49 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
             throw new DAOException("Impossible to update the notification", ex);
         }
     }
-    
+
     @Override
     public ArrayList<Notifica> getNotificationByUserEmail(String userEmail) throws DAOException {
         ArrayList<Notifica> notificationList = new ArrayList<>();
-        
-        try (PreparedStatement stm = CON.prepareStatement("select Notifiche.ID, LISTE.Owner " + 
-                "from Notifiche join Liste on Liste.ID = Notifiche.ID_list" +
-                "where Liste.Owner = ?")) {
+
+        try (PreparedStatement stm = CON.prepareStatement("select Notifiche.ID, LISTE.Owner "
+                + "from Notifiche join Liste on Liste.ID = Notifiche.ID_list"
+                + "where Liste.Owner = ?")) {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
-                while(rs.next()){                
+                while (rs.next()) {
                     Integer id_notifica = rs.getInt("ID");
                     Notifica notification = getByPrimaryKey(id_notifica);
                     notificationList.add(notification);
                 }
 
-            } 
-        
+            }
+
         } catch (SQLException ex) {
             throw new DAOException("Unable to get notifications by userEmail", ex);
         }
         return notificationList;
     }
-    
+
     @Override
     public Boolean delete(Integer primaryKey) throws DAOException {
         if (primaryKey == null) {
             throw new DAOException("Notifica is null");
-	}
-	try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Notifiche where ID = ? ")) {
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Notifiche where ID = ? ")) {
             stm.setInt(1, primaryKey);
             int res = stm.executeUpdate();
             return res >= 1;
-	} catch (SQLException ex) {
-		return false;
-	}
+        } catch (SQLException ex) {
+            return false;
+        }
     }
-    
+
     @Override
     public void generateNotificationsByProducts() throws DAOException {
-        try {
-            PreparedStatement stm = CON.prepareStatement("call add_notifications()");
+        try (PreparedStatement stm = CON.prepareStatement("call add_notifications()")) {
             stm.execute();
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Unable to add new notifications", ex);
         }
     }
@@ -211,7 +206,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
     @Override
     public ArrayList<Notifica> getAllNotificationsNotSentByEmail() throws DAOException {
         ArrayList<Notifica> retval = new ArrayList<>();
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Notifiche where Mail=false")) {
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
@@ -220,21 +215,19 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     retval.add(notification);
                 }
             }
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Unable to get notification with Mail = false", ex);
         }
         return retval;
     }
-    
+
     public void setFieldTo(List<Notifica> notifications, String fielName, Object value) throws DAOException {
-        for(Notifica notification : notifications) {
+        for (Notifica notification : notifications) {
             try (PreparedStatement std = CON.prepareStatement("UPDATE notifiche SET ? = ? where ID = ?")) {
                 std.setString(1, fielName);
                 std.setObject(2, value);
                 std.setInt(3, notification.getId());
-            }
-            catch(SQLException ex) {
+            } catch (SQLException ex) {
                 throw new DAOException("unable to update a field of certain notifications", ex);
             }
         }
