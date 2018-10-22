@@ -34,9 +34,11 @@ public class RegisterServlet extends HttpServlet {
         
             JdbcUtenteDao.Close();
             if (!ok) {
+                JdbcUtenteDao.Close();
                 response.sendRedirect(request.getContextPath() + "/register.jsp");
             }
             else {
+                JdbcUtenteDao.Close();
                 response.sendRedirect(request.getContextPath() + "/login.jsp");
             }
         } catch (Exception e) {

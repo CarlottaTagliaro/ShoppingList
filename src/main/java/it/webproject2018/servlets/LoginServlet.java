@@ -35,10 +35,12 @@ public class LoginServlet extends HttpServlet {
             JdbcUtenteDao.Close();
             if (user == null || !user.getEmail().equals(username)) {
                 request.getSession().removeAttribute("User");
+                JdbcUtenteDao.Close();
                 response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login page.
             }
             else {
                 request.getSession().setAttribute("User", user);
+                JdbcUtenteDao.Close();
                 response.sendRedirect(request.getContextPath() + "/home");
                 // Logged-in user found, so just continue request.
             }
