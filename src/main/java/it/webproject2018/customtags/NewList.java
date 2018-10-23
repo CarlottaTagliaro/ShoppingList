@@ -144,7 +144,7 @@ public class NewList extends SimpleTagSupport {
                 + "                                                     <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b> Modify list details:</b></h3>\n"
                 + "                                                 </div>\n"
                 + "                                                 <form action=\"ChangeListDetailsServlet\" id=\"upload_form\" enctype=\"multipart/form-data\" method=\"POST\">\n"
-                + "                                                     <input type=\"text\" name=\"idList\" value=\"" + lista.getId() + "\" style=\"display: none;\">\n"
+                + "                                                     <input type=\"hidden\" name=\"idList\" value=\"" + lista.getId() + "\">\n"
                 + "                                                 <div class=\"modal-body\">\n"
                 + "                                                     <div class=\"input-group\">\n"
                 + "                                                         <div class=\"row cambia-dati\">\n"

@@ -8,8 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +18,6 @@ import javax.servlet.http.Part;
 import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Lista;
-import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 
 /**
@@ -44,57 +41,36 @@ public class ChangeListDetailsServlet extends HttpServlet {
         init();
         PrintWriter w = response.getWriter();
         try {
-            Utente user = (Utente) request.getSession().getAttribute("User");
-
             String img = "";
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             Integer idList = Integer.parseInt(request.getParameter("idList"));
-            String owner = user.getEmail();
-            w.println(name);
-            w.println(description);
-            w.println(idList);
-            List<Object> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName()))
-                    .collect(Collectors.toList());
 
-            if(!fileParts.isEmpty()) {
-                for (Object oFilePart : fileParts) {
-                    Part filePart = (Part) oFilePart;
-                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                    InputStream fileContent = filePart.getInputStream();
-    
-                    try {
-                        w.println("FileName:"+fileName);
-                        String ext = fileName.substring(fileName.lastIndexOf("."));
-                        fileName = randomString(70) + ext;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-    
-                    img = "imagesUpload/" + fileName;
-                    // w.println(img);
-                    w.println(img);
-                    w.println(fileContent.toString());
-                    Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
-                    w.println(pathToFile.toString());
-                    //Files.copy(fileContent, pathToFile);
-                }
+            Part filePart = request.getPart("file");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            InputStream fileContent = filePart.getInputStream();
+            try {
+                String ext = fileName.substring(fileName.lastIndexOf("."));
+                fileName = randomString(70) + ext; // assign random name
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            //w.println(img);
+            img = "imagesUpload/" + fileName;
+            Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
+            Files.copy(fileContent, pathToFile);
+            
             Lista list = JDBCLista.getByPrimaryKey(idList);
-            //w.println(list.getNome());
             list.setNome(name);
             list.setDescrizione(description);
             list.setImmagine(img);
             
             list = JDBCLista.update(list);
             Boolean ok = list != null;
-            w.println(ok);
             
             JDBCLista.Close();
             JDBCCategoriaListe.Close();
-            //response.sendRedirect(request.getContextPath() + (!ok ? "/myList" : "/myList"));
+            response.sendRedirect(request.getContextPath() + (!ok ? "/myList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());
         }
