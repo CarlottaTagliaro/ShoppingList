@@ -43,9 +43,9 @@ public class NewList extends SimpleTagSupport {
 
         Utente user = (Utente) request.getSession().getAttribute("User");
         ListaPermessi perm;
-        
+
         Boolean canShare;
-        
+
         if (user != null) {
             canShare = lista.getOwner().equals(user.getEmail());
             Pair<String, Integer> primaryKey = Pairs.from(user.getEmail(), lista.getId());
@@ -56,13 +56,12 @@ public class NewList extends SimpleTagSupport {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             //utente non loggato
             perm = new ListaPermessi("", 1);
             canShare = false;
         }
-        
+
         String listaHtml = "";
 
         for (int i = 0; i < lista.size(); i++) {
@@ -108,7 +107,7 @@ public class NewList extends SimpleTagSupport {
                     + "                                             <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Add</b></button>\"\n"
                     + "                                         </div>\n"
                     + "                                         </form>\n"
-                    + "                                     </div>\n" 
+                    + "                                     </div>\n"
                     + "                                 </div>\n"
                     + "                             </div>\n" + "                         </div>\n"
                     + "                     </li>\n");
@@ -140,78 +139,78 @@ public class NewList extends SimpleTagSupport {
                 + "                                                 </div>\n"
                 + "                                                 <form action=\"ChangeListDetailsServlet\" id=\"upload_form\" enctype=\"multipart/form-data\" method=\"POST\">\n"
                 + "                                                     <input type=\"text\" name=\"idList\" value=\"" + lista.getId() + "\" style=\"display: none;\">\n"
-                    + "                                                 <div class=\"modal-body\">\n"
-                    + "                                                     <div class=\"input-group\">\n"
-                    + "                                                         <div class=\"row cambia-dati\">\n"
-                    + "                                                             <label class=\"search\">Name:</label> \n"
-                    + "                                                             <input type=\"text\" name=\"name\" class=\"form-control inserisci\" aria-label=\"...\" placeholder=\"Insert new name\">\n"
-                    + "                                                         </div>\n"
-                    + "                                                     </div>"
-                    + "                                                     <div class=\"row cambia-dati\">\n"
-                    + "                                                         <label class=\"search\">Description:</label> \n"
-                    + "                                                             <textarea id=\"description\" name=\"description\" cols=\"40\" rows=\"5\" class=\"form-control descrizione\"\n"
-                    + "                                                                     placeholder=\"Enter new list description\" required></textarea>"
-                    + "                                                     </div>\n"
-                    + "                                                     <div class=\"row cambia-dati\">\n"
-                    + "                                                         <div class=\"row\">\n"
-                    + "                                                         <label class=\"search\">Immagine:</label> \n"
-                    + "                                                         </div>\n"
-                    + "                                                             <input type=\"file\" name=\"file\" id=\"file\" data-toggle=\"modal\" class=\"inputfile\" data-multiple-caption=\"{count} files selected\" multiple >\n"
-                    + "                                                             <label for=\"file\" class=\"button1 myButton3 btn\" ><span class=\"glyphicon glyphicon-open\"></span> Choose file </label>\n"
-                    + "                                                     </div>\n"
-                    + "                                                 </div>\n"
-                    + "                                                 <div class=\"modal-footer\">\n"
-                    + "                                                     <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
-                    + "                                                     <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Save</b></button>\"\n"
-                    + "                                                 </div>\n"
+                + "                                                 <div class=\"modal-body\">\n"
+                + "                                                     <div class=\"input-group\">\n"
+                + "                                                         <div class=\"row cambia-dati\">\n"
+                + "                                                             <label class=\"search\">Name:</label> \n"
+                + "                                                             <input type=\"text\" name=\"name\" class=\"form-control inserisci\" aria-label=\"...\" placeholder=\"Insert new name\">\n"
+                + "                                                         </div>\n"
+                + "                                                     </div>"
+                + "                                                     <div class=\"row cambia-dati\">\n"
+                + "                                                         <label class=\"search\">Description:</label> \n"
+                + "                                                             <textarea id=\"description\" name=\"description\" cols=\"40\" rows=\"5\" class=\"form-control descrizione\"\n"
+                + "                                                                     placeholder=\"Enter new list description\" required></textarea>"
+                + "                                                     </div>\n"
+                + "                                                     <div class=\"row cambia-dati\">\n"
+                + "                                                         <div class=\"row\">\n"
+                + "                                                         <label class=\"search\">Immagine:</label> \n"
+                + "                                                         </div>\n"
+                + "                                                             <input type=\"file\" name=\"file\" id=\"file_" + lista.getId() + "\" class=\"inputfile\">\n"
+                + "                                                             <label for=\"file_" + lista.getId() + "\" class=\"button1 myButton3 btn\" ><span class=\"glyphicon glyphicon-open\"></span> Choose file </label>\n"
+                + "                                                     </div>\n"
+                + "                                                 </div>\n"
+                + "                                                 <div class=\"modal-footer\">\n"
+                + "                                                     <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
+                + "                                                     <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Save</b></button>\"\n"
+                + "                                                 </div>\n"
                 + "                                                 </form>\n"
                 + "                                             </div>\n"
                 + "                                         </div>\n"
                 + "                                     </div>\n" : "")
                 + (canShare ? "                                    <a type=\"button\" title=\"Share list\" class=\"btn btn-default btn-xs small\" data-toggle=\"modal\" data-target=\"#modal_share_" + lista.getId() + "\">\n"
-                + "                                        <span class=\"glyphicon glyphicon-share-alt\"></span>\n"
-                + "                                    </a>\n" + "<script>"
-                + "$(document).ready(function(){$(\"#modal_share_" + lista.getId()
-                + "\").on('shown.bs.modal', function() {\n" + "    shareGetUsers(" + lista.getId() + ", '');\n"
-                + "})});" + "</script>"
-                + "                                     <div class=\"modal fade\" id=\"modal_share_" + lista.getId()
-                + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
-                + "                                         <div class=\"modal-dialog\" role=\"document\">\n"
-                + "                                             <div class=\"modal-content\">\n"
-                + "                                                 <div class=\"modal-header\">\n"
-                + "                                                     <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Share with:</b></h3>\n"
-                + "                                                 </div>\n"
-                + "                                                 <form action='ShareListInsertUser' method='POST'>"
-                + "                                                 <div class=\"modal-body\">\n"
-                + "                                                     <div class=\"row\">\n"
-                + "                                                         <div class=\"input-group\">\n"
-                + "                                                             <input type=\"text\" class=\"form-control form-control1\" id=\"modal_share_" + lista.getId() + "_search\" name=\"qry\" aria-label=\"...\" placeholder=\"Search user by email or name\" value=\"\">\n"
-                + "                                                             <div class=\"input-group-btn\">\n"
-                + "                                                                 <button type=\"button\" class=\"btn bottone-cerca btn-default\" onclick=\"shareGetUsers(" + lista.getId() + ", $('#modal_share_" + lista.getId() + "_search').val())\">\n"
-                + "                                                                     <span class=\"glyphicon glyphicon-search\"/>\n"
-                + "                                                                 </button>\n"
-                + "                                                             </div>\n"
-                + "                                                         </div>\n"
-                + "                                                     </div>"
-                + "                                                     <div class=\"row\">\n"
-                + "                                                             <table id=\"table_share_" + lista.getId() + "\">\n"
-                + "                                                                 <tr>\n"
-                + "                                                                     <th>Name Surname</th>\n"
-                + "                                                                 <th>Add/delete products</th>\n"
-                + "                                                                 <th>Modify list details</th>\n"
-                + "                                                                 <th>Delete list</th>\n"
-                + "                                                             </tr>\n"
-                + "                                                         </table>"
-                + "                                                     </div>"
-                + "                                                 </div>\n"
-                + "                                                 <div class=\"modal-footer\">\n"
-                + "                                                     <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
-                + "                                                     <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Share</b></button>\"\n"
-                + "                                                 </div>\n"
-                + "                                             </form>\n"
-                + "                                             </div>\n"
-                + "                                         </div>\n"
-                + "                                     </div>\n" : "")
+                        + "                                        <span class=\"glyphicon glyphicon-share-alt\"></span>\n"
+                        + "                                    </a>\n" + "<script>"
+                        + "$(document).ready(function(){$(\"#modal_share_" + lista.getId()
+                        + "\").on('shown.bs.modal', function() {\n" + "    shareGetUsers(" + lista.getId() + ", '');\n"
+                        + "})});" + "</script>"
+                        + "                                     <div class=\"modal fade\" id=\"modal_share_" + lista.getId()
+                        + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                        + "                                         <div class=\"modal-dialog\" role=\"document\">\n"
+                        + "                                             <div class=\"modal-content\">\n"
+                        + "                                                 <div class=\"modal-header\">\n"
+                        + "                                                     <h3 class=\"modal-title\" id=\"exampleModalLabel\"><b>Share with:</b></h3>\n"
+                        + "                                                 </div>\n"
+                        + "                                                 <form action='ShareListInsertUser' method='POST'>"
+                        + "                                                 <div class=\"modal-body\">\n"
+                        + "                                                     <div class=\"row\">\n"
+                        + "                                                         <div class=\"input-group\">\n"
+                        + "                                                             <input type=\"text\" class=\"form-control form-control1\" id=\"modal_share_" + lista.getId() + "_search\" name=\"qry\" aria-label=\"...\" placeholder=\"Search user by email or name\" value=\"\">\n"
+                        + "                                                             <div class=\"input-group-btn\">\n"
+                        + "                                                                 <button type=\"button\" class=\"btn bottone-cerca btn-default\" onclick=\"shareGetUsers(" + lista.getId() + ", $('#modal_share_" + lista.getId() + "_search').val())\">\n"
+                        + "                                                                     <span class=\"glyphicon glyphicon-search\"/>\n"
+                        + "                                                                 </button>\n"
+                        + "                                                             </div>\n"
+                        + "                                                         </div>\n"
+                        + "                                                     </div>"
+                        + "                                                     <div class=\"row\">\n"
+                        + "                                                             <table id=\"table_share_" + lista.getId() + "\">\n"
+                        + "                                                                 <tr>\n"
+                        + "                                                                     <th>Name Surname</th>\n"
+                        + "                                                                 <th>Add/delete products</th>\n"
+                        + "                                                                 <th>Modify list details</th>\n"
+                        + "                                                                 <th>Delete list</th>\n"
+                        + "                                                             </tr>\n"
+                        + "                                                         </table>"
+                        + "                                                     </div>"
+                        + "                                                 </div>\n"
+                        + "                                                 <div class=\"modal-footer\">\n"
+                        + "                                                     <button type=\"button\" class=\" btn btn-secondary\" data-dismiss=\"modal\"><b>Close</b></button>\n"
+                        + "                                                     <button type=\"submit\" class=\"myButton3 btn btn-primary\"> <b>Share</b></button>\"\n"
+                        + "                                                 </div>\n"
+                        + "                                             </form>\n"
+                        + "                                             </div>\n"
+                        + "                                         </div>\n"
+                        + "                                     </div>\n" : "")
                 + (perm.getPerm_del() ? "              <a type=\"button\" title=\"Delete list\" class=\"btn btn-default btn-xs small\" href=\"DeleteListServlet?List=" + lista.getId() + "\">\n"
                 + "                                        <span class=\"glyphicon glyphicon-trash\"></span>\n"
                 + "                                    </a>\n" : "")

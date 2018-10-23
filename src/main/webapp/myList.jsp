@@ -15,6 +15,7 @@
         <script src="JS/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
 
         <script src="JS/carousel.js" type="text/javascript"></script>
+        <script src="JS/uploadFile.js" type="text/javascript"></script>
         <script>
             function scendi(bottone) {
                 if ($(bottone).find(".scendi").hasClass('glyphicon-chevron-down')) {
