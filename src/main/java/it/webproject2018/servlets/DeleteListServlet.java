@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 
 /**
@@ -39,17 +40,26 @@ public class DeleteListServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter w = response.getWriter();
-        try {
-            String ID = request.getParameter("List");
-            Integer list = Integer.parseInt(ID);
-            Boolean ok = JDBCLista.delete(list);
+        init();
 
-            JDBCLista.Close();
-            response.sendRedirect(request.getContextPath().concat("/myList"));
-        } catch (DAOException e) {
-            w.println(e.getMessage());
+        Utente user = (Utente) request.getSession().getAttribute("User");
+        if (user != null) {
+            try {
+                String ID = request.getParameter("List");
+                Integer list = Integer.parseInt(ID);
+                Boolean ok = JDBCLista.delete(list);
+
+                JDBCLista.Close();
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            request.getSession().setAttribute("DefaultProductList", null);
+            request.getSession().removeAttribute("DefaultProductList");
+            request.getSession().setAttribute("DefaultList", null);
+            request.getSession().removeAttribute("DefaultList");
         }
+        
+        response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }

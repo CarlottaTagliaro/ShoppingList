@@ -45,6 +45,7 @@ public class NewList extends SimpleTagSupport {
         ListaPermessi perm;
 
         Boolean canShare;
+        Boolean canBuy;
 
         if (user != null) {
             canShare = lista.getOwner().equals(user.getEmail());
@@ -52,15 +53,19 @@ public class NewList extends SimpleTagSupport {
             perm = new ListaPermessi(user.getEmail(), lista.getId());
             try {
                 perm = JdbcListaPermessiDao.getByPrimaryKey(primaryKey);
-                JdbcListaPermessiDao.Close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            canBuy = perm.getPerm_add_rem();
         } else {
             //utente non loggato
             perm = new ListaPermessi("", 1);
+            perm.setPerm_del(true); //può eliminare la sua lista temporanea
+            perm.setPerm_add_rem(true); //può eliminare i prodotti dalla sua lista temporanea
             canShare = false;
+            canBuy = false;
         }
+        JdbcListaPermessiDao.Close();
 
         String listaHtml = "";
 
@@ -73,7 +78,8 @@ public class NewList extends SimpleTagSupport {
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
                     + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong> \n"
-                    + (perm.getPerm_add_rem() ? "       <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n"
+                    + (perm.getPerm_add_rem() ? 
+                            (canBuy ? "                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n" : "")
                     + "                                 <a href=\"DeleteProductServlet?Product=" + lista.get(i).getId() + "&List=" + lista.getId() + "\"><button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
                     + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
                     + "                                 </button></a>\n" : "")

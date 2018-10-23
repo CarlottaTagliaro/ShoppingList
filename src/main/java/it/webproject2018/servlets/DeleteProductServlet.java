@@ -5,10 +5,15 @@
  */
 package it.webproject2018.servlets;
 
+import de.scravy.pair.Pair;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,21 +44,36 @@ public class DeleteProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter w = response.getWriter();
-        try {
-            String ID_product = request.getParameter("Product");
-            String ID_list = request.getParameter("List");
+        init();
 
-            Integer product = Integer.parseInt(ID_product);
-            Integer list = Integer.parseInt(ID_list);
+        Utente user = (Utente) request.getSession().getAttribute("User");
+        String ID_product = request.getParameter("Product");
+        String ID_list = request.getParameter("List");
 
-            Boolean ok = JDBCProdotto.deleteFromList(product, list);
-        
-            JDBCProdotto.Close();
-            response.sendRedirect(request.getContextPath().concat("/myList"));
-        } catch (DAOException e) {
-            w.println(e.getMessage());
+        if (user != null) {
+            try {
+
+                Integer product = Integer.parseInt(ID_product);
+                Integer list = Integer.parseInt(ID_list);
+
+                Boolean ok = JDBCProdotto.deleteFromList(product, list);
+            } catch (DAOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
+
+            for (int i = 0; i < defaultList.size(); i++) {
+                if (defaultList.get(i).getFirst().getId().equals(Integer.parseInt(ID_product))) {
+                    defaultList.remove(i);
+                    break;
+                }
+            }
+            
+            request.getSession().setAttribute("DefaultProductList", defaultList);
         }
+
+        JDBCProdotto.Close();
+        response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }
