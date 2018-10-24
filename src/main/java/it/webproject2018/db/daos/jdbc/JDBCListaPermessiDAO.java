@@ -63,7 +63,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         if (primaryKey == null) {
             throw new DAOException("lista ID is null");
         }
-
+        
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where Email = ? AND ID = ? ")) {
             stm.setString(1, primaryKey.getFirst());
             stm.setInt(2, primaryKey.getSecond());

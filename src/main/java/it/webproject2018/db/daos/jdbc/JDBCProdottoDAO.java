@@ -17,6 +17,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
@@ -143,6 +144,26 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
 
         return lista;
+    }
+    
+
+    public Integer getProductOfListAmount(Prodotto product, Lista list) throws DAOException {
+        Integer amount = 0;
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT Quantita FROM Liste_Prodotti WHERE ID_prodotto = ? AND ID_lista = ?;")) {
+            stm.setInt(1, product.getId());
+            stm.setInt(2, list.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    amount = rs.getInt("Quantita");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting Product of a List Amount", ex);
+        }
+
+        return amount;
     }
 
     @Override

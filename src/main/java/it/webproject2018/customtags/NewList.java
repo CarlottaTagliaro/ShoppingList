@@ -8,6 +8,7 @@ package it.webproject2018.customtags;
 import de.scravy.pair.Pair;
 import de.scravy.pair.Pairs;
 import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
+import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.entities.Utente;
@@ -40,6 +41,7 @@ public class NewList extends SimpleTagSupport {
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
         JDBCListaPermessiDAO JdbcListaPermessiDao = new JDBCListaPermessiDAO(servletContext);
+        JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(servletContext);
 
         Utente user = (Utente) request.getSession().getAttribute("User");
         ListaPermessi perm;
@@ -66,10 +68,18 @@ public class NewList extends SimpleTagSupport {
             canBuy = false;
         }
         JdbcListaPermessiDao.Close();
-
+        
         String listaHtml = "";
 
         for (int i = 0; i < lista.size(); i++) {
+            Integer amount = 0;
+            try{
+                amount = JdbcProdottoDao.getProductOfListAmount(lista.get(i), lista);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            
             listaHtml += String.format("<li class=\"left clearfix\">"
                     + "                         <span class=\"list-img pull-left\">\n"
                     + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text="
@@ -77,7 +87,7 @@ public class NewList extends SimpleTagSupport {
                     + "                         </span>\n"
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
-                    + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong> \n"
+                    + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong>" + " (" + amount + ")"
                     + (perm.getPerm_add_rem() ? 
                             (canBuy ? "                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n" : "")
                     + "                                 <a href=\"DeleteProductServlet?Product=" + lista.get(i).getId() + "&List=" + lista.getId() + "\"><button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
@@ -119,6 +129,8 @@ public class NewList extends SimpleTagSupport {
                     + "                     </li>\n");
         }
 
+        JdbcProdottoDao.Close();
+        
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
                 + "                    <div class=\"row row-lista\">\n"
                 + "                        <div class=\"img_wrapper\">\n"

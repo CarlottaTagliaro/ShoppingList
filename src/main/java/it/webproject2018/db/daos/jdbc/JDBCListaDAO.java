@@ -46,18 +46,13 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
 
         ArrayList<Lista> liste = null;
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ? ")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ?")) {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
                 liste = new ArrayList<>();
 
                 while (rs.next()) {
-
-                    Boolean perm_edit = rs.getBoolean("perm_edit");
-                    Boolean perm_add_rem = rs.getBoolean("perm_add_rem");
-                    Boolean perm_del = rs.getBoolean("perm_del");
-                    Boolean accettato = rs.getBoolean("accettato");
                     Integer id = rs.getInt("ID");
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");
