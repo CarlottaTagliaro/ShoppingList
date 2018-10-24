@@ -127,7 +127,7 @@
                     <div class="modal-body">
                         <p id="list_name_modal"></p>
                     </div>
-                    <form class="modal-footer">
+                    <form action="AcceptListShare" method="POST" class="modal-footer">
                         <input type="hidden" name="idLista" id="idLista_modal">
                         <button type="submit" class="myButton3 btn btn-primary"><b>Accept</b></button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><b>Decline</b></button>
