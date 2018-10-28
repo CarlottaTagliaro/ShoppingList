@@ -152,8 +152,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         if (entity == null) {
             throw new DAOException("CategoriaProdotti parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_categorie (Nome, Descrizione, Logo, Nome_liste_cat) VALUES (?, ?, ?, ?);");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_categorie (Nome, Descrizione, Logo, Nome_liste_cat) VALUES (?, ?, ?, ?);")){
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getDescrizione());
             stm.setString(3, entity.getLogo());

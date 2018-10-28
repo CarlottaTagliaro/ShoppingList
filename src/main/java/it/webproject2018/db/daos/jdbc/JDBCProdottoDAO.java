@@ -17,6 +17,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
+import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
@@ -143,6 +144,26 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
 
         return lista;
+    }
+    
+
+    public Integer getProductOfListAmount(Prodotto product, Lista list) throws DAOException {
+        Integer amount = 0;
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT Quantita FROM Liste_Prodotti WHERE ID_prodotto = ? AND ID_lista = ?;")) {
+            stm.setInt(1, product.getId());
+            stm.setInt(2, list.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    amount = rs.getInt("Quantita");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting Product of a List Amount", ex);
+        }
+
+        return amount;
     }
 
     @Override
@@ -344,8 +365,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         if (entity == null) {
             throw new DAOException("product parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti (ID, Nome, Note, Logo, Categoria, Owner) VALUES (null, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getNote());
             stm.setString(3, "");
@@ -369,8 +389,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         if (entity == null || img == null) {
             throw new DAOException("product parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES (?, ?)");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES (?, ?)")) {
             stm.setInt(1, entity.getId());
             stm.setString(2, img);
             Integer rs = stm.executeUpdate();
@@ -386,8 +405,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email, Data_inserimento) VALUES (?, ?, NOW())");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti_Prodotti (ID_prodotto, Email, Data_inserimento) VALUES (?, ?, NOW())")) {
             stm.setInt(1, idProduct);
             stm.setString(2, email);
             Integer rs = stm.executeUpdate();
@@ -403,8 +421,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti_Prodotti WHERE ID_prodotto = ? AND Email = ?");
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Utenti_Prodotti WHERE ID_prodotto = ? AND Email = ?")) {
             stm.setInt(1, idProduct);
             stm.setString(2, email);
             Integer rs = stm.executeUpdate();

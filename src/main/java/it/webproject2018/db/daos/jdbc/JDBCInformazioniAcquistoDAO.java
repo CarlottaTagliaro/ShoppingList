@@ -132,8 +132,7 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
         if (entity == null) {
             throw new DAOException("InformazioniAcquisto parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, ?, ?);");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, ?, ?);")){
             stm.setInt(1, entity.getId_lista());
             stm.setInt(2, entity.getId_prodotto());
             stm.setDate(3, entity.getData());

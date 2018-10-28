@@ -102,6 +102,10 @@
         <servlet-name>GetWebNotifications</servlet-name>
         <servlet-class>it.webproject2018.servlets.GetWebNotifications</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AcceptListShare</servlet-name>
+        <servlet-class>it.webproject2018.servlets.AcceptListShare</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -280,6 +284,10 @@
     <servlet-mapping>
         <servlet-name>GetWebNotifications</servlet-name>
         <url-pattern>/GetWebNotifications</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptListShare</servlet-name>
+        <url-pattern>/AcceptListShare</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

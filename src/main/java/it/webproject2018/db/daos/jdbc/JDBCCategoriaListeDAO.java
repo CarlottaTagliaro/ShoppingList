@@ -21,15 +21,16 @@ import javax.servlet.ServletContext;
  *
  * @author davide
  */
-public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> implements CategoriaListeDAO  {    
+public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> implements CategoriaListeDAO {
+
     public JDBCCategoriaListeDAO(ServletContext sc) {
         super(sc);
-    }    
-      
+    }
+
     public JDBCCategoriaListeDAO(Connection conn) {
         super(conn);
-    }    
-    
+    }
+
     public List<String> getAllNames() throws DAOException {
         List<String> names = new ArrayList<>();
 
@@ -63,7 +64,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
                 String descrizione = rs.getString("Descrizione");
                 ArrayList<String> immagini = getListCategoryImages(nome);
 
-                CategoriaListe cat = new CategoriaListe(nome, descrizione, immagini); 
+                CategoriaListe cat = new CategoriaListe(nome, descrizione, immagini);
 
                 return cat;
             }
@@ -71,32 +72,31 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
             throw new DAOException("Impossible to get the shopping_list for the passed primary key", ex);
         }
     }
-	
+
     @Override
-    public ArrayList<String> getListCategoryImages(String catNome) throws DAOException{
+    public ArrayList<String> getListCategoryImages(String catNome) throws DAOException {
         if (catNome == null) {
             throw new DAOException("catNome is null");
         }
-        
+
         ArrayList<String> immagini = new ArrayList<>();
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Liste_categorie_immagini where Nome = ? ")) {
             stm.setString(1, catNome);
             try (ResultSet rs = stm.executeQuery()) {
-                while(rs.next()){
+                while (rs.next()) {
                     String immagine = rs.getString("Immagine");
-                
+
                     immagini.add(immagine);
                 }
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Error while getting Category of the List", ex);
         }
-        
-        return immagini;        
+
+        return immagini;
     }
-    
+
     @Override
     public List<CategoriaListe> getAll() throws DAOException {
         List<CategoriaListe> shoppingLists = new ArrayList<>();
@@ -109,7 +109,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
                     String descrizione = rs.getString("Descrizione");
                     ArrayList<String> immagini = getListCategoryImages(nome);
 
-                    CategoriaListe cat = new CategoriaListe(nome, descrizione, immagini); 
+                    CategoriaListe cat = new CategoriaListe(nome, descrizione, immagini);
 
                     shoppingLists.add(cat);
                 }
@@ -120,7 +120,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
 
         return shoppingLists;
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -135,21 +135,21 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
 
         return 0L;
     }
-    
+
     @Override
-    public CategoriaListe insert(CategoriaListe entity) throws DAOException{
+    public CategoriaListe insert(CategoriaListe entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("CategoriaListe parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie (Nome, Descrizione) VALUES (?, ?);");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie (Nome, Descrizione) VALUES (?, ?);")) {
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getDescrizione());
             Integer rs = stm.executeUpdate();
-            
-            if (rs <= 0)
+
+            if (rs <= 0) {
                 return getByPrimaryKey(entity.getNome());
-            
+            }
+
             return entity;
         } catch (Exception e) {
             return null;
@@ -160,8 +160,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         if (entity == null || img == null) {
             throw new DAOException("product parameter is null");
         }
-        try {
-            PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie_immagini (Nome, Immagine) VALUES (?, ?)");
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_categorie_immagini (Nome, Immagine) VALUES (?, ?)")) {
             stm.setString(1, entity.getNome());
             stm.setString(2, img);
             Integer rs = stm.executeUpdate();
@@ -172,9 +171,9 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
             return null;
         }
     }
-    
+
     @Override
-    public CategoriaListe update(CategoriaListe entity) throws DAOException{
+    public CategoriaListe update(CategoriaListe entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("Parameter 'CategoriaListe' not valid for update",
                     new IllegalArgumentException("The passed CategoriaListe is null"));
@@ -193,21 +192,21 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
             throw new DAOException("Impossible to update the CategoriaListe", ex);
         }
     }
-	
-	@Override
-	public Boolean delete(String primaryKey) throws DAOException {
-		if (primaryKey == null) {
-			throw new DAOException("Categoria liste is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_categorie WHERE Nome = ? ")) {
-			stm.setString(1, primaryKey);
-			int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException ex) {
-			return false;
-		}
-	}
+
+    @Override
+    public Boolean delete(String primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Categoria liste is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Liste_categorie WHERE Nome = ? ")) {
+            stm.setString(1, primaryKey);
+            int res = stm.executeUpdate();
+            if (res >= 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

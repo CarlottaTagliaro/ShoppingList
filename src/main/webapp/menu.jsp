@@ -38,7 +38,7 @@
 
         <div class="title">     
             <img class="img-responsive banner" src="images/Senzanome.png" alt=""/> 
-            <a href="#" class="dropdown-toggle notifiche" onclick="getNotifications(false)" > 
+            <a href="#" class="dropdown-toggle notifiche" onclick="getNotifications()" > 
                 <img class="img-responsive notification-bell" src="images/notification_bell.png" alt=""/> 
             </a>
         </div>
@@ -95,7 +95,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="#" class="dropdown-toggle " onclick="getNotifications(true)" > 
+                    <a href="#" class="dropdown-toggle " onclick="getNotifications()" > 
                         <img class="img-responsive notif-mobile" src="images/notification_bell.png" alt=""/> 
                     </a>
                 </div>
@@ -125,12 +125,13 @@
                         <h3 class="modal-title" id="exampleModalLabel"><b>Accept share:</b></h3>
                     </div>
                     <div class="modal-body">
-                        <p></p>
+                        <p id="list_name_modal"></p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="myButton3 btn btn-primary"> <b>Accept</b></button>
+                    <form action="AcceptListShare" method="POST" class="modal-footer">
+                        <input type="hidden" name="idLista" id="idLista_modal">
+                        <button type="submit" class="myButton3 btn btn-primary"><b>Accept</b></button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><b>Decline</b></button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

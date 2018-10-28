@@ -44,6 +44,7 @@ public class GeolocationServlet extends HttpServlet {
             JDBCListaDAO listaDao = new JDBCListaDAO(super.getServletContext());
             ArrayList<Lista> liste = listaDao.getUserLists(user.getEmail());
 
+            listaDao.Close();
             for (Lista l : liste) {
                 SearchPlaces p = SearchPlaces.GetPlaces(lat, lon, 1000, l.getCategoria().getNome());
 

@@ -65,12 +65,10 @@ public class ShareProductInsertUser extends HttpServlet {
             }
             JdbcProdottoDao.Close();
                         
-            //TODO: redirect to correct origin page
-            response.sendRedirect(request.getContextPath().concat("/home"));
+            //redirect on login page
+            response.sendRedirect(request.getHeader("referer"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        //response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }
