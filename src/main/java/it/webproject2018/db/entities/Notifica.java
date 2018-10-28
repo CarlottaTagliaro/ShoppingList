@@ -5,6 +5,8 @@
  */
 package it.webproject2018.db.entities;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author alberto
@@ -16,19 +18,19 @@ public class Notifica {
     private Integer giorniMancanti;
     private Integer quantitaMancante;
     private boolean mail;
-    private boolean sito;
+    private Timestamp creazione;
     
     public Notifica() {}
     
     public Notifica(Integer id, Lista list, Prodotto product, Integer giorniMancanti, 
-                     Integer quantitaMancante, boolean mail, boolean sito) {
+                     Integer quantitaMancante, boolean mail, Timestamp creazione) {
         this.id = id;
         this.list = list;
         this.product = product;
         this.giorniMancanti = giorniMancanti;
         this.quantitaMancante = quantitaMancante;
         this.mail = mail;
-        this.sito = sito;
+        this.creazione = creazione;
     }
     
     public Integer getId() {
@@ -75,11 +77,11 @@ public class Notifica {
        return this.mail;
    }
    
-   public void setSito(boolean sito) {
-       this.sito = sito;
+   public void setCreazione(Timestamp creazione) {
+       this.creazione = creazione;
    }
    
-   public boolean getSito() {
-       return this.sito;
+   public Timestamp getCreazione() {
+       return this.creazione;
    }
 }

@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -70,9 +71,9 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     Integer giorniMancanti = rs.getInt("GiorniMancanti");
                     Integer quantitaMancante = rs.getInt("QuantitaMancanti");
                     boolean mail = rs.getBoolean("Mail");
-                    boolean sito = rs.getBoolean("Sito");
+                    Timestamp creazione = rs.getTimestamp("Creazione");
 
-                    Notifica notification = new Notifica(id, list, product, giorniMancanti, quantitaMancante, mail, sito);
+                    Notifica notification = new Notifica(id, list, product, giorniMancanti, quantitaMancante, mail, creazione);
                     return notification;
                 }
             }
@@ -107,14 +108,14 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         if (entity == null) {
             throw new DAOException("notication parameter is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Sito) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Notifiche (ID, ID_list, ID_prodotto, GiorniMancanti, QuantitaMancanti, Mail, Creazione) VALUES (null, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS)) {
             stm.setInt(1, entity.getId());
             stm.setInt(2, entity.getLista().getId());
             stm.setInt(3, entity.getProdotto().getId());
             stm.setInt(4, entity.getGiorniMancanti());
             stm.setInt(5, entity.getQuantitaMancante());
             stm.setBoolean(6, entity.getMail());
-            stm.setBoolean(7, entity.getSito());
+            stm.setTimestamp(7, entity.getCreazione());
 
             Integer rs = stm.executeUpdate();
 
@@ -139,14 +140,14 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 
         try (PreparedStatement std = CON.prepareStatement("UPDATE Notifiche "
                 + "SET ID = ?, ID_list = ?, ID_prodotto = ?, GiorniMancanti = ?, "
-                + "QuantitaMancanti = ? Mail = ? Sito = ? WHERE ID = ?")) {
+                + "QuantitaMancanti = ? Mail = ? Creazione = ? WHERE ID = ?")) {
             std.setInt(1, entity.getId());
             std.setInt(2, entity.getLista().getId());
             std.setInt(3, entity.getProdotto().getId());
             std.setInt(4, entity.getGiorniMancanti());
             std.setInt(5, entity.getQuantitaMancante());
             std.setBoolean(6, entity.getMail());
-            std.setBoolean(7, entity.getSito());
+            std.setTimestamp(7, entity.getCreazione());
             if (std.executeUpdate() == 1) {
                 return entity;
             } else {
