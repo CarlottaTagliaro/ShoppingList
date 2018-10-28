@@ -138,7 +138,7 @@ CREATE TABLE Notifiche(
   ID_prodotto integer not null,
   Giorni_mancanti integer not null,
   Quantita_mancanti integer not null,
-  Mail boolean not null,
+  Creazione timestamp not null,
   Sito boolean not null,
   primary key(ID),
   foreign key(ID_list) references Liste(ID),
