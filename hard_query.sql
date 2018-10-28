@@ -1,5 +1,7 @@
 -- to get product the user need to buy 
 
+-- se non va:
+-- set sql_mode= (SELECT replace(@@sql_mode, 'ONLY_FULL_GROUP_BY',''));
 select * from
 
 	(select ID_lista, ID_prodotto, 
