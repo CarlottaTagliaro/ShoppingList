@@ -16,7 +16,7 @@ import it.webproject2018.db.exceptions.DAOException;
  *
  * @author Stefano
  */
-public class ChangeUserDetailsServlet extends HttpServlet {
+public class ChangeUserPassword extends HttpServlet {
 
     private JDBCUtenteDAO JDBCUtente;
 
@@ -32,14 +32,14 @@ public class ChangeUserDetailsServlet extends HttpServlet {
         PrintWriter w = response.getWriter();
         try {
             Utente user = (Utente) request.getSession().getAttribute("User");
-            String name = request.getParameter("name");
-            String surname = request.getParameter("surname");
+            String newP = request.getParameter("NewPassword");
+            String confirmP = request.getParameter("ConfirmPassword");
+            Boolean ok = false;
 
-            user.setName((name==null) ? "" : name);
-            user.setSurname((surname==null) ? "" : surname);
-            
-            user = JDBCUtente.update(user);
-            Boolean ok = user != null;
+            if(newP.equals(confirmP)) {
+                user = JDBCUtente.updatePassword(user, newP);
+                ok = user != null;
+            }
             
             JDBCUtente.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/profile" : "/profile"));

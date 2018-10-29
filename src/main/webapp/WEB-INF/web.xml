@@ -183,6 +183,14 @@
         <url-pattern>/AddProductToList</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ChangeUserPassword</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ChangeUserPassword</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeUserPassword</servlet-name>
+        <url-pattern>/ChangeUserPassword</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>BuyProductServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.BuyProductServlet</servlet-class>
     </servlet>

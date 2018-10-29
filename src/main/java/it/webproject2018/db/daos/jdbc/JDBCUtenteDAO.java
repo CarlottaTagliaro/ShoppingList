@@ -152,6 +152,25 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
 
+    public Utente updatePassword(Utente user, String password) throws DAOException {
+        if (user == null) {
+            throw new DAOException("Parameter 'user' not valid for update",
+                    new IllegalArgumentException("The passed user is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti SET Password = SHA2(?, 256) WHERE Email = ?")) {
+            std.setString(1, password);
+            std.setString(2, user.getEmail());
+            if (std.executeUpdate() == 1) {
+                return user;
+            } else {
+                throw new DAOException("Impossible to update the user");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the user", ex);
+        }
+    }
+
     public Boolean updateUserLastAccess(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
