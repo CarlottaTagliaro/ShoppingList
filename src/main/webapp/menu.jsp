@@ -6,13 +6,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>-->
         <script src="JQUERY/jquery.min.js" type="text/javascript"></script>
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" crossorigin="anonymous">-->
         <link href="Bootsrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <!--<script src="Bootsrap/bootstrap.min.js" type="text/javascript"></script>-->
-
+        <script src="Bootsrap/bootstrap3-2.min.js" type="text/javascript"></script>
         <link href="css/menu_css.css" rel="stylesheet" type="text/css"/>
         <script src="JS/js_menu.js" type="text/javascript"></script>
         
