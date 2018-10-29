@@ -35,20 +35,21 @@ public class ShopCard  extends SimpleTagSupport {
 "                                </div>\n", (i == 0 ? "active" : ""), i, getShop().getImmagini().get(i));
         }
                
+        int hash_name = shop.getNome().hashCode();
         String enc_name = URLEncoder.encode(shop.getNome());
         
         String html = String.format("<div class=\"col-md-4 liste\">\n" +
 "                    <div class=\"row center shop-header\">\n" +
-"                        <div class=\"carousel slide newLista\" id=\"car_%s\">\n" +
+"                        <div class=\"carousel slide newLista\" id=\"car_"+ hash_name + "\">\n" +
 "                            <!-- Carousel items -->\n" +
 "                            <div class=\"carousel-inner\">\n" +
 "                               %s" +
 "                            </div><!-- Carousel nav -->\n" +
-"                            <a class=\"left carousel-control\" href=\"#car_%s\" data-slide=\"prev\">\n" +
+"                            <a class=\"left carousel-control\" href=\"#car_"+ hash_name +"\" data-slide=\"prev\">\n" +
 "                                <span class=\"glyphicon glyphicon-chevron-left\"></span>  \n" +
 "                                <span class=\"sr-only\">Previous</span>\n" +
 "                            </a>\n" +
-"                            <a class=\"right carousel-control\" href=\"#car_%s\" data-slide=\"next\">\n" +
+"                            <a class=\"right carousel-control\" href=\"#car_" + hash_name + "\" data-slide=\"next\">\n" +
 "                                <span class=\"glyphicon glyphicon-chevron-right\"></span>\n" +
 "                                <span class=\"sr-only\">Next</span>\n" +
 "                            </a>                                 \n" +
@@ -61,7 +62,7 @@ public class ShopCard  extends SimpleTagSupport {
 "                            </div>\n" +
 "                        </div>\n" +
 "                    </div>\n" +
-"                </div>", enc_name, imgHtml, enc_name, enc_name, enc_name, shop.getNome());
+"                </div>", imgHtml, enc_name, shop.getNome());
         getJspContext().getOut().write(html);
     }
 
