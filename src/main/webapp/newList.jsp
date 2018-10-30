@@ -24,7 +24,7 @@
                 <form action="CreateListServlet" id="upload_form" enctype="multipart/form-data" method="POST">
 
                     <c:if test="${not empty sessionScope.User}">
-                        <input type="file" id="file" name="file" class="inputfile">
+                        <input type="file" id="file" name="file" class="inputfile" required>
                         <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose
                             file </label>
                     </c:if>

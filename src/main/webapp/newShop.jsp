@@ -21,7 +21,7 @@
         <div class="card">
             <form action="CreateShopsServlet" id="upload_form" enctype="multipart/form-data" method="POST">
                 <input type="file" name="file" id="file" class="inputfile" data-multiple-caption="{count} files selected"
-                    multiple>
+                    multiple required>
                 <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose
                     files </label>
                 <div class="form-group elemento">

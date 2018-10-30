@@ -73,7 +73,7 @@ public class NewList extends SimpleTagSupport {
 
         for (int i = 0; i < lista.size(); i++) {
             Integer amount = 0;
-            try{
+            try {
                 amount = JdbcProdottoDao.getProductOfListAmount(lista.get(i), lista);
             }
             catch(Exception e){
