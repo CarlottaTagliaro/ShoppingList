@@ -11,18 +11,25 @@ select CONCAT("You have new messages in the list chat '", Nome, "'!") as testo, 
 				join Liste on Liste.ID = chat.ID_list
 union
         
-select CONCAT(owner, " has shared '", Nome, "' list with you!") as testo, "list_share" as tipo, Data_inserimento, Liste.ID as id_elem
+select CONCAT(owner, " has shared '", Nome, "' list with you!") as testo, "list_share" as tipo, Data_inserimento as data, Liste.ID as id_elem
 		from Utenti_Liste join Liste on Liste.ID = Utenti_Liste.ID where Email = user_email and Owner != email and
 			Data_inserimento >= (select Ultima_visualizzazione from Utenti where Email = user_email)
 union    
     
-select CONCAT(owner, " has shared '", Nome, "' product with you!") as testo, "product_share" as tipo, Data_inserimento, Prodotti.ID as id_elem
+select CONCAT(owner, " has shared '", Nome, "' product with you!") as testo, "product_share" as tipo, Data_inserimento as data, Prodotti.ID as id_elem
 		from Utenti_Prodotti join Prodotti on Prodotti.ID = Utenti_Prodotti.ID_prodotto where Email = user_email and
-			Data_inserimento >= (select Ultima_visualizzazione from Utenti where Email = user_email)) as res
-            
-            order by data desc;
-            
+			Data_inserimento >= (select Ultima_visualizzazione from Utenti where Email = user_email)
+            		
+union
 
+select CONCAT("Maybe you need to buy ", Quantita_mancanti, " ", Prodotti.Nome, " in ", Giorni_mancanti, " days for the '", Liste.Nome, "' list.") as testo, 
+	"previsioning" as tipo, Creazione as data, Notifiche.ID as id_elem
+		from Notifiche JOIN Prodotti ON ID_prodotto = Prodotti.ID JOIN Liste ON ID_list = Liste.ID JOIN Utenti_Liste ON Liste.ID = Utenti_Liste.ID
+			WHERE Utenti_Liste.Email = user_email AND Creazione >= (select Ultima_visualizzazione from Utenti where Email = user_email)
+            
+            ) as res
+				order by data desc;
+            
 END;;
 
 delimiter ;
