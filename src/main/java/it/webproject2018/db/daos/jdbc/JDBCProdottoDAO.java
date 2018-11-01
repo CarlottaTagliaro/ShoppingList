@@ -252,7 +252,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
 
     @Override
-    public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy) throws DAOException {
+    public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy, Integer count, Integer start) throws DAOException {
         if (srcQry == null) {
             srcQry = "";
         }
@@ -266,8 +266,10 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
         //prendo solo prodotto creati da admin
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ORDER BY Prodotti." + orderBy)) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ORDER BY Prodotti." + orderBy + " LIMIT ?, ?")) {
             stm.setString(1, "%" + srcQry + "%");
+            stm.setInt(2, start);
+            stm.setInt(3, count);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -284,7 +286,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
 
     @Override
-    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy) throws DAOException {
+    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy, Integer count, Integer start) throws DAOException {
         if (srcQry == null) {
             srcQry = "";
         }
@@ -301,10 +303,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         //prendo solo prodotti creati da admin
         try (PreparedStatement stm = CON.prepareStatement("Select * from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)"
                 + "UNION"
-                + "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ? ORDER BY " + orderBy)) {
+                + "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ? ORDER BY " + orderBy + " LIMIT ?, ?")) {
             stm.setString(1, userEmail);
             stm.setString(2, userEmail);
             stm.setString(3, "%" + srcQry + "%");
+            stm.setInt(2, start);
+            stm.setInt(3, count);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -319,7 +323,44 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return prodotti;
     }
+    @Override
+    public Long getCountVisibleProducts(String srcQry) throws DAOException{
+        try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ")){
+            stm.setString(1, "%" + srcQry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
 
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to count products", ex);
+        }
+
+        return 0L;
+    }
+    
+    @Override
+    public Long getCountUserVisibleProducts(String userEmail, String srcQry) throws DAOException{
+        try (PreparedStatement stm = CON.prepareStatement("Select COUNT(*) from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)" +
+                "UNION" +
+                "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ?")){
+            stm.setString(1, userEmail);
+            stm.setString(2, userEmail);
+            stm.setString(3, "%" + srcQry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
+
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to count products", ex);
+        }
+
+        return 0L;
+    }
+    
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {

@@ -23,7 +23,11 @@ public interface ProdottoDAO extends DAO<Prodotto, Integer> {
 	
     public ArrayList<Prodotto> getUserProducts(String userEmail) throws DAOException;
     
-    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy) throws DAOException;
+    public ArrayList<Prodotto> getAllUserVisibleProducts(String userEmail, String srcQry, String orderBy, Integer count, Integer start) throws DAOException;
     
-    public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy) throws DAOException;
+    public ArrayList<Prodotto> getAllVisibleProducts(String srcQry, String orderBy, Integer count, Integer start) throws DAOException;
+
+    public Long getCountUserVisibleProducts(String userEmail, String srcQry) throws DAOException;
+    
+    public Long getCountVisibleProducts(String srcQry) throws DAOException;
 }

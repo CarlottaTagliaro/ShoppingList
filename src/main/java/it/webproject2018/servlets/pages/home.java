@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author davide
  */
 public class home extends HttpServlet {
-
+    private Integer numElem = 10;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,16 +38,34 @@ public class home extends HttpServlet {
             List<Prodotto> productList;
 
             String srcText = request.getParameter("qry");
+            if(srcText == null)
+                srcText = "";
             String orderBy = request.getParameter("orderBy");
+            if(orderBy == null)
+                orderBy = "";
+            String page = request.getParameter("page");
+            Integer pageN = 0;
+            if(page != null)
+                pageN = Integer.parseInt(page);
 
+            Integer start = numElem * pageN;
+            Long count = 0L;
+            
             if (user != null) {
-                productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy);
-            } else {
-                
-                productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy);
+                productList = JdbcProdottoDao.getAllUserVisibleProducts(user.getEmail(), srcText, orderBy, numElem, start);
+                count = JdbcProdottoDao.getCountUserVisibleProducts(user.getEmail(), srcText);
+            } else {                
+                productList = JdbcProdottoDao.getAllVisibleProducts(srcText, orderBy, numElem, start);
+                count = JdbcProdottoDao.getCountVisibleProducts(srcText);
             }
-
+            
+            count = (long)Math.ceil((double)count / numElem);
+            
             request.setAttribute("productList", productList);
+            request.setAttribute("qry", srcText);
+            request.setAttribute("orderBy", orderBy);
+            request.setAttribute("page", pageN);
+            request.setAttribute("count", count);
             
             JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);

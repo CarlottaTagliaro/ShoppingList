@@ -23,14 +23,27 @@
         <script>
             $(document).ready(function () {
                 selectMenuEl("home");
-                
+
                 //submit form when order selection changed
-                $("#search-select").change(function(){$(".search-form").submit()});
+                $("#search-select").change(function () {
+                    $(".search-form").submit()
+                });
             });
+            $(document).ready(function () {
+                var value = "${orderBy}";
+                if (value != "")
+                    $("select[name=orderBy]").val(value);
+            });
+
+            function changePage(num) {
+                $("#page").val(num);
+                $(".search-form").submit()
+            }
         </script>
 
         <div class="main">
-            <form class="row search-form">
+            <form class="row search-form" action="home">
+                <input type="hidden" id="page" name="page" value="${page}">
                 <div class="col-sm-7">
                     <div class="ordering-form">
                         <label class="search"> Order by: </label>
@@ -41,17 +54,9 @@
                     </div>
                 </div>
 
-                <script>
-                    $(document).ready(function () {
-                        var value = "<%= request.getParameter("orderBy") == null ? "" : request.getParameter("orderBy")%>";
-                        if(value != "")
-                            $("select[name=orderBy]").val(value);
-                    });
-                </script>
-
                 <div class="col-sm-5">
                     <div class="input-group">
-                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product" value="<%= request.getParameter("qry") == null ? "" : request.getParameter("qry")%>">
+                        <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product" value="${qry}">
                         <div class="input-group-btn">
                             <button type="submit" class="btn bottone-cerca btn-default">
                                 <span class="glyphicon glyphicon-search"/>
@@ -66,6 +71,13 @@
                 <productCard:productCard product="${product}"/>
             </c:forEach>
 
+            <div class="row center">
+                <ul class="pagination">
+                    <c:forEach var = "i" begin = "1" end = "${count}">
+                        <li><a href="#" onclick="changePage(${i-1})">${i}</a></li>
+                    </c:forEach>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
