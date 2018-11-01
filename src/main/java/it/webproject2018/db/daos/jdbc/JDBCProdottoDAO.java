@@ -307,8 +307,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
             stm.setString(1, userEmail);
             stm.setString(2, userEmail);
             stm.setString(3, "%" + srcQry + "%");
-            stm.setInt(2, start);
-            stm.setInt(3, count);
+            stm.setInt(4, start);
+            stm.setInt(5, count);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
