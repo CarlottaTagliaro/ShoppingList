@@ -193,9 +193,7 @@ div.liste:nth-child(3n+1) {
 }
 
 .descrizione {
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
+    padding: 15px;
 }
 
 .panel-primary{    

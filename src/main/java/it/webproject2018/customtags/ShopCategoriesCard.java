@@ -27,7 +27,7 @@ public class ShopCategoriesCard  extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
         String enc_name = URLEncoder.encode(category.getNome());
         
-        String html = String.format("<div class=\"col-md-4 liste\">\n" +
+        String html = String.format("<div class=\"col-md-4 liste center\">\n" +
 "                    <div class=\"row\">\n" +
 "                        <div class=\"img_wrapper\">\n" +
 "                            <img class=\"immagine_liste\" src=\"http://placehold.it/770x300&text=%s\">\n" +
