@@ -44,6 +44,7 @@ public class prodotti extends HttpServlet {
 
             request.setAttribute("productList", products);
             request.setAttribute("titolo", catName);
+            request.setAttribute("qry", qry);
             
             JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/prodotti.jsp").forward(request, response);
