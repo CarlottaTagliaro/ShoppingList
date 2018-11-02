@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefano
  */
 public class AuthenticationFilter implements Filter {
+    @Override
     public void init(FilterConfig config) throws ServletException {
 
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
         try {
             HttpServletRequest req = (HttpServletRequest) request;
@@ -28,10 +30,11 @@ public class AuthenticationFilter implements Filter {
             else
                 chain.doFilter(request, response);
         } catch (Exception e) {
-            
+            e.printStackTrace();
         }
     }
 
+    @Override
     public void destroy() {
 
     }

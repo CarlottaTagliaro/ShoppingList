@@ -261,6 +261,18 @@
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>AutoLoginFilter</filter-name>
+        <filter-class>it.webproject2018.filters.AutoLoginFilter</filter-class>
+        <init-param>
+            <param-name/>
+            <param-value/>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AutoLoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>
         <url-pattern>/DeleteListServlet</url-pattern>

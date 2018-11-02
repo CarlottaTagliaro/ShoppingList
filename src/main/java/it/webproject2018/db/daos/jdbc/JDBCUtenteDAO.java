@@ -60,6 +60,47 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
     }
 
     @Override
+    public String createRememberMeID(String userEmail) throws DAOException {
+        if (userEmail == null) {
+            throw new DAOException("userEmail is null");
+        }
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT SHA2(CONCAT(Email, Password), 256) as id FROM Utenti WHERE Email = ?")) {
+            stm.setString(1, userEmail);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getString("id");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while creating Remember Me ID", ex);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Utente getUserByRememberMeID(String id) throws DAOException {
+        if (id == null) {
+            throw new DAOException("Remember me id is null");
+        }
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT Email FROM Utenti WHERE SHA2(CONCAT(Email, Password), 256) = ?")) {
+            stm.setString(1, id);
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    return getByPrimaryKey(rs.getString("Email"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting user by Remember Me ID", ex);
+        }
+
+        return null;
+    }
+
+    @Override
     public Utente getUserAuthentication(String userEmail, String password) throws DAOException {
         if (userEmail == null || password == null) {
             throw new DAOException("userEmail or password is null");
@@ -195,7 +236,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         if (userEmail == null || password == null || name == null || surname == null) {
             throw new DAOException("userEmail or password or name or surname is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW());")){
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW());")) {
             stm.setString(1, name);
             stm.setString(2, surname);
             stm.setString(3, userEmail);
