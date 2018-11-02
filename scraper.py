@@ -39,5 +39,8 @@ def getProducts(cat):
 
             f.write(sql)
 
-
-getProducts("Gardening")
+with open("words.txt") as file:
+    line = file.readline()
+    while line:
+        getProducts(line)
+        line = file.readline()
