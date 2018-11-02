@@ -114,7 +114,7 @@ public class CreateListServlet extends HttpServlet {
             ArrayList<Pair<Prodotto, Integer>> defaultList = new ArrayList<>();
             request.getSession().setAttribute("DefaultProductList", defaultList);
 
-            Lista l = new Lista(1, name, description, "", cat, "");
+            Lista l = new Lista(1, name, description, "images/carrello.png", cat, "");
             request.getSession().setAttribute("DefaultList", l);
         }
 
