@@ -76,7 +76,7 @@
 
             <div class="row">
                 <c:forEach items="${userLists}" var="lista">
-                    <newList:newList lista="${lista}"/>
+                    <newList:newList lista="${lista}" listQuantities="${listQuantities}"/>
                 </c:forEach>
             </div>
 

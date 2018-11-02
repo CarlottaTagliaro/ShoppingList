@@ -11,8 +11,10 @@ import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.ListaPermessi;
+import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +30,8 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 public class NewList extends SimpleTagSupport {
 
     private Lista lista;
+    //only for not registered users
+    private ArrayList<Pair<Prodotto, Integer>> listQuantities;
 
     public NewList() {
 
@@ -68,18 +72,26 @@ public class NewList extends SimpleTagSupport {
             canBuy = false;
         }
         JdbcListaPermessiDao.Close();
-        
+
         String listaHtml = "";
 
         for (int i = 0; i < lista.size(); i++) {
             Integer amount = 0;
             try {
-                amount = JdbcProdottoDao.getProductOfListAmount(lista.get(i), lista);
-            }
-            catch(Exception e){
+                if (user != null) {
+                    amount = JdbcProdottoDao.getProductOfListAmount(lista.get(i), lista);
+                } else {
+                    for (int el = 0; el < listQuantities.size(); el++) {
+                        if (listQuantities.get(el).getFirst().getId().equals(lista.get(i).getId())) {
+                            amount = listQuantities.get(el).getSecond();
+                            break;
+                        }
+                    }
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
             listaHtml += String.format("<li class=\"left clearfix\">"
                     + "                         <span class=\"list-img pull-left\">\n"
                     + "                             <img src=\"http://placehold.it/50/55C1E7/fff&text="
@@ -88,8 +100,8 @@ public class NewList extends SimpleTagSupport {
                     + "                         <div class=\"list-body clearfix\">\n"
                     + "                             <div class=\"header\">\n"
                     + "                                 <strong class=\"primary-font\">" + lista.get(i).getNome() + "</strong>" + " (" + amount + ")"
-                    + (perm.getPerm_add_rem() ? 
-                            (canBuy ? "                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n" : "")
+                    + (perm.getPerm_add_rem()
+                    ? (canBuy ? "                 <button class=\"myButton3 addTo\" text=\"+\" data-toggle=\"modal\" data-target=\"#modal_prod_" + lista.getId() + "_" + i + "\"><b>+</b></button>\n" : "")
                     + "                                 <a href=\"DeleteProductServlet?Product=" + lista.get(i).getId() + "&List=" + lista.getId() + "\"><button class=\"myButton3 addTo\" title=\"Delete product\" class=\"btn btn-default btn-xs small\">\n"
                     + "                                     <span class=\"glyphicon glyphicon-trash\"></span>\n"
                     + "                                 </button></a>\n" : "")
@@ -130,7 +142,7 @@ public class NewList extends SimpleTagSupport {
         }
 
         JdbcProdottoDao.Close();
-        
+
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
                 + "                    <div class=\"row row-lista\">\n"
                 + "                        <div class=\"img_wrapper\">\n"
@@ -259,5 +271,19 @@ public class NewList extends SimpleTagSupport {
      */
     public void setLista(Lista lista) {
         this.lista = lista;
+    }
+
+    /**
+     * @return the listQuantities
+     */
+    public ArrayList<Pair<Prodotto, Integer>> getListQuantities() {
+        return listQuantities;
+    }
+
+    /**
+     * @param listQuantities the listQuantities to set
+     */
+    public void setListQuantities(ArrayList<Pair<Prodotto, Integer>> listQuantities) {
+        this.listQuantities = listQuantities;
     }
 }

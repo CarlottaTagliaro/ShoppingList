@@ -39,12 +39,13 @@ public class myList extends HttpServlet {
             JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
             List<Lista> userLists;
+            ArrayList<Pair<Prodotto, Integer>> defaultList = null;
             if (user != null) {
                 userLists = JdbcListaDao.getUserLists(user.getEmail());
             } else {
                 userLists = new ArrayList<>();
                 
-                ArrayList<Pair<Prodotto, Integer>> defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
+                defaultList = (ArrayList<Pair<Prodotto, Integer>>) request.getSession().getAttribute("DefaultProductList");
 
                 Lista l = (Lista) request.getSession().getAttribute("DefaultList");
                 
@@ -65,6 +66,7 @@ public class myList extends HttpServlet {
             
             request.setAttribute("userLists", userLists);
             request.setAttribute("showNewList", showNewList);
+            request.setAttribute("listQuantities", defaultList);
             
             JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/myList.jsp").forward(request, response);
