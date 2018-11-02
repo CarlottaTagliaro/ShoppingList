@@ -13,7 +13,10 @@ select final.ID_lista, final.ID_prodotto, final.giorni_manc, final.quant_manc, n
 		(giorni_media - DATEDIFF(NOW(), ultimo)) as giorni_manc,
 		(quant_media + quant_media - 
 			(select Quantita from Liste_Prodotti_Acquistati where ID_lista = medie.ID_lista AND ID_prodotto = medie.ID_prodotto AND Data_acquisto = medie.ultimo)
-			) as quant_manc from
+			) as quant_manc,
+		(select count(*) from Notifiche where ID_lista = Notifiche.ID_list and 
+			Notifiche.Creazione between subdate(now(), 1) and now()) as tmp_count
+        from
 
 		(select ID_lista, ID_prodotto, AVG(Quantita) as quant_media, AVG(diff) as giorni_media, ultimo from
 
@@ -25,7 +28,8 @@ select final.ID_lista, final.ID_prodotto, final.giorni_manc, final.quant_manc, n
 				
 				group by a.Data_acquisto, a.ID_lista, a.ID_prodotto) as tmp
 			group by ID_lista, ID_prodotto) as medie) as final
-	where quant_manc > 0 and (ID_lista, ID_prodotto) not in (select ID_lista, ID_prodotto from Liste_Prodotti);
+	where quant_manc > 0 and (ID_lista, ID_prodotto) not in (select ID_lista, ID_prodotto from Liste_Prodotti) 
+        and tmp_count = 0;
 end $$
 delimiter ;
 -- giorni_manc: tra quanti giorni deve fare l'acquisto (se negativo doveva farlo giorni fa)
