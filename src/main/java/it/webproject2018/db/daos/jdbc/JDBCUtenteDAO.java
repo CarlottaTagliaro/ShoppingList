@@ -18,7 +18,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link UtenteDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO {
@@ -193,6 +194,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
 
+	@Override
     public Utente updatePassword(Utente user, String password) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
@@ -212,6 +214,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
 
+	@Override
     public Boolean updateUserLastAccess(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",

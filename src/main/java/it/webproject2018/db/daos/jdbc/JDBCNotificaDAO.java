@@ -21,7 +21,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link NotificaDAO} interface.
+ * 
  * @author alberto
  */
 public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements NotificaDAO {
@@ -221,6 +222,7 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
         return retval;
     }
 
+	@Override
     public void setFieldTo(List<Notifica> notifications, String fielName, Object value) throws DAOException {
         for (Notifica notification : notifications) {
             try (PreparedStatement std = CON.prepareStatement("UPDATE notifiche SET ? = ? where ID = ?")) {

@@ -9,8 +9,7 @@ import it.webproject2018.db.exceptions.DAOException;
 import it.webproject2018.db.entities.Utente;
 
 /**
- * All concrete DAOs must implement this interface to handle the persistence
- * system that interact with {@link User users}.
+ * DAO interface for Utente
  *
  * @author davide
  */
@@ -34,4 +33,8 @@ public interface UtenteDAO extends DAO<Utente, String> {
     public Utente getUserByRememberMeID(String id) throws DAOException;
     
     public String createRememberMeID(String userEmail) throws DAOException;
+	
+	public Utente updatePassword(Utente user, String password) throws DAOException;
+		
+	public Boolean updateUserLastAccess(Utente user) throws DAOException;
 }

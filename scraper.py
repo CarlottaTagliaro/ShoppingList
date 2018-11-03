@@ -22,6 +22,7 @@ def getProducts(cat):
         try:
             desc = soupDesc.select_one("#productDescription p").text
         except:
+            print("exception")
             continue
 
         nome = img['alt']
@@ -34,7 +35,7 @@ def getProducts(cat):
 
         with open("insert_query/qry_" + cat + ".sql", 'a') as f:
             sql = 'INSERT INTO Prodotti (Nome, Note, Logo, Categoria, Owner) VALUES("' + nome + '", "' + desc + '", "", "' + cat + '", "g.s@agg.it");\n'
-            sql += "INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES(SELECT LAST_INSERT_ID(), '" + "imagesUpload/" + os.path.basename(src) + "');\n"
+            sql += "INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES((SELECT Max(ID) FROM cucciolo.Prodotti), '" + "imagesUpload/" + os.path.basename(src) + "');\n"
             sql = sql.replace("–", "-")
 
             f.write(sql)
@@ -42,5 +43,6 @@ def getProducts(cat):
 with open("words.txt") as file:
     line = file.readline()
     while line:
+        print(line)
         getProducts(line)
         line = file.readline()
