@@ -69,17 +69,16 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
                     Integer idProdotto = rs.getInt("ID_prodotto");
                     JDBCProdottoDAO prodottoDAO = new JDBCProdottoDAO(CON);
                     Prodotto product = prodottoDAO.getByPrimaryKey(idProdotto);
-                    Integer giorniMancanti = rs.getInt("GiorniMancanti");
-                    Integer quantitaMancante = rs.getInt("QuantitaMancanti");
+                    Integer giorniMancanti = rs.getInt("Giorni_mancanti");
+                    Integer quantitaMancante = rs.getInt("Quantita_mancanti");
                     boolean mail = rs.getBoolean("Mail");
                     Timestamp creazione = rs.getTimestamp("Creazione");
-
                     Notifica notification = new Notifica(id, list, product, giorniMancanti, quantitaMancante, mail, creazione);
                     return notification;
                 }
             }
         } catch (SQLException ex) {
-            throw new DAOException("Error while getting Product by ID", ex);
+            throw new DAOException("Error while getting Notification by ID", ex);
         }
 
         return null;

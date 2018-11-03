@@ -35,19 +35,21 @@ public class AutoLoginFilter implements Filter {
 
             if (req.getSession().getAttribute("User") == null) {
                 Cookie[] cookies = req.getCookies();
-                for (int i = 0; i < cookies.length; i++) {
-                    Cookie c = cookies[i];
-                    if (c.getName().equals("rememberMe")) {
-                        //do automatic login
-                        System.out.println("user automatic logged in");
-                        String token = c.getValue();
+                if (null != cookies) {
+                    for (int i = 0; i < cookies.length; i++) {
+                        Cookie c = cookies[i];
+                        if (c.getName().equals("rememberMe")) {
+                            //do automatic login
+                            System.out.println("user automatic logged in");
+                            String token = c.getValue();
                         
-                        JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(request.getServletContext());
+                            JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(request.getServletContext());
                         
-                        Utente user = JdbcUtenteDao.getUserByRememberMeID(token);
-                        req.getSession().setAttribute("User", user);
+                            Utente user = JdbcUtenteDao.getUserByRememberMeID(token);
+                            req.getSession().setAttribute("User", user);
                         
-                        JdbcUtenteDao.Close();
+                            JdbcUtenteDao.Close();
+                        }
                     }
                 }
             }
