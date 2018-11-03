@@ -1,3 +1,7 @@
+--EMAIL ACCOUNT--
+email: shoppinglistprogweb@gmail.com
+password: vadoaprendereillatte
+
 --NEW--
 Server: gg18.ml
 Name: cucciolo
