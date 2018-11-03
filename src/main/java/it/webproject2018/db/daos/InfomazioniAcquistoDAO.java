@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
- *
+ * * DAO interface for InformazioniAcquisto
+ * 
  * @author davide
  */
 public interface InfomazioniAcquistoDAO extends DAO<InformazioniAcquisto, Triple<Integer, Integer, Date>> {
+	
     public ArrayList<InformazioniAcquisto> getListProductsBuyInfo(Integer listID, Integer productID) throws DAOException;
+	
 }

@@ -15,10 +15,13 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * This is the base DAO class all concrete DAO using JDBC technology
+ * must extend.
+ * 
  * @author davide
- * @param <ENTITY_CLASS>
- * @param <PRIMARY_KEY_CLASS>
+ * @param <ENTITY_CLASS> the class of the entities the dao handle.
+ * @param <PRIMARY_KEY_CLASS> the class of the primary key of the entity the
+ * dao handle.
  */
 public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 
@@ -26,12 +29,18 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
      * The JDBC {@link Connection} used to access the persistence system.
      */
     protected final Connection CON;
-    protected final ServletContext SC;
-    /**
+	protected final ServletContext SC;
+	/**
      * The list of other DAOs this DAO can interact with.
      */
     protected final HashMap<Class, DAO> FRIEND_DAOS;
 
+	/**
+	 * This function establishes a connection with the mysql database
+	 * 
+	 * @param sc the ServletContext
+	 * @return the connection
+	 */
     final private Connection CreateDbConn(ServletContext sc) {
         String dburl = sc.getInitParameter("dburl");
         String dbuser = sc.getInitParameter("dbuser");
@@ -71,6 +80,7 @@ public abstract class JDBCDAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> implements DAO<EN
         FRIEND_DAOS = new HashMap<>();
     }
 
+	@Override
     public void Close() {
         try {
             this.CON.close();

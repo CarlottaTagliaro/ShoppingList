@@ -23,6 +23,11 @@ import java.util.List;
 public interface DAO<ENTITY_CLASS, PRIMARY_KEY_CLASS> {
 	
 	/**
+	 * Closes connection
+	 */
+	public void Close();
+	
+	/**
 	 * Returns the number of records of {@code ENTITY_CLASS} stored on the
 	 * persistence system of the application.
 	 *

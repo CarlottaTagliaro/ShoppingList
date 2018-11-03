@@ -21,7 +21,8 @@ import javax.servlet.ServletContext;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
- *
+ * The JDBC implementation of the {@link MessaggioChatDAO} interface.
+ * 
  * @author Max
  */
 public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, Integer, Timestamp>> implements MessaggioChatDAO {

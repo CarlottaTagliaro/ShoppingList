@@ -19,11 +19,13 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link CategoriaProdottiDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String> implements CategoriaProdottiDAO  {    
-    public JDBCCategoriaProdottiDAO(Connection conn) {
+    
+	public JDBCCategoriaProdottiDAO(Connection conn) {
         super(conn);
     }    
     
@@ -87,6 +89,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         return lista;
     }
 	
+	@Override
     public List<CategoriaProdotti> getAllByShop(String catName) throws DAOException {
         List<CategoriaProdotti> lista = new ArrayList<>();
 
@@ -113,6 +116,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         return lista;
     }
 	
+	@Override
     public List<String> getAllNames() throws DAOException {
         List<String> names = new ArrayList<>();
 

@@ -20,7 +20,8 @@ import javax.servlet.ServletContext;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
- *
+ * The JDBC implementation of the {@link InformazioniAcquistoDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, Triple<Integer, Integer, Date>> implements InfomazioniAcquistoDAO {

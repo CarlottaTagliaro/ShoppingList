@@ -18,7 +18,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link CategoriaListeDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> implements CategoriaListeDAO {
@@ -31,6 +32,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         super(conn);
     }
 
+	@Override
     public List<String> getAllNames() throws DAOException {
         List<String> names = new ArrayList<>();
 
@@ -156,6 +158,7 @@ public class JDBCCategoriaListeDAO extends JDBCDAO<CategoriaListe, String> imple
         }
     }
 
+	@Override
     public Boolean insertImage(CategoriaListe entity, String img) throws DAOException {
         if (entity == null || img == null) {
             throw new DAOException("product parameter is null");

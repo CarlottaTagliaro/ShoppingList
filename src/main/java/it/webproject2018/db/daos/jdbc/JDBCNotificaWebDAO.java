@@ -18,7 +18,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link NotificaWebDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements NotificaWebDAO {
@@ -31,6 +32,7 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
         super(sc);
     }
 
+	@Override
     public List<NotificaWeb> getAllUserNotifications(String email) throws DAOException {
         ArrayList<NotificaWeb> lista = new ArrayList<>();
         if (email == null) {

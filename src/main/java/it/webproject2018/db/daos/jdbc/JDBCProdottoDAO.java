@@ -24,7 +24,8 @@ import it.webproject2018.db.exceptions.DAOException;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
- *
+ * The JDBC implementation of the {@link ProdottoDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements ProdottoDAO {
@@ -116,6 +117,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
+	@Override
     public List<Triple<Integer, String, Integer>> getProductListAmount(Prodotto entity, Utente user) throws DAOException {
         ArrayList<Triple<Integer, String, Integer>> lista = new ArrayList<>();
 
@@ -146,7 +148,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return lista;
     }
     
-
+	@Override
     public Integer getProductOfListAmount(Prodotto product, Lista list) throws DAOException {
         Integer amount = 0;
 
@@ -188,6 +190,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
+	@Override
     public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
@@ -323,7 +326,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return prodotti;
     }
-    @Override
+    
+	@Override
     public Long getCountVisibleProducts(String srcQry) throws DAOException{
         try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ")){
             stm.setString(1, "%" + srcQry + "%");
@@ -426,6 +430,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+	@Override
     public Boolean insertImage(Prodotto entity, String img) throws DAOException {
         if (entity == null || img == null) {
             throw new DAOException("product parameter is null");
@@ -442,6 +447,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+	@Override
     public Boolean shareProduct(Integer idProduct, String email) throws DAOException {
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
@@ -458,6 +464,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+	@Override
     public Boolean deleteShareProduct(Integer idProduct, String email) throws DAOException {
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
@@ -474,6 +481,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+	@Override
     public ArrayList<Pair<Utente, Boolean>> getUserToShareWith(Integer idProdotto, Utente user, String qry) throws DAOException {
         ArrayList<Pair<Utente, Boolean>> lista = new ArrayList<>();
 
@@ -501,6 +509,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return lista;
     }
 
+	@Override
     public ArrayList<Utente> getUserSharedProduct(Integer idProdotto) throws DAOException {
         ArrayList<Utente> lista = new ArrayList<>();
 
@@ -540,6 +549,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
+	@Override
     public Boolean deleteFromList(Integer ID_product, Integer ID_list) throws DAOException {
         if (ID_product == null || ID_list == null) {
             throw new DAOException("Something is null");

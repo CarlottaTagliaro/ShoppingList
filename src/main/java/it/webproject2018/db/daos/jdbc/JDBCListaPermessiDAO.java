@@ -21,7 +21,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 /**
- *
+ * The JDBC implementation of the {@link ListaPermessiDAO} interface.
+ * 
  * @author davide
  */
 public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, Integer>> implements ListaPermessiDAO {
@@ -112,6 +113,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         return liste;
     }
 
+	@Override
     public ArrayList<ListaPermessi> getAllByList(Integer idList, String emailUser) throws DAOException {
         ArrayList<ListaPermessi> liste = new ArrayList<>();
 
@@ -135,6 +137,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         return liste;
     }
 
+	@Override
     public List<Pair<Utente, ListaPermessi>> getShareUserList(Utente user, String qry, Integer idLista) throws DAOException {
         ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();
         JDBCUtenteDAO UtenteDao = new JDBCUtenteDAO(CON);
