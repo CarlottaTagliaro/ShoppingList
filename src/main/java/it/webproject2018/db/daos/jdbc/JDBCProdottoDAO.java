@@ -191,12 +191,14 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
 
     @Override
-    public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry) throws DAOException {
+    public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry, Integer count, Integer start) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Categoria = ? and Nome like ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Categoria = ? and Nome like ? LIMIT ?, ?")) {
             stm.setString(1, catName);
             stm.setString(2, "%" + qry + "%");
+            stm.setInt(3, start);
+            stm.setInt(4, count);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -210,6 +212,24 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
 
         return prodotti;
+    }
+    
+    @Override
+    public Long getAllProductsByCategoryCount(String catName, String qry) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti where Categoria = ? and Nome like ?")) {
+            stm.setString(1, catName);
+            stm.setString(2, "%" + qry + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting all Products by Category Count", ex);
+        }
+
+        return 0L;
     }
 
     @Override

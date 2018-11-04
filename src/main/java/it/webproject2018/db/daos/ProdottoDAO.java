@@ -43,7 +43,9 @@ public interface ProdottoDAO extends DAO<Prodotto, Integer> {
 
     public Integer getProductOfListAmount(Prodotto product, Lista list) throws DAOException;
 
-    public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry) throws DAOException;
+    public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry, Integer count, Integer start) throws DAOException;
+
+    public Long getAllProductsByCategoryCount(String catName, String qry) throws DAOException;
 
     public Boolean insertImage(Prodotto entity, String img) throws DAOException;
 

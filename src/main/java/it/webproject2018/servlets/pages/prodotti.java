@@ -5,12 +5,9 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaProdottiDAO;
 import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
-import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author davide
  */
 public class prodotti extends HttpServlet {
+    private Integer numElem = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,16 +34,30 @@ public class prodotti extends HttpServlet {
         try {
             String catName = request.getParameter("catName");
             String qry = request.getParameter("qry");
-            if(qry == null)
+            if (qry == null) {
                 qry = "";
+            }
+
+            String page = request.getParameter("page");
+            Integer pageN = 0;
+            if(page != null)
+                pageN = Integer.parseInt(page);
+            
+            Integer start = numElem * pageN;
+            Long count = 0L;
             
             JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
-            List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName, qry);
+            List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName, qry, numElem, start);
+            count = JdbcProdottoDao.getAllProductsByCategoryCount(catName, qry);
+
+            count = (long)Math.ceil((double)count / numElem);
 
             request.setAttribute("productList", products);
             request.setAttribute("titolo", catName);
             request.setAttribute("qry", qry);
-            
+            request.setAttribute("page", pageN);
+            request.setAttribute("count", count);
+
             JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/prodotti.jsp").forward(request, response);
         } catch (Exception ex) {
