@@ -25,7 +25,7 @@ import org.glassfish.gmbal.generic.Triple;
 
 /**
  * The JDBC implementation of the {@link ProdottoDAO} interface.
- * 
+ *
  * @author davide
  */
 public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements ProdottoDAO {
@@ -117,7 +117,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
-	@Override
+    @Override
     public List<Triple<Integer, String, Integer>> getProductListAmount(Prodotto entity, Utente user) throws DAOException {
         ArrayList<Triple<Integer, String, Integer>> lista = new ArrayList<>();
 
@@ -147,8 +147,8 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return lista;
     }
-    
-	@Override
+
+    @Override
     public Integer getProductOfListAmount(Prodotto product, Lista list) throws DAOException {
         Integer amount = 0;
 
@@ -190,7 +190,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return prodotti;
     }
 
-	@Override
+    @Override
     public ArrayList<Prodotto> getAllProductsByCategory(String catName, String qry) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
@@ -213,11 +213,13 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
     }
 
     @Override
-    public ArrayList<Prodotto> getUserProducts(String userEmail) throws DAOException {
+    public ArrayList<Prodotto> getUserProducts(String userEmail, Integer count, Integer start) throws DAOException {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Owner = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti where Owner = ? ORDER BY Nome LIMIT ?, ?")) {
             stm.setString(1, userEmail);
+            stm.setInt(2, start);
+            stm.setInt(3, count);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -231,6 +233,23 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
 
         return prodotti;
+    }
+    
+    @Override
+    public Long getUserProductsCount(String userEmail) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti where Owner = ? ORDER BY Nome")) {
+            stm.setString(1, userEmail);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                if (rs.next()) {
+                    return rs.getLong(1);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting all user Products", ex);
+        }
+        
+        return 0L;
     }
 
     @Override
@@ -326,10 +345,10 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return prodotti;
     }
-    
-	@Override
-    public Long getCountVisibleProducts(String srcQry) throws DAOException{
-        try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ")){
+
+    @Override
+    public Long getCountVisibleProducts(String srcQry) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true and Prodotti.Nome LIKE ? ")) {
             stm.setString(1, "%" + srcQry + "%");
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
@@ -343,12 +362,12 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return 0L;
     }
-    
+
     @Override
-    public Long getCountUserVisibleProducts(String userEmail, String srcQry) throws DAOException{
-        try (PreparedStatement stm = CON.prepareStatement("Select COUNT(*) from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)" +
-                "UNION" +
-                "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ?")){
+    public Long getCountUserVisibleProducts(String userEmail, String srcQry) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("Select COUNT(*) from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)"
+                + "UNION"
+                + "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ?")) {
             stm.setString(1, userEmail);
             stm.setString(2, userEmail);
             stm.setString(3, "%" + srcQry + "%");
@@ -364,7 +383,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return 0L;
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -430,7 +449,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
-	@Override
+    @Override
     public Boolean insertImage(Prodotto entity, String img) throws DAOException {
         if (entity == null || img == null) {
             throw new DAOException("product parameter is null");
@@ -447,7 +466,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
-	@Override
+    @Override
     public Boolean shareProduct(Integer idProduct, String email) throws DAOException {
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
@@ -464,7 +483,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
-	@Override
+    @Override
     public Boolean deleteShareProduct(Integer idProduct, String email) throws DAOException {
         if (idProduct == null || email == null) {
             throw new DAOException("product parameter is null");
@@ -481,7 +500,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
-	@Override
+    @Override
     public ArrayList<Pair<Utente, Boolean>> getUserToShareWith(Integer idProdotto, Utente user, String qry) throws DAOException {
         ArrayList<Pair<Utente, Boolean>> lista = new ArrayList<>();
 
@@ -509,7 +528,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         return lista;
     }
 
-	@Override
+    @Override
     public ArrayList<Utente> getUserSharedProduct(Integer idProdotto) throws DAOException {
         ArrayList<Utente> lista = new ArrayList<>();
 
@@ -549,7 +568,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         }
     }
 
-	@Override
+    @Override
     public Boolean deleteFromList(Integer ID_product, Integer ID_list) throws DAOException {
         if (ID_product == null || ID_list == null) {
             throw new DAOException("Something is null");

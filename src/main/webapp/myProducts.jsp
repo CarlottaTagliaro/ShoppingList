@@ -23,7 +23,12 @@
         <script>
             $(document).ready(function() {
                 selectMenuEl("myProducts"); 
-            });   
+            });  
+            
+            function changePage(num) {
+                $("#page").val(num);
+                $(".search-form").submit()
+            }
         </script>
         
         <div class="main">
@@ -37,6 +42,18 @@
             <c:forEach items="${productList}" var="product">
                 <productCard:productCard product="${product}"/>
             </c:forEach>
+            
+            <form class="search-form" action="myProducts">
+                <input type="hidden" name="page" id="page" value="${page}">
+            </form>
+            
+            <div class="row center">
+                <ul class="pagination">
+                    <c:forEach var = "i" begin = "1" end = "${count}">
+                        <li class="${(i-1 == page) ? 'active' : ''}"><a href="#" onclick="changePage(${i-1})">${i}</a></li>
+                    </c:forEach>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
