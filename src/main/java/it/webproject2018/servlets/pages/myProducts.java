@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author davide
  */
 public class myProducts extends HttpServlet {
+    private Integer numElem = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,17 +34,30 @@ public class myProducts extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            String page = request.getParameter("page");
+            Integer pageN = 0;
+            if(page != null)
+                pageN = Integer.parseInt(page);
+            
             JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
             List<Prodotto> productList;
 
+            Integer start = numElem * pageN;
+            Long count = 0L;
+            
             if (user != null) {
-                productList = JdbcProdottoDao.getUserProducts(user.getEmail());
+                productList = JdbcProdottoDao.getUserProducts(user.getEmail(), numElem, start);
+                count = JdbcProdottoDao.getUserProductsCount(user.getEmail());
             } else {
                 productList = new ArrayList<>();
             }
+            
+            count = (long)Math.ceil((double)count / numElem);
 
             request.setAttribute("productList", productList);
+            request.setAttribute("page", pageN);
+            request.setAttribute("count", count);
             
             JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/myProducts.jsp").forward(request, response);

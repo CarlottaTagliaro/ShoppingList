@@ -74,7 +74,7 @@
             <div class="row center">
                 <ul class="pagination">
                     <c:forEach var = "i" begin = "1" end = "${count}">
-                        <li><a href="#" onclick="changePage(${i-1})">${i}</a></li>
+                        <li class="${(i-1 == page) ? 'active' : ''}"><a href="#" onclick="changePage(${i-1})">${i}</a></li>
                     </c:forEach>
                 </ul>
             </div>

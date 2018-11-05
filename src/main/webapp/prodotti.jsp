@@ -23,12 +23,18 @@
             $(document).ready(function () {
                 selectMenuEl("shops");
             });
+            
+            function changePage(num) {
+                $("#page").val(num);
+                $(".search-form").submit()
+            }
         </script>
 
         <div class="main">
             <div class="row search-form">
                 <form class="input-group cerca">
-                    <input type="hidden" name="catName" value="<%=request.getParameter("catName") %>">
+                    <input type="hidden" name="page" id="page" value="${page}">
+                    <input type="hidden" name="catName" value="<%=request.getParameter("catName")%>">
                     <input type="text" class="form-control form-control1" name="qry" aria-label="..." placeholder="Search product" value="${qry}">
                     <div class="input-group-btn">
                         <button type="submit" class="btn bottone-cerca btn-default">
@@ -40,53 +46,18 @@
 
             </div>
 
-            <!--
-            <div class="row card">
-                <div class="col-xs-3">
-                    <img class="imageList img-responsive" src="https://www.bricoman.it/media/foto_articoli/2018/02/10058208_LR_PRO_V01_2018_02_1_171605.JPG"/>
-                </div>
-                <div class="col-xs-6">
-                    <h4> <b> Tosaerba </b></h4>
-                    <h6> Giardinaggio </h6>
-                    <p> questo è un tosaerba bellissimo </p>
-                </div>
-
-                <div class="col-xs-3 myColumn">
-                    <div>
-                        <label> Add to list: </label>
-                        <button class="myButton" text="+" data-toggle="modal" data-target="#exampleModal">+</button>
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel"><b>Choose the list:</b></h3>
-                                    </div>
-                                    <div class="modal-body">
-                                        <select class="form-control" id="search-select">
-                                            <option value="Pet shop">Pet shop</option>
-                                            <option value="Super Market">Super Market</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <input type="checkbox" value="true" disabled="true"> Already in a list
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
-
-
             <c:forEach items="${productList}" var="product">
                 <productCard:productCard product="${product}"/>
             </c:forEach>
+
+
+            <div class="row center">
+                <ul class="pagination">
+                    <c:forEach var = "i" begin = "1" end = "${count}">
+                        <li class="${(i-1 == page) ? 'active' : ''}"><a href="#" onclick="changePage(${i-1})">${i}</a></li>
+                    </c:forEach>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
