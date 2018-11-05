@@ -273,6 +273,18 @@
         <filter-name>AutoLoginFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <filter>
+      <filter-name>ConfirmEmailFilter</filter-name>
+      <filter-class>it.webproject2018.filters.ConfirmEmailFilter</filter-class>
+      <init-param>
+        <param-name/>
+        <param-value/>
+      </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ConfirmEmailFilter</filter-name>
+        <url-pattern>/confirmEmail.jsp</url-pattern>
+    </filter-mapping>
     <servlet-mapping>
         <servlet-name>DeleteListServlet</servlet-name>
         <url-pattern>/DeleteListServlet</url-pattern>
