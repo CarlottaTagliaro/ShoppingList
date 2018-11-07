@@ -26,8 +26,8 @@ $(document).ready(function () {
         return formatted;
     };
 
-    getListChats();
-    
+    //getListChats();
+
     refreshChatMessages();
 });
 
@@ -64,7 +64,7 @@ function getListChats() {
             }
 
             getChatMessages($("#chat-panel").children()[0], chats[0].id);
-        } else {            
+        } else {
             //nessuna lista
             elem = "<li class='left clearfix center'>" +
                     "                       <p>No list chat</p>" +
@@ -84,8 +84,8 @@ function getChatMessages(sender, id) {
     }
 
     $(sender).css("background-color", "rgba(180,180,180, 0.5)");
-    
-    
+
+
     //loading messages
     $("#chat-messages").empty();
     elem = "<li class='left clearfix center'>" +
@@ -122,82 +122,91 @@ function refreshChatMessages() {
      
      var chat = JSON.parse(json);*/
 
-    $.post("/ShoppingList/ChatServlet", {
-        "action": "getChatMessages", 
-        "list_id": selChatId,
-        "lastMsgSender": lastMsgSender,
-        "lastMsgTime": lastMsgTime
-    }).done(function (chat) {
-        console.log("ok refresh");
+    var interval = 5000;
+    if (selChatId === undefined && lastMsgSender === undefined && lastMsgTime === undefined) {
+        //load chat list
+        getListChats();
         
-        if(lastMsgTime === null)
-            $("#chat-messages").empty();
         
-        if (chat.messages !== undefined && chat.messages.length > 0) {
-            for (var i = 0; i < chat.messages.length; i++) {
-                var elem = "";
-                if (chat.messages[i].isMe) {
-                    elem = "<li class='right clearfix'><span class='chat-img pull-right'>" +
-                            "                                            <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
-                            "                                        </span>" +
-                            "                                        <div class='chat-body clearfix'>" +
-                            "                                            <div class='header'>" +
-                            "                                                <small class=' text-muted'><span class='glyphicon glyphicon-time'></span>{3}</small>" +
-                            "                                                <strong class='pull-right primary-font'>{2}</strong>" +
-                            "                                            </div>" +
-                            "                                            <p>" +
-                            "                                                {0}" +
-                            "                                            </p>" +
-                            "                                        </div>" +
-                            "                                    </li>";
-                } else {
-                    elem = "<li class='left clearfix'>" +
-                            "                       <span class='chat-img pull-left'>" +
-                            "                           <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
-                            "                       </span>" +
-                            "                       <div class='chat-body clearfix'>" +
-                            "                           <div class='header'>" +
-                            "                               <strong class='primary-font'>{2}</strong> <small class='pull-right text-muted'>" +
-                            "                               <span class='glyphicon glyphicon-time'></span>{3}</small>" +
-                            "                           </div>" +
-                            "                           <p>" +
-                            "                               {0}" +
-                            "                           </p>" +
-                            "                       </div>" +
-                            "                   </li>";
+        interval = 8000;
+        setTimeout(refreshChatMessages, interval);
+    } else {
+        $.post("/ShoppingList/ChatServlet", {
+            "action": "getChatMessages",
+            "list_id": selChatId,
+            "lastMsgSender": lastMsgSender,
+            "lastMsgTime": lastMsgTime
+        }).done(function (chat) {
+            console.log("ok refresh");
+
+            if (lastMsgTime === null)
+                $("#chat-messages").empty();
+
+            if (chat.messages !== undefined && chat.messages.length > 0) {
+                for (var i = 0; i < chat.messages.length; i++) {
+                    var elem = "";
+                    if (chat.messages[i].isMe) {
+                        elem = "<li class='right clearfix'><span class='chat-img pull-right'>" +
+                                "                                            <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
+                                "                                        </span>" +
+                                "                                        <div class='chat-body clearfix'>" +
+                                "                                            <div class='header'>" +
+                                "                                                <small class=' text-muted'><span class='glyphicon glyphicon-time'></span>{3}</small>" +
+                                "                                                <strong class='pull-right primary-font'>{2}</strong>" +
+                                "                                            </div>" +
+                                "                                            <p>" +
+                                "                                                {0}" +
+                                "                                            </p>" +
+                                "                                        </div>" +
+                                "                                    </li>";
+                    } else {
+                        elem = "<li class='left clearfix'>" +
+                                "                       <span class='chat-img pull-left'>" +
+                                "                           <img src='{1}' alt='User Avatar' class='img-circle img-responsive img-chat-list'>" +
+                                "                       </span>" +
+                                "                       <div class='chat-body clearfix'>" +
+                                "                           <div class='header'>" +
+                                "                               <strong class='primary-font'>{2}</strong> <small class='pull-right text-muted'>" +
+                                "                               <span class='glyphicon glyphicon-time'></span>{3}</small>" +
+                                "                           </div>" +
+                                "                           <p>" +
+                                "                               {0}" +
+                                "                           </p>" +
+                                "                       </div>" +
+                                "                   </li>";
+                    }
+
+                    elem = elem.format(chat.messages[i].messaggio, chat.messages[i].immagine, chat.messages[i].nome + " " + chat.messages[i].cognome, chat.messages[i].timestamp);
+                    $("#chat-messages").append(elem);
                 }
 
-                elem = elem.format(chat.messages[i].messaggio, chat.messages[i].immagine, chat.messages[i].nome + " " + chat.messages[i].cognome, chat.messages[i].timestamp);
+                //set last msg
+                lastMsgTime = chat.messages[chat.messages.length - 1].milliseconds;
+
+                //scroll to bottom of the chat
+                $(".panel-body").animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 500);
+            } else if (chat !== "" && lastMsgTime === null) {
+                //nessun messaggio nella chat
+                elem = "<li class='left clearfix center'>" +
+                        "   <p>No messages yet</p>" +
+                        "</li>";
+                $("#chat-messages").append(elem);
+            } else if (chat === "") {
+                //loading messages
+                $("#chat-messages").empty();
+                elem = "<li class='left clearfix center'>" +
+                        "   <p>Loading messages...</p>&nbsp;&nbsp;" +
+                        "</li>";
                 $("#chat-messages").append(elem);
             }
-            
-            //set last msg
-            lastMsgTime = chat.messages[chat.messages.length-1].milliseconds;
 
-            //scroll to bottom of the chat
-            $(".panel-body").animate({scrollTop: $('.panel-body').prop("scrollHeight")}, 500);
-        } else if(chat !== "" && lastMsgTime === null) {
-            //nessun messaggio nella chat
-            elem = "<li class='left clearfix center'>" +
-                    "   <p>No messages yet</p>" +
-                    "</li>";
-            $("#chat-messages").append(elem);
-        } else if(chat === ""){
-            //loading messages
-            $("#chat-messages").empty();
-            elem = "<li class='left clearfix center'>" +
-                    "   <p>Loading messages...</p>&nbsp;&nbsp;" +
-                    "</li>";
-            $("#chat-messages").append(elem);
-        }
-        
-        
-        //check for new msg every tot secs
-        var interval = 5000;
-        if(selChatId === undefined || selChatId === null)
-            interval = 500;
-        setTimeout(refreshChatMessages, interval);
-    });
+
+            //check for new msg every tot secs
+            if (selChatId === undefined || selChatId === null)
+                interval = 500;
+            setTimeout(refreshChatMessages, interval);
+        });
+    }
 }
 
 function sendMessage() {

@@ -50,7 +50,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                 liste = new ArrayList<>();
 
                 while (rs.next()) {
-                    Integer id = rs.getInt("ID");
+                    Integer id = rs.getInt("Liste.ID");
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");
                     String immagine = rs.getString("Immagine");
