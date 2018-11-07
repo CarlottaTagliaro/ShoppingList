@@ -106,6 +106,10 @@
         <servlet-name>AcceptListShare</servlet-name>
         <servlet-class>it.webproject2018.servlets.AcceptListShare</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EmailConfirmationServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.EmailConfirmationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -320,6 +324,10 @@
     <servlet-mapping>
         <servlet-name>AcceptListShare</servlet-name>
         <url-pattern>/AcceptListShare</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailConfirmationServlet</servlet-name>
+        <url-pattern>/EmailConfirmationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
