@@ -19,82 +19,86 @@ import java.util.logging.Logger;
 
 /**
  * The JDBC implementation of {@code DAOFactory}
- * 
+ *
  * @author Max
  */
-public class JDBCDAOFactory implements DAOFactory{
-	private final transient Connection CON;
-	private final transient HashMap<Class, DAO> DAO_CACHE;
-	
-	private static JDBCDAOFactory instance;
-	
-	/**
-	 * Method to configure the instance of this class to call before
-	 * using it.
-	 * 
-	 * @param dbUrl the url to access the database
-	 * @throws DAOFactoryException if an error occurred during dao factory
+public class JDBCDAOFactory implements DAOFactory {
+
+    private final transient Connection CON;
+    private final transient HashMap<Class, DAO> DAO_CACHE;
+
+    private static JDBCDAOFactory instance;
+
+    /**
+     * Method to configure the instance of this class to call before using it.
+     *
+     * @param dbUrl the url to access the database
+     * @throws DAOFactoryException if an error occurred during dao factory
      * configuration.
-	 */
-	public static void configure(String dbUrl) throws DAOFactoryException {
-		if (instance == null) {
+     */
+    public static void configure(String dbUrl) throws DAOFactoryException {
+        if (instance == null) {
             instance = new JDBCDAOFactory(dbUrl);
         } else {
             throw new DAOFactoryException("DAOFactory already configured. You can call configure only one time");
         }
-	}
-	
-	/**
-	 * Returns the instance of this {@link DAOFactory}.
-	 * 
-	 * @return the instance
-	 * @throws DAOFactoryException if an error occurred if this dao factory is
+    }
+
+    /**
+     * Returns the instance of this {@link DAOFactory}.
+     *
+     * @return the instance
+     * @throws DAOFactoryException if an error occurred if this dao factory is
      * not yet configured.
-	 */
-	public static JDBCDAOFactory getInstance() throws DAOFactoryException {
+     */
+    public static JDBCDAOFactory getInstance() throws DAOFactoryException {
         if (instance == null) {
             throw new DAOFactoryException("DAOFactory not yet configured."
-					+ "Call DAOFactory.configure(String dbUrl) before use the class");
+                    + "Call DAOFactory.configure(String dbUrl) before use the class");
         }
         return instance;
     }
-	
-	/**
-	 * The private constructor used to create the instance of {@code DAOFactory}
-	 * 
-	 * @param dbUrl the url to access the database
-	 * @throws DAOFactoryException if an error occurred during {@code DAOFactory}
-     * creation.
-	 */
-	private JDBCDAOFactory(String dbUrl) throws DAOFactoryException {
+
+    /**
+     * The private constructor used to create the instance of {@code DAOFactory}
+     *
+     * @param dbUrl the url to access the database
+     * @throws DAOFactoryException if an error occurred during
+     * {@code DAOFactory} creation.
+     */
+    private JDBCDAOFactory(String dbUrl) throws DAOFactoryException {
         super();
-		
+
         try {
-            Class.forName("nome driver come org.apache.derby.jdbc.EmbeddedDriver", true, getClass().getClassLoader());
-        } catch (ClassNotFoundException cnfe) {
-            throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
-        }
-        try {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException cnfe) {
+                throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
+            }
+
             CON = DriverManager.getConnection(dbUrl);
-        } catch (SQLException sqle) {
-            throw new DAOFactoryException("Cannot create connection", sqle);
-        }        
+        } catch (SQLException ex) {
+            throw new DAOFactoryException("Cannot create connection", ex);
+
+        }
+        
         DAO_CACHE = new HashMap<>();
     }
-	
-	/**
+
+    /**
      * Shutdowns the access to the storage system.
      */
-	@Override
+    @Override
     public void shutdown() {
         try {
-            DriverManager.getConnection("nome driver come jdbc:derby:;shutdown=true");
+            CON.close();
+            DriverManager.getConnection("com.mysql.jdbc.Driver;shutdown=true");
         } catch (SQLException sqle) {
             Logger.getLogger(JDBCDAOFactory.class.getName()).info(sqle.getMessage());
         }
     }
-	
-	/**
+
+    /**
      * Returns the concrete {@link DAO dao} which type is the class passed as
      * parameter.
      *
@@ -110,13 +114,13 @@ public class JDBCDAOFactory implements DAOFactory{
         if (dao != null) {
             return (DAO_CLASS) dao;
         }
-        
+
         Package pkg = daoInterface.getPackage();
-        String prefix = pkg.getName() + "nome package come .jdbc.JDBC";
+        String prefix = pkg.getName() + ".jdbc.JDBC";
         
         try {
             Class daoClass = Class.forName(prefix + daoInterface.getSimpleName());
-            
+
             Constructor<DAO_CLASS> constructor = daoClass.getConstructor(Connection.class);
             DAO_CLASS daoInstance = constructor.newInstance(CON);
             if (!(daoInstance instanceof JDBCDAO)) {

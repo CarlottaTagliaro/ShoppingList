@@ -3,7 +3,7 @@
     <!--I seguenti tre parametri servono per connettersi al database mysql-->
     <context-param>
         <param-name>dburl</param-name>
-        <param-value>jdbc:mysql://gg18.ml:3306/cucciolo</param-value>
+        <param-value>jdbc:mysql://cucciolo:1EEFA02E-D313-4589-AFAD-92FAD1741B20@gg18.ml:3306/cucciolo</param-value>
     </context-param>
     <context-param>
         <param-name>dbuser</param-name>
