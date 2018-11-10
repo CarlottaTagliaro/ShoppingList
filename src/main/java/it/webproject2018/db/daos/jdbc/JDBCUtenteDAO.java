@@ -120,6 +120,29 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
     }
 
     @Override
+    public Utente getUserByConfString(String confString) throws DAOException {
+        Utente user = null;
+        
+        if (confString == null) {
+            throw new DAOException("confirmation string is null");
+        }
+        
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE conf_string = ?")) {
+            stm.setString(1, confString);
+            
+            try(ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    user = getUserByResultSet(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Error while getting User by confString", ex);
+        }
+        
+        return user;
+    }
+    
+    @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
             try (ResultSet counter = stmt.executeQuery("SELECT COUNT(*) FROM Utenti")) {

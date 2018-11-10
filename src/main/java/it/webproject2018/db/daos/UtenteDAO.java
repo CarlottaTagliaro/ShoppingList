@@ -34,7 +34,10 @@ public interface UtenteDAO extends DAO<Utente, String> {
     
     public String createRememberMeID(String userEmail) throws DAOException;
 	
-	public Utente updatePassword(Utente user, String password) throws DAOException;
+    public Utente updatePassword(Utente user, String password) throws DAOException;
 		
-	public Boolean updateUserLastAccess(Utente user) throws DAOException;
+    public Boolean updateUserLastAccess(Utente user) throws DAOException;
+    
+    public Utente getUserByConfString(String confString) throws DAOException;
+
 }
