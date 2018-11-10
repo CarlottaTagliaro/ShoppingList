@@ -5,6 +5,7 @@
  */
 package it.webproject2018.db.entities;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -22,15 +23,18 @@ public class Utente {
     private String immagine;
     private Boolean isAdmin;
     private String confString;
+    private Timestamp lastView;
     
     public Utente(){}
     
-    public Utente(String nome, String cognome, String email, String immagine, Boolean isAdmin, String confString){
+    public Utente(String nome, String cognome, String email, String immagine, 
+                  Boolean isAdmin, Timestamp lastView, String confString){
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.immagine = immagine;
         this.isAdmin = isAdmin;
+        this.lastView = lastView;
         this.confString = confString;
     }
 
@@ -90,7 +94,15 @@ public class Utente {
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-
+    
+    public Timestamp getLastView() {
+        return lastView;
+    }
+    
+    public void setLastVisualization(Timestamp lastView) {
+        this.lastView = lastView;
+    }
+    
     public String getConfString() {
         return confString;
     }
@@ -98,4 +110,6 @@ public class Utente {
     public void setConfString(String confString) {
         this.confString = confString;
     }
+
+
 }
