@@ -21,15 +21,17 @@ public class Utente {
     private String email;
     private String immagine;
     private Boolean isAdmin;
+    private String confString;
     
     public Utente(){}
     
-    public Utente(String nome, String cognome, String email, String immagine, Boolean isAdmin){
+    public Utente(String nome, String cognome, String email, String immagine, Boolean isAdmin, String confString){
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.immagine = immagine;
         this.isAdmin = isAdmin;
+        this.confString = confString;
     }
 
     @Override
@@ -89,4 +91,11 @@ public class Utente {
         this.isAdmin = isAdmin;
     }
 
+    public String getConfString() {
+        return confString;
+    }
+    
+    public void setConfString(String confString) {
+        this.confString = confString;
+    }
 }
