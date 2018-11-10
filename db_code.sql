@@ -19,7 +19,7 @@ CREATE TABLE Utenti(
     Password varchar(256) not null,
     IsAdmin boolean not null,
     Ultima_visualizzazione Timestamp,
-    conf_string varchar(120),
+    conf_string varchar(120) unique,
     primary key(Email)
 );
 
