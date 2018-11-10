@@ -43,12 +43,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             try (ResultSet rs = stm.executeQuery()) {
 
                 if (rs.next()) {
-                    Utente user = new Utente();
-                    user.setName(rs.getString("Nome"));
-                    user.setSurname(rs.getString("Cognome"));
-                    user.setEmail(rs.getString("Email"));
-                    user.setPicture(rs.getString("Immagine"));;
-                    user.setIsAdmin(rs.getBoolean("IsAdmin"));
+                    Utente user = getUserByResultSet(rs);
 
                     return user;
                 }
@@ -115,13 +110,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
-                    user = new Utente();
-
-                    user.setName(rs.getString("Nome"));
-                    user.setSurname(rs.getString("Cognome"));
-                    user.setEmail(rs.getString("Email"));
-                    user.setPicture(rs.getString("Immagine"));
-                    user.setIsAdmin(rs.getBoolean("IsAdmin"));
+                    user = getUserByResultSet(rs);
                 }
             }
         } catch (SQLException ex) {
@@ -153,13 +142,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             try (ResultSet rs = stm.executeQuery("SELECT * FROM Utenti ORDER BY Cognome, Nome")) {
 
                 while (rs.next()) {
-                    Utente user = new Utente();
-
-                    user.setName(rs.getString("Nome"));
-                    user.setSurname(rs.getString("Cognome"));
-                    user.setEmail(rs.getString("Email"));
-                    user.setPicture(rs.getString("Immagine"));
-                    user.setIsAdmin(rs.getBoolean("IsAdmin"));
+                    Utente user = getUserByResultSet(rs);
 
                     utenti.add(user);
                 }
@@ -279,5 +262,19 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (SQLException ex) {
             return false;
         }
+    }
+    
+    private Utente getUserByResultSet(ResultSet rs) throws SQLException {
+        Utente user;
+        
+        user = new Utente();
+                
+        user.setName(rs.getString("Nome"));
+        user.setSurname(rs.getString("Cognome"));            
+        user.setEmail(rs.getString("Email"));
+        user.setPicture(rs.getString("Immagine"));            
+        user.setIsAdmin(rs.getBoolean("IsAdmin"));
+        user.setConfString(rs.getString("conf_string"));
+        return user;
     }
 }
