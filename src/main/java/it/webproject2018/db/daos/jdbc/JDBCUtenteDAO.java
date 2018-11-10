@@ -184,12 +184,15 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
 
         try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
-                + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ? WHERE Email = ?")) {
+                + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ?, " +
+                "Ultima_visualizzazione = ? conf_string = ? WHERE Email = ?")) {
             std.setString(1, user.getName());
             std.setString(2, user.getSurname());
             std.setString(3, user.getPicture());
             std.setBoolean(4, user.getIsAdmin());
-            std.setString(5, user.getEmail());
+            std.setTimestamp(5, user.getLastView());
+            std.setString(6, user.getConfString());
+            std.setString(7, user.getEmail());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {
