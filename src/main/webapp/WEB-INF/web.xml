@@ -110,6 +110,10 @@
         <servlet-name>EmailConfirmationServlet</servlet-name>
         <servlet-class>it.webproject2018.servlets.pages.EmailConfirmationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>it.webproject2018.servlets.ResetPasswordServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ShoppingListsServlet</servlet-name>
         <url-pattern>/ShoppingListsServlet</url-pattern>
@@ -328,6 +332,10 @@
     <servlet-mapping>
         <servlet-name>EmailConfirmationServlet</servlet-name>
         <url-pattern>/EmailConfirmationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
