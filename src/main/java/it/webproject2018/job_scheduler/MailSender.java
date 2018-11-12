@@ -23,8 +23,13 @@ import javax.mail.internet.MimeMessage;
 
 /* send emails using GMAIL (copy paste code) */
 public class MailSender {
-    
-    public static void Send(final String from, final String password, String to, String title, String message_text) throws AddressException, MessagingException {
+    private static final String DEF_FROM = "shoppinglistprogweb@gmail.com";
+    private static final String DEF_PASS = "vadoaprendereillatte";
+
+    public static void sendDefault(final String to, final String title, final String messageText) throws AddressException, MessagingException{
+        MailSender.send(DEF_FROM, DEF_PASS, to, title, messageText);
+    }
+    public static void send(final String from, final String password, String to, String title, String message_text) throws AddressException, MessagingException {
          // Recipient's email ID needs to be mentioned.
       // Sender's email ID needs to be mentioned
 
