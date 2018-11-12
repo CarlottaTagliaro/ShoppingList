@@ -185,7 +185,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
         try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
                 + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ?, " +
-                "Ultima_visualizzazione = ? conf_string = ? WHERE Email = ?")) {
+                "Ultima_visualizzazione = ?, conf_string = ? WHERE Email = ?")) {
             std.setString(1, user.getName());
             std.setString(2, user.getSurname());
             std.setString(3, user.getPicture());
@@ -244,17 +244,19 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
     }
 
     @Override
-    public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException {
+    public Boolean registerUser(String name, String surname, String userEmail, String password, String confirmString) throws DAOException {
+        /* TODO[alberto]: Adapt to confirmString mechanism... */
         if (userEmail == null || password == null || name == null || surname == null) {
             throw new DAOException("userEmail or password or name or surname is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW());")) {
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Utenti (Nome, Cognome, Email, Immagine, Password, IsAdmin, Ultima_visualizzazione, conf_string) VALUES (?, ?, ?, ?, SHA2(?, 256), ?, NOW(), ?);")) {
             stm.setString(1, name);
             stm.setString(2, surname);
             stm.setString(3, userEmail);
             stm.setString(4, "");
             stm.setString(5, password);
             stm.setInt(6, 0);
+            stm.setString(7, confirmString);
             Integer rs = stm.executeUpdate();
 
             if (rs <= 0) {
@@ -301,6 +303,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         user.setPicture(rs.getString("Immagine"));            
         user.setIsAdmin(rs.getBoolean("IsAdmin"));
         user.setConfString(rs.getString("conf_string"));
+        user.setLastVisualization(rs.getTimestamp("Ultima_visualizzazione"));
         return user;
     }
 }

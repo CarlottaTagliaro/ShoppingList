@@ -28,7 +28,7 @@ public interface UtenteDAO extends DAO<Utente, String> {
      */
     public Utente getUserAuthentication(String userEmail, String password) throws DAOException;
 
-    public Boolean RegisterUser(String name, String surname, String userEmail, String password) throws DAOException;
+    public Boolean registerUser(String name, String surname, String userEmail, String password, String confirmString) throws DAOException;
 
     public Utente getUserByRememberMeID(String id) throws DAOException;
     
