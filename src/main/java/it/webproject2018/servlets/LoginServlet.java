@@ -34,7 +34,8 @@ public class LoginServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             Utente user = JdbcUtenteDao.getUserAuthentication(username, password);
-            if (user == null || !user.getEmail().equals(username)) {
+            if (user == null || !user.getEmail().equals(username) || null != user.getConfString()) {
+                /* TODO: use different messages to handle the failure cases */
                 JdbcUtenteDao.Close();
                 request.getSession().removeAttribute("User");
 
