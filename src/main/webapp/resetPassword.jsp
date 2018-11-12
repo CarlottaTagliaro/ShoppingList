@@ -26,7 +26,7 @@
 
     <div class="main">
         <div class="card">
-            <form action="ResetPassword" method="POST">
+            <form action="ResetPasswordServlet" method="POST">
                 <img class="logo spacing" src="images/carrello.png" alt="Insert sth" width="128" height="128">
                 
                 <div class="form-group elemento spacing">
