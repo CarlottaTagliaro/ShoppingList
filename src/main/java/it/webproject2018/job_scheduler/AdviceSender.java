@@ -89,7 +89,7 @@ public class AdviceSender implements Runnable {
     void sendMailTo(Utente user, ArrayList<Prodotto> products) {
         String header = "SHOPPING LIST: prodotti in scadenza";
         try {
-            MailSender.Send(this.senderMail, this.password, user.getEmail(), header,
+            MailSender.send(this.senderMail, this.password, user.getEmail(), header,
                     this.generateMessage(user, products));
         } catch (MessagingException ex) {
             System.err.println("Fail sending email");
