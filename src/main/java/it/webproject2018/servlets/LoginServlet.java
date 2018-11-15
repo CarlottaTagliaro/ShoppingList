@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Utente;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -35,10 +36,17 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
             Utente user = JdbcUtenteDao.getUserAuthentication(username, password);
             if (user == null || !user.getEmail().equals(username) || null != user.getConfString()) {
-                /* TODO: use different messages to handle the failure cases */
+                HttpSession session = request.getSession(false);
+                String error = null;
                 JdbcUtenteDao.Close();
                 request.getSession().removeAttribute("User");
 
+                if (null == user || ! user.getEmail().equals(username)) {
+                    error = "Error: username or password are wrong";
+                } else {
+                    error = "Error: user has not been confirmed. Confirm your email.";
+                }
+                session.setAttribute("error_message", error);
                 response.sendRedirect(request.getContextPath() + "/login.jsp"); // No logged-in user found, so redirect to login page.
             } else {
                 String rememberMe = request.getParameter("rememberMe");

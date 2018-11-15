@@ -5,16 +5,21 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/login.css" rel="stylesheet" type="text/css"/>
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
         <title>Shopping List - Login</title>
+
     </head>
     <body>
         <jsp:include page="menu.jsp"/>
+        <script src="JS/sweetalert2.all.min.js"/>
 
         <script>
             $(document).ready(function() {
@@ -31,6 +36,18 @@
             }
         </script>
 
+        <c:if test="${not empty error_message}">
+
+        <script>
+            swal({
+  type: 'error',
+  title: 'Oops... Something went wrong!',
+  text: '${error_message}',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+        </script>
+        <c:set var="error_message" value="" scope="session" />
+        </c:if>
         <div class="main">
             <div class="card">
                 <form action="LoginServlet" method="POST">
