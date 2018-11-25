@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -17,13 +19,25 @@
 
 <body>
     <jsp:include page="menu.jsp" />
+    <script src="JS/sweetalert2.all.min.js"/>
 
     <script>
         $(document).ready(function () {
             selectMenuEl("register");
         });   
     </script>
+    <c:if test="${not empty error_message}">
 
+        <script>
+            swal({
+  type: 'error',
+  title: 'Oops... Something went wrong!',
+  text: '${error_message}',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+        </script>
+        <c:set var="error_message" value="" scope="session" />
+    </c:if>
     <div class="main">
         <div class="card">
             <form action="RegisterServlet" method="POST">

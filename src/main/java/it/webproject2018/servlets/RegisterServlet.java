@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.job_scheduler.MailSender;
 import java.util.UUID;
+import javax.servlet.http.HttpSession;
 /**
  *
  * @author Stefano
@@ -40,8 +41,11 @@ public class RegisterServlet extends HttpServlet {
             Boolean ok = JdbcUtenteDao.registerUser(name, surname, username, password, confirmString);
         
             if (!ok) {
+                HttpSession session = request.getSession(false);
+                String error = "Username already exists, choose another one.";
                 JdbcUtenteDao.Close();
-                System.out.println("failed dude...");
+                
+                session.setAttribute("error_message", error);
                 response.sendRedirect(request.getContextPath() + "/register.jsp");
             }
             else {
