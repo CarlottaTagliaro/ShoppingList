@@ -112,7 +112,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                                                     <label> Choose: </label>\n"
                 + "                                                 </div>\n"
                 + "                                                 <div class=\"row\"> \n"
-                + "                                                     <select id=\"selList_" + getProduct().getId() + "\" name=\"list\" class=\"form-control\">\n"
+                + "                                                     <select id=\"selList_" + getProduct().getId() + "\" name=\"list\" class=\"form-control\" required=\"true\">\n"
                 + "                                                         " + listeHtml
                 + "                                                     </select>\n"
                 + "                                                 </div>"
