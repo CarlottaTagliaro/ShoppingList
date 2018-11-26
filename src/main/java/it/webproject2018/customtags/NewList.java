@@ -179,7 +179,7 @@ public class NewList extends SimpleTagSupport {
                 + "                                                     <div class=\"row cambia-dati\">\n"
                 + "                                                         <label class=\"search\">Description:</label> \n"
                 + "                                                             <textarea id=\"description\" name=\"description\" cols=\"40\" rows=\"5\" class=\"form-control descrizione\"\n"
-                + "                                                                     placeholder=\"Enter new list description\" required></textarea>"
+                + "                                                                     placeholder=\"Enter new list description\"></textarea>"
                 + "                                                     </div>\n"
                 + "                                                     <div class=\"row cambia-dati\">\n"
                 + "                                                         <div class=\"row\">\n"
