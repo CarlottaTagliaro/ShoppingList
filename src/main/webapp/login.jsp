@@ -22,31 +22,26 @@
         <script src="JS/sweetalert2.all.min.js"/>
 
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 selectMenuEl("login");
             });
-            
-            
+
             function goBack() {
                 window.history.back();
-            }
-
-            function reset() {
-                alert("New password sent!")
             }
         </script>
 
         <c:if test="${not empty error_message}">
 
-        <script>
-            swal({
-  type: 'error',
-  title: 'Oops... Something went wrong!',
-  text: '${error_message}',
-  footer: '<a href>Why do I have this issue?</a>'
-})
-        </script>
-        <c:set var="error_message" value="" scope="session" />
+            <script>
+                swal({
+                    type: 'error',
+                    title: 'Oops... Something went wrong!',
+                    text: '${error_message}',
+                    confirmButtonColor: '#222'
+                })
+            </script>
+            <c:set var="error_message" value="" scope="session" />
         </c:if>
         <div class="main">
             <div class="card">
