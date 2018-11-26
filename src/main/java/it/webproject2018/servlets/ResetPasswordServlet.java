@@ -62,7 +62,6 @@ public class ResetPasswordServlet extends HttpServlet {
             Utente user = userDAO.getByPrimaryKey(username);
             
             String newPassword = generateRandomPassword();
-            System.out.println("new password: " + newPassword);
             
             if (user == null) {
                 /* TODO: trigger a user message error */
@@ -70,7 +69,7 @@ public class ResetPasswordServlet extends HttpServlet {
             }
             
             /* TODO: this is not robust in case of faults... */
-            MailSender.sendDefault(username, "Reset password", "La tua nuove password e': "+newPassword);
+            MailSender.sendDefault(username, "Reset password", "Your new password is: "+newPassword);
             userDAO.updatePassword(user, newPassword);
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             

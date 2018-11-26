@@ -39,7 +39,6 @@ public class AdviceSender implements Runnable {
         /* qui c'e' solo codice esempio che ho usato per testare, va.*/
         /*String dest_mail = "";
         if (this.run) {
-            System.out.println("porco dio!");
             mail = "web2018unitn@gmail.com";
             password = "shoppinglist18";
             ArrayList<Prodotto> products = new ArrayList<>();
@@ -87,7 +86,7 @@ public class AdviceSender implements Runnable {
     }
     
     void sendMailTo(Utente user, ArrayList<Prodotto> products) {
-        String header = "SHOPPING LIST: prodotti in scadenza";
+        String header = "SHOPPING LIST: ran off products";
         try {
             MailSender.send(this.senderMail, this.password, user.getEmail(), header,
                     this.generateMessage(user, products));
@@ -99,14 +98,14 @@ public class AdviceSender implements Runnable {
     
     String generateMessage(Utente user, ArrayList<Prodotto> products) {
         StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append(String.format("Ciao: %s, hai dei prodotti in scadenza:\n",
+        messageBuilder.append(String.format("Hey: %s, you are running out of these products:\n",
                                             user.getSurname()));
         for (Prodotto p : products) {
-            messageBuilder.append(String.format("PRODOTTO %s, CATEGORIA: %s.\n",
+            messageBuilder.append(String.format("PRODUCT %s, CATEGORY: %s.\n",
                                                 p.getNome(), p.getCategoria().getNome()));
         }
         
-        messageBuilder.append("Buona Giornata da SHOPPING LIST.");
+        messageBuilder.append("Have a nice day from SHOPPING LIST.");
         return messageBuilder.toString();
     }
 }
