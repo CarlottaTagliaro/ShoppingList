@@ -10,70 +10,70 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="css/register.css" rel="stylesheet" type="text/css" />
-    <title>Shopping List - Register</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/register.css" rel="stylesheet" type="text/css" />
+        <title>Shopping List - Register</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    </head>
 
-<body>
-    <jsp:include page="menu.jsp" />
-    <script src="JS/sweetalert2.all.min.js"/>
-
-    <script>
-        $(document).ready(function () {
-            selectMenuEl("register");
-        });   
-    </script>
-    <c:if test="${not empty error_message}">
+    <body>
+        <jsp:include page="menu.jsp" />
+        <script src="JS/sweetalert2.all.min.js"/>
 
         <script>
-            swal({
-  type: 'error',
-  title: 'Oops... Something went wrong!',
-  text: '${error_message}',
-  footer: '<a href>Why do I have this issue?</a>'
-})
+            $(document).ready(function () {
+                selectMenuEl("register");
+            });
         </script>
-        <c:set var="error_message" value="" scope="session" />
-    </c:if>
-    <div class="main">
-        <div class="card">
-            <form action="RegisterServlet" method="POST">
-                <img class="logo spacing" src="images/carrello.png" alt="Insert sth" width="128" height="128">
-                <div class="form-group elemento spacing">
-                    <label class="titles"> Name: </label>
-                    <input type="name" id="nome" name="nome" class="form-control" placeholder="Enter name" required
-                        autofocus>
-                </div>
-                <div class="form-group elemento spacing">
-                    <label class="titles"> Surname: </label>
-                    <input type="name" id="surname" name="surname" class="form-control" placeholder="Enter surname"
-                        required autofocus>
-                </div>
-                <div class="form-group elemento spacing">
-                    <label> Email: </label>
-                    <input type="email" id="username" name="username" class="form-control" placeholder="Enter new username"
-                        required autofocus>
-                </div>
-                <div class="form-group elemento spacing">
-                    <label> Password: </label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter new password"
-                        required>
-                </div>
-                <div class="spacing">
-                    <input type="checkbox" name="Privacy" value="true" required="true"> <b>I accept the <a href="privacy.jsp">privacy normatives</a></b>
-                </div>
-                <button class="button1" type="submit"> <b> Register </b> </button>
-                <button class="button1" onclick="goBack()"> <b> Cancel </b> </button>
-            </form>
+        <c:if test="${not empty error_message}">
+
             <script>
-                function goBack() {
-                    window.history.back();
-                }
+                swal({
+                    type: 'error',
+                    title: 'Oops... Something went wrong!',
+                    text: '${error_message}',
+                    confirmButtonColor: '#222'
+                })
             </script>
+            <c:set var="error_message" value="" scope="session" />
+        </c:if>
+        <div class="main">
+            <div class="card">
+                <form action="RegisterServlet" method="POST">
+                    <img class="logo spacing" src="images/carrello.png" alt="Insert sth" width="128" height="128">
+                    <div class="form-group elemento spacing">
+                        <label class="titles"> Name: </label>
+                        <input type="name" id="nome" name="nome" class="form-control" placeholder="Enter name" required
+                               autofocus>
+                    </div>
+                    <div class="form-group elemento spacing">
+                        <label class="titles"> Surname: </label>
+                        <input type="name" id="surname" name="surname" class="form-control" placeholder="Enter surname"
+                               required autofocus>
+                    </div>
+                    <div class="form-group elemento spacing">
+                        <label> Email: </label>
+                        <input type="email" id="username" name="username" class="form-control" placeholder="Enter new username"
+                               required autofocus>
+                    </div>
+                    <div class="form-group elemento spacing">
+                        <label> Password: </label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter new password"
+                               required>
+                    </div>
+                    <div class="spacing">
+                        <input type="checkbox" name="Privacy" value="true" required="true"> <b>I accept the <a href="privacy.jsp">privacy normatives</a></b>
+                    </div>
+                    <button class="button1" type="submit"> <b> Register </b> </button>
+                    <button class="button1" onclick="goBack()"> <b> Cancel </b> </button>
+                </form>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

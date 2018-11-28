@@ -51,8 +51,8 @@ public class RegisterServlet extends HttpServlet {
             else {
                 String link = request.getRequestURL().toString().replaceFirst("RegisterServlet","EmailConfirmationServlet?verify=" + confirmString);
                 JdbcUtenteDao.Close();
-                MailSender.sendDefault(username, "Conferma registrazione", 
-                                       "link: " + link);
+                MailSender.sendDefault(username, "Registration Confirm", 
+                                       "Click on the following link: " + link);
                     
                 
                 response.sendRedirect(request.getContextPath() + "/login.jsp");

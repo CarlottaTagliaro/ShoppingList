@@ -43,7 +43,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
 
         ArrayList<Lista> liste = null;
 
-        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste join Liste on Utenti_Liste.ID = Liste.ID where Email = ? and Utenti_Liste.Accettato = 1")) {
             stm.setString(1, userEmail);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -173,7 +173,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
             throw new DAOException("listID is null");
         }
 
-        Boolean update = quantity.equals(amount);
+        Boolean update = !quantity.equals(amount);
         String sql = "DELETE FROM Liste_Prodotti WHERE (ID_lista = ? AND ID_prodotto = ?)";
         if (update) {
             sql = "UPDATE Liste_Prodotti SET Quantita = ? WHERE (ID_lista = ? AND ID_prodotto = ?)";
@@ -184,7 +184,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
                 stm.setInt(1, listID);
                 stm.setInt(2, prodID);
             } else {//update
-                stm.setInt(1, amount);
+                stm.setInt(1, quantity - amount);
                 stm.setInt(2, listID);
                 stm.setInt(3, prodID);
             }

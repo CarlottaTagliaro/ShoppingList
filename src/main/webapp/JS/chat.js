@@ -1,10 +1,10 @@
 $(document).ready(function () {
     var suggestions = [
-        "Sto andando a fare la spesa, manca qualcosa?",
-        "Lista modificata. Guarda cosa ho aggiunto",
-        "Spesa fatta. Ti puoi rilassare",
-        "Ho convidiso la lista con un'altra persona",
-        "Puoi andare a fare la spesa?"
+        "I'm going shopping. Do we need something?",
+        "List modified. Look at what I've added.",
+        "I've been to the shop. You can relax now.",
+        "I've shared the list with another person.",
+        "Can you go shopping?"
     ];
 
     for (var i = 0; i < suggestions.length; i++) {

@@ -31,7 +31,6 @@ public class JobScheduler implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("I'm getting out!!!");
         scheduler.shutdownNow();
     }
 }

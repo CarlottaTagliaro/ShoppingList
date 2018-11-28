@@ -46,6 +46,8 @@ public class AddProductToList extends HttpServlet {
             Integer alreadyAdd = Integer.parseInt(request.getParameter("alreadyAdd"));
             Integer amount = Integer.parseInt(request.getParameter("amount_value"));
             
+            amount += alreadyAdd;
+            
             Boolean logged = (Utente) request.getSession().getAttribute("User") != null;
             
             if(!logged){   
