@@ -61,13 +61,13 @@
                                 <div class="input-group">
                                     <div class="row cambia-dati">
                                         <label class="search">Name:</label>
-                                        <input type="text" name="name" class="form-control inserisci" aria-label="..."
+                                        <input type="text" value="${user.getName()}" name="name" class="form-control inserisci" aria-label="..."
                                             placeholder="Insert new name">
                                     </div>
 
                                     <div class="row cambia-dati">
                                         <label class="search">Surname:</label>
-                                        <input type="text" name="surname" class="form-control inserisci" aria-label="..."
+                                        <input type="text" value="${user.getSurname()}" name="surname" class="form-control inserisci" aria-label="..."
                                             placeholder="Insert new surname">
                                     </div>
                                 </div>

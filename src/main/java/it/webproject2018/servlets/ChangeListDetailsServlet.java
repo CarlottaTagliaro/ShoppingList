@@ -47,27 +47,30 @@ public class ChangeListDetailsServlet extends HttpServlet {
             Integer idList = Integer.parseInt(request.getParameter("idList"));
 
             Part filePart = request.getPart("file");
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            InputStream fileContent = filePart.getInputStream();
-            try {
-                String ext = fileName.substring(fileName.lastIndexOf("."));
-                fileName = randomString(70) + ext; // assign random name
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if (filePart.getSize() != 0) {
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                InputStream fileContent = filePart.getInputStream();
+                try {
+                    String ext = fileName.substring(fileName.lastIndexOf("."));
+                    fileName = randomString(70) + ext; // assign random name
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            img = "imagesUpload/" + fileName;
-            Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
-            Files.copy(fileContent, pathToFile);
-            
+                img = "imagesUpload/" + fileName;
+                Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
+                Files.copy(fileContent, pathToFile);
+            }
             Lista list = JDBCLista.getByPrimaryKey(idList);
             list.setNome(name);
             list.setDescrizione(description);
-            list.setImmagine(img);
-            
+            if (filePart.getSize() != 0) {
+                list.setImmagine(img);
+            }
+
             list = JDBCLista.update(list);
             Boolean ok = list != null;
-            
+
             JDBCLista.Close();
             JDBCCategoriaListe.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/myList" : "/myList"));
