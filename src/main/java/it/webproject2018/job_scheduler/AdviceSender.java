@@ -71,6 +71,8 @@ public class AdviceSender implements Runnable {
                     ArrayList<Prodotto> toAdd = new ArrayList<>();
                     toAdd.add(notification.getProdotto());
                     userProductsMap.put(userEmail, toAdd);
+                    notification.setMail(true);
+                    notificationDao.update(notification);
                 }
             }
             
@@ -79,6 +81,7 @@ public class AdviceSender implements Runnable {
                 sendMailTo(userDao.getByPrimaryKey(entry.getKey()), entry.getValue());
             }
             
+            /* setta flag mail */
             notificationDao.Close();
             userDao.Close();
         } catch (DAOException ex) {
