@@ -12,6 +12,7 @@ import it.webproject2018.db.entities.NotificaWeb;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,33 +40,35 @@ public class GetWebNotifications extends HttpServlet {
 
         Utente user = (Utente) request.getSession().getAttribute("User");
 
-        try {
-            List<NotificaWeb> notifiche = JdbcNotificaWebDao.getAllUserNotifications(user.getEmail());
+        if (user != null) {
+            try {
+                List<NotificaWeb> notifiche = JdbcNotificaWebDao.getAllUserNotifications(user.getEmail());
 
-            String onlyNews = request.getParameter("onlyNews");
+                String onlyNews = request.getParameter("onlyNews");
 
-            response.setContentType("application/json");
-            PrintWriter out = response.getWriter();
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
 
-            if (onlyNews == null) {
-                Gson gson = new Gson();
-                String json = gson.toJson(notifiche);
-                out.print(json);
-                
-                //aggiornare user ultima visualizzazione
-                JdbcUtenteDao.updateUserLastAccess(user);
-            } else if (onlyNews.equals("true")) {
-                String output = notifiche.size() > 0 ? "true" : "false";
-                out.print(output);
+                if (onlyNews == null) {
+                    Gson gson = new Gson();
+                    String json = gson.toJson(notifiche);
+                    out.print(json);
+
+                    //aggiornare user ultima visualizzazione
+                    JdbcUtenteDao.updateUserLastAccess(user);
+                } else if (onlyNews.equals("true")) {
+                    String output = notifiche.stream().anyMatch(x -> x.getIsNew()) ? "true" : "false";
+                    out.print(output);
+                }
+
+                out.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            out.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
+            JdbcNotificaWebDao.Close();
+            JdbcUtenteDao.Close();
         }
-
-        JdbcNotificaWebDao.Close();
-        JdbcUtenteDao.Close();
     }
 
 }

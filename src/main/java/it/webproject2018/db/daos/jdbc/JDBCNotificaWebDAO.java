@@ -48,8 +48,9 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
                     String tipo = rs.getString("tipo");
                     Timestamp data = rs.getTimestamp("data");
                     Integer id_elem = rs.getInt("id_elem");
+                    Boolean isNew = rs.getBoolean("new");
 
-                    NotificaWeb notification = new NotificaWeb(testo, tipo, data, id_elem);
+                    NotificaWeb notification = new NotificaWeb(testo, tipo, data, id_elem, isNew);
                     lista.add(notification);
                 }
             }

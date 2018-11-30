@@ -16,12 +16,14 @@ public class NotificaWeb {
     private String tipo;
     private Timestamp data;
     private Integer idElemento;
+    private Boolean isNew;
 
-    public NotificaWeb(String testo, String tipo, Timestamp data, Integer idElemento){
+    public NotificaWeb(String testo, String tipo, Timestamp data, Integer idElemento, Boolean isNew){
         this.testo = testo;
         this.tipo = tipo;
         this.data = data;
         this.idElemento = idElemento;
+        this.isNew = isNew;
     }
     
     /**
@@ -78,5 +80,19 @@ public class NotificaWeb {
      */
     public void setIdElemento(Integer idElemento) {
         this.idElemento = idElemento;
+    }
+
+    /**
+     * @return the isNew
+     */
+    public Boolean getIsNew() {
+        return isNew;
+    }
+
+    /**
+     * @param isNew the isNew to set
+     */
+    public void setIsNew(Boolean isNew) {
+        this.isNew = isNew;
     }
 }

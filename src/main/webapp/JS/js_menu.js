@@ -81,7 +81,7 @@ function getNotifications(){
             else if(data[i].tipo === "product_share")
                 tipo = "Product shared with you!";
             
-            var elem = "<li>" +
+            var elem = "<li " + (!data[i].isNew ? "style='background-color:#3333'" : "") + ">" +
                             "<div class=\"col-md-12 col-sm-12 col-xs-12\">" +
                                 "<a href=\"\"" + (data[i].tipo === "list_share" ? "data-toggle=\"modal\" data-target=\"#modal_accept\"" : "") + ">" + 
                                     tipo + 
@@ -108,6 +108,7 @@ function getNotifications(){
 function checkNotifications(){
     $.post("GetWebNotifications", {onlyNews: true}).done(function (data) {
         var img = "images/notification_bell.png";
+        
         if(data){
             img = "images/notification_bell1.png";
         }
