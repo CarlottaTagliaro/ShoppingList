@@ -6,9 +6,11 @@
 package it.webproject2018.servlets;
 
 import de.scravy.pair.Pairs;
-import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
+import it.webproject2018.db.daos.ListaPermessiDAO;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,11 +26,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShareListInsertUser extends HttpServlet {
 
-    private JDBCListaPermessiDAO JdbcListaPermessiDao;
+    private ListaPermessiDAO listaPermessiDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcListaPermessiDao = new JDBCListaPermessiDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaPermessiDao = daoFactory.getDAO(ListaPermessiDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
+        }
     }
 
     @Override
@@ -42,7 +52,7 @@ public class ShareListInsertUser extends HttpServlet {
         ListaPermessi[] new_perm_array = new_perm.toArray(new ListaPermessi[new_perm.size()]);
         
         try {
-            ArrayList<ListaPermessi> old_perm = JdbcListaPermessiDao.getAllByList(idLista, user.getEmail());
+            ArrayList<ListaPermessi> old_perm = listaPermessiDao.getAllByList(idLista, user.getEmail());
             ListaPermessi[] old_perm_array = old_perm.toArray(new ListaPermessi[old_perm.size()]);
 
             for (ListaPermessi l : new_perm_array) {
@@ -58,7 +68,7 @@ public class ShareListInsertUser extends HttpServlet {
                             !l.getPerm_del().equals(p.getPerm_del())){
                         //update
                         l.setAccettato(p.getAccettato());
-                        JdbcListaPermessiDao.update(l);
+                        listaPermessiDao.update(l);
                     }
                     
                     old_perm.remove(p);
@@ -66,7 +76,7 @@ public class ShareListInsertUser extends HttpServlet {
                 else{
                     //insert
                     //TODO: send email
-                    JdbcListaPermessiDao.insert(l);
+                    listaPermessiDao.insert(l);
                 }
                 
                 new_perm.remove(l);
@@ -74,14 +84,12 @@ public class ShareListInsertUser extends HttpServlet {
             
             for(ListaPermessi l : old_perm){
                 //delete
-                JdbcListaPermessiDao.delete(Pairs.from(l.getEmail(), l.getId_lista()));
+                listaPermessiDao.delete(Pairs.from(l.getEmail(), l.getId_lista()));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
                 
-        JdbcListaPermessiDao.Close();
-        
         response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 

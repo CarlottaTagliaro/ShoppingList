@@ -1,5 +1,6 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.ListaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -8,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -16,11 +18,19 @@ import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
  */
 public class BuyProductServlet extends HttpServlet {
 
-    private JDBCListaDAO JDBCLista;
+    private ListaDAO listaDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCLista = new JDBCListaDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista storage system", ex);
+        }
     }
 
     @Override
@@ -35,19 +45,18 @@ public class BuyProductServlet extends HttpServlet {
             Boolean ok = false;
             Boolean ok2 = false;
             
-            Integer quantity = JDBCLista.getProductQuantity(idList, idProduct, amount);
+            Integer quantity = listaDao.getProductQuantity(idList, idProduct, amount);
             
             if(quantity != null && quantity != -1) {
                 if(amount > quantity)
                     amount = quantity;
-                ok = JDBCLista.updateListProductToBuy(idList, idProduct, amount, quantity);
+                ok = listaDao.updateListProductToBuy(idList, idProduct, amount, quantity);
             }
             
             if (ok) {
-                ok2 = JDBCLista.buyProduct(idList, idProduct, amount);
+                ok2 = listaDao.buyProduct(idList, idProduct, amount);
             }
             
-            JDBCLista.Close();
             response.sendRedirect(request.getContextPath() + (!ok2 ? "/myList" : "/myList"));
         } catch (Exception e) {
             w.println(e.getMessage());

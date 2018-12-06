@@ -7,8 +7,10 @@ package it.webproject2018.servlets;
 
 import com.google.gson.Gson;
 import de.scravy.pair.Pair;
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,11 +25,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShareProductGetUsers extends HttpServlet {
 
-    private JDBCProdottoDAO JdbcProdottoDao;
+    private ProdottoDAO prodottoDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     @Override
@@ -43,8 +53,7 @@ public class ShareProductGetUsers extends HttpServlet {
         }
         
         try {
-            ArrayList<Pair<Utente, Boolean>> lista = JdbcProdottoDao.getUserToShareWith(idProdotto, user, qry);        
-            JdbcProdottoDao.Close();
+            ArrayList<Pair<Utente, Boolean>> lista = prodottoDao.getUserToShareWith(idProdotto, user, qry);        
             
             ArrayList<UtenteShare> users = new ArrayList<>();
             

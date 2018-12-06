@@ -6,6 +6,9 @@
 package it.webproject2018.servlets;
 
 import de.scravy.pair.Pair;
+import it.webproject2018.db.daos.CategoriaListeDAO;
+import it.webproject2018.db.daos.ListaDAO;
+import it.webproject2018.db.daos.ListaPermessiDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,15 +26,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
-import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
 import it.webproject2018.db.entities.CategoriaListe;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.util.ArrayList;
 
 /**
@@ -40,15 +42,23 @@ import java.util.ArrayList;
  */
 public class CreateListServlet extends HttpServlet {
 
-    private JDBCListaDAO JDBCLista;
-    private JDBCListaPermessiDAO JDBCListaPermessi;
-    private JDBCCategoriaListeDAO JDBCCategoriaListe;
+    private ListaDAO listaDao;
+    private ListaPermessiDAO listaPermessiDao;
+    private CategoriaListeDAO categoriaListeDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCLista = new JDBCListaDAO(super.getServletContext());
-        JDBCCategoriaListe = new JDBCCategoriaListeDAO(super.getServletContext());
-        JDBCListaPermessi = new JDBCListaPermessiDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+			listaPermessiDao = daoFactory.getDAO(ListaPermessiDAO.class);
+			categoriaListeDao = daoFactory.getDAO(CategoriaListeDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista permessi and categoria liste storage system", ex);
+        }
     }
 
     @Override
@@ -67,7 +77,7 @@ public class CreateListServlet extends HttpServlet {
 
         CategoriaListe cat = new CategoriaListe();
         try {
-            cat = JDBCCategoriaListe.getByPrimaryKey(category);
+            cat = categoriaListeDao.getByPrimaryKey(category);
         } catch (DAOException e) {
             e.printStackTrace();
         }
@@ -99,12 +109,12 @@ public class CreateListServlet extends HttpServlet {
 
                 Lista list = new Lista(null, name, description, img, cat, owner);
 
-                list = JDBCLista.insert(list);
+                list = listaDao.insert(list);
                 ok = list != null;
                 
                 if (ok) {
                     ListaPermessi permessi = new ListaPermessi(true, true, true, true, user.getEmail(), list.getId());
-                    JDBCListaPermessi.insert(permessi);
+                    listaPermessiDao.insert(permessi);
                 }
             } catch (DAOException e) {
                 w.println(e.getMessage());
@@ -118,10 +128,6 @@ public class CreateListServlet extends HttpServlet {
             request.getSession().setAttribute("DefaultList", l);
         }
 
-        JDBCLista.Close();
-        JDBCListaPermessi.Close();
-        JDBCCategoriaListe.Close();
-        
         response.sendRedirect(request.getContextPath() + (!ok ? "/newList" : "/myList"));
     }
 

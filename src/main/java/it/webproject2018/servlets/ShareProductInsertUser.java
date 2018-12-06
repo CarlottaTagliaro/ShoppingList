@@ -5,9 +5,10 @@
  */
 package it.webproject2018.servlets;
 
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
-import it.webproject2018.db.entities.ListaPermessi;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,11 +24,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShareProductInsertUser extends HttpServlet {
 
-    private JDBCProdottoDAO JdbcProdottoDao;
+    private ProdottoDAO prodottoDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     @Override
@@ -40,7 +49,7 @@ public class ShareProductInsertUser extends HttpServlet {
         String[] share = request.getParameterValues("share");
 
         try {
-            ArrayList<Utente> old_share = JdbcProdottoDao.getUserSharedProduct(idProdotto);
+            ArrayList<Utente> old_share = prodottoDao.getUserSharedProduct(idProdotto);
                         
             for (String s : share) {
                 Utente[] user_array = old_share.toArray(new Utente[old_share.size()]);
@@ -51,7 +60,7 @@ public class ShareProductInsertUser extends HttpServlet {
                 if (!optional.isPresent()) {
                     //insert
                     //TODO: send email notifications
-                    JdbcProdottoDao.shareProduct(idProdotto, s);
+                    prodottoDao.shareProduct(idProdotto, s);
                 }
                 else{
                     //remove from array
@@ -61,9 +70,8 @@ public class ShareProductInsertUser extends HttpServlet {
 
             //delete
             for(Utente u : old_share){
-                JdbcProdottoDao.deleteShareProduct(idProdotto, u.getEmail());
+                prodottoDao.deleteShareProduct(idProdotto, u.getEmail());
             }
-            JdbcProdottoDao.Close();
                         
             //redirect on login page
             response.sendRedirect(request.getHeader("referer"));

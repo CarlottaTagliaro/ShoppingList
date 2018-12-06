@@ -1,5 +1,6 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.CategoriaListeDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
 import it.webproject2018.db.entities.CategoriaListe;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -29,11 +31,19 @@ import it.webproject2018.db.exceptions.DAOException;
  */
 public class CreateShopsServlet extends HttpServlet {
 
-    private JDBCCategoriaListeDAO JDBCCategoriaListe;
+    private CategoriaListeDAO categoriaListeDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCCategoriaListe = new JDBCCategoriaListeDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			categoriaListeDao = daoFactory.getDAO(CategoriaListeDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for categoria liste storage system", ex);
+        }
     }
 
     @Override
@@ -71,15 +81,14 @@ public class CreateShopsServlet extends HttpServlet {
                 Files.copy(fileContent, pathToFile);
             }
             CategoriaListe CatListe = new CategoriaListe(name, description, images);
-            CatListe = JDBCCategoriaListe.insert(CatListe);
+            CatListe = categoriaListeDao.insert(CatListe);
             Boolean ok = CatListe != null;
             if (ok) {
                 for (String x : images) {
-                    JDBCCategoriaListe.insertImage(CatListe, x);
+                    categoriaListeDao.insertImage(CatListe, x);
                 }
             }
         
-            JDBCCategoriaListe.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/newShop" : "/shops"));
         } catch (DAOException e) {
             w.println(e.getMessage());

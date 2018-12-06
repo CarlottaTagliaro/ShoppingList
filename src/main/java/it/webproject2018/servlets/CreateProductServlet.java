@@ -1,5 +1,6 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.ProdottoDAO;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -13,11 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.nio.file.Files;
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.File;
 import java.nio.file.Path;
 import java.security.SecureRandom;
@@ -28,11 +30,19 @@ import java.security.SecureRandom;
  */
 public class CreateProductServlet extends HttpServlet {
 
-    private JDBCProdottoDAO JDBCProdotto;
+    private ProdottoDAO prodottoDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCProdotto = new JDBCProdottoDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     @Override
@@ -48,7 +58,7 @@ public class CreateProductServlet extends HttpServlet {
             String description = request.getParameter("description");
 
             Prodotto prod = new Prodotto(null, name, description, null, null, new CategoriaProdotti(category), user.getEmail());
-            prod = JDBCProdotto.insert(prod);
+            prod = prodottoDao.insert(prod);
             Boolean ok = prod != null;
             if (ok) {
                 List<Object> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName()))
@@ -72,11 +82,10 @@ public class CreateProductServlet extends HttpServlet {
 
                     Files.copy(fileContent, pathToFile);
                     prod.Fotografie.add(img);
-                    JDBCProdotto.insertImage(prod, img);
+                    prodottoDao.insertImage(prod, img);
                 }
             }
         
-            JDBCProdotto.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/newProduct" : "/myProducts"));
         } catch (DAOException e) {
             w.println(e.getMessage());

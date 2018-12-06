@@ -5,17 +5,18 @@
  */
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.ListaDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -23,11 +24,19 @@ import it.webproject2018.db.exceptions.DAOException;
  */
 public class DeleteListServlet extends HttpServlet {
 
-    private JDBCListaDAO JDBCLista;
+    private ListaDAO listaDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCLista = new JDBCListaDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista storage system", ex);
+        }
     }
 
     /**
@@ -47,9 +56,8 @@ public class DeleteListServlet extends HttpServlet {
             try {
                 String ID = request.getParameter("List");
                 Integer list = Integer.parseInt(ID);
-                Boolean ok = JDBCLista.delete(list);
+                Boolean ok = listaDao.delete(list);
 
-                JDBCLista.Close();
             } catch (DAOException e) {
                 e.printStackTrace();
             }

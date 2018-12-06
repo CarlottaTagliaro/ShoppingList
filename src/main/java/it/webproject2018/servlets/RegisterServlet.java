@@ -1,5 +1,6 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.UtenteDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -8,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import it.webproject2018.job_scheduler.MailSender;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
@@ -17,12 +19,20 @@ import javax.servlet.http.HttpSession;
  * @author Stefano
  */
 public class RegisterServlet extends HttpServlet {
-    private JDBCUtenteDAO JdbcUtenteDao;
+    
+	private UtenteDAO utenteDao;
 
     @Override
     public void init() throws ServletException {
-        /* TODO: use DaoFactory */
-        JdbcUtenteDao = new JDBCUtenteDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			utenteDao = daoFactory.getDAO(UtenteDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
+        }
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,19 +48,17 @@ public class RegisterServlet extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String confirmString = generateConfirmString();
-            Boolean ok = JdbcUtenteDao.registerUser(name, surname, username, password, confirmString);
+            Boolean ok = utenteDao.registerUser(name, surname, username, password, confirmString);
         
             if (!ok) {
                 HttpSession session = request.getSession(false);
                 String error = "Username already exists, choose another one.";
-                JdbcUtenteDao.Close();
                 
                 session.setAttribute("error_message", error);
                 response.sendRedirect(request.getContextPath() + "/register.jsp");
             }
             else {
                 String link = request.getRequestURL().toString().replaceFirst("RegisterServlet","EmailConfirmationServlet?verify=" + confirmString);
-                JdbcUtenteDao.Close();
                 MailSender.sendDefault(username, "Registration Confirm", 
                                        "Click on the following link: " + link);
                     

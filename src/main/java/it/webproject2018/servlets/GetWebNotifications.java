@@ -6,13 +6,14 @@
 package it.webproject2018.servlets;
 
 import com.google.gson.Gson;
-import it.webproject2018.db.daos.jdbc.JDBCNotificaWebDAO;
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.daos.NotificaWebDAO;
+import it.webproject2018.db.daos.UtenteDAO;
 import it.webproject2018.db.entities.NotificaWeb;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,13 +26,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GetWebNotifications extends HttpServlet {
 
-    private JDBCNotificaWebDAO JdbcNotificaWebDao;
-    private JDBCUtenteDAO JdbcUtenteDao;
+    private NotificaWebDAO notificaWebDao;
+    private UtenteDAO utenteDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcNotificaWebDao = new JDBCNotificaWebDAO(super.getServletContext());
-        JdbcUtenteDao = new JDBCUtenteDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			notificaWebDao = daoFactory.getDAO(NotificaWebDAO.class);
+			utenteDao = daoFactory.getDAO(UtenteDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for notifica and utente storage system", ex);
+        }
     }
 
     @Override
@@ -42,7 +51,7 @@ public class GetWebNotifications extends HttpServlet {
 
         if (user != null) {
             try {
-                List<NotificaWeb> notifiche = JdbcNotificaWebDao.getAllUserNotifications(user.getEmail());
+                List<NotificaWeb> notifiche = notificaWebDao.getAllUserNotifications(user.getEmail());
 
                 String onlyNews = request.getParameter("onlyNews");
 
@@ -55,7 +64,7 @@ public class GetWebNotifications extends HttpServlet {
                     out.print(json);
 
                     //aggiornare user ultima visualizzazione
-                    JdbcUtenteDao.updateUserLastAccess(user);
+                    utenteDao.updateUserLastAccess(user);
                 } else if (onlyNews.equals("true")) {
                     String output = notifiche.stream().anyMatch(x -> x.getIsNew()) ? "true" : "false";
                     out.print(output);
@@ -66,8 +75,6 @@ public class GetWebNotifications extends HttpServlet {
                 e.printStackTrace();
             }
 
-            JdbcNotificaWebDao.Close();
-            JdbcUtenteDao.Close();
         }
     }
 

@@ -6,11 +6,13 @@
 package it.webproject2018.servlets;
 
 import com.google.gson.Gson;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
-import it.webproject2018.db.daos.jdbc.JDBCMessaggioChatDAO;
+import it.webproject2018.db.daos.ListaDAO;
+import it.webproject2018.db.daos.MessaggioChatDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.MessaggioChat;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -30,13 +32,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ChatServlet", urlPatterns = {"/ChatServlet"})
 public class ChatServlet extends HttpServlet {
 
-    private JDBCListaDAO JdbcListaDao;
-    private JDBCMessaggioChatDAO JdbcMessaggioChatDao;
+    private ListaDAO listaDao;
+    private MessaggioChatDAO messaggioChatDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcListaDao = new JDBCListaDAO(super.getServletContext());
-        JdbcMessaggioChatDao = new JDBCMessaggioChatDAO(super.getServletContext());
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+			messaggioChatDao = daoFactory.getDAO(MessaggioChatDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista and messaggioChat storage system", ex);
+        }
     }
 
     @Override
@@ -72,14 +82,11 @@ public class ChatServlet extends HttpServlet {
             e.printStackTrace();
             response.setStatus(500);
         }
-            
-        JdbcListaDao.Close();
-        JdbcMessaggioChatDao.Close();
     }
 
     protected void getChatList(Utente user, HttpServletResponse response) {
         try {
-            ArrayList<Lista> liste = JdbcListaDao.getUserLists(user.getEmail());
+            ArrayList<Lista> liste = listaDao.getUserLists(user.getEmail());
             ArrayList<ChatElement> chats = new ArrayList<>();
             for (Lista l : liste) {
                 chats.add(new ChatElement(l.getId(), l.getNome(), l.getImmagine()));
@@ -99,7 +106,7 @@ public class ChatServlet extends HttpServlet {
 
     protected void getChatMessages(Utente user, int chat_list_id, Timestamp lasttime, HttpServletResponse response) {
         try {
-            ArrayList<MessaggioChat> messaggi = JdbcMessaggioChatDao.getChatLastMessages(chat_list_id, lasttime);
+            ArrayList<MessaggioChat> messaggi = messaggioChatDao.getChatLastMessages(chat_list_id, lasttime);
 
             ChatView chat = new ChatView();
             chat.id_lista = chat_list_id;
@@ -126,7 +133,7 @@ public class ChatServlet extends HttpServlet {
         Boolean res;
         try {
             MessaggioChat msg = new MessaggioChat(user, chat_list_id, text, new Timestamp(System.currentTimeMillis()));
-            res = JdbcMessaggioChatDao.insert(msg) != null;
+            res = messaggioChatDao.insert(msg) != null;
         } catch (Exception ex) {
             res = false;
         }

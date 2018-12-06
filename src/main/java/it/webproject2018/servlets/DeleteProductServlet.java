@@ -6,13 +6,13 @@
 package it.webproject2018.servlets;
 
 import de.scravy.pair.Pair;
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
-import it.webproject2018.db.entities.Lista;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +25,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DeleteProductServlet extends HttpServlet {
 
-    private JDBCProdottoDAO JDBCProdotto;
+    private ProdottoDAO prodottoDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCProdotto = new JDBCProdottoDAO(super.getServletContext());
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     /**
@@ -56,7 +64,7 @@ public class DeleteProductServlet extends HttpServlet {
                 Integer product = Integer.parseInt(ID_product);
                 Integer list = Integer.parseInt(ID_list);
 
-                Boolean ok = JDBCProdotto.deleteFromList(product, list);
+                Boolean ok = prodottoDao.deleteFromList(product, list);
             } catch (DAOException e) {
                 e.printStackTrace();
             }
@@ -73,7 +81,6 @@ public class DeleteProductServlet extends HttpServlet {
             request.getSession().setAttribute("DefaultProductList", defaultList);
         }
 
-        JDBCProdotto.Close();
         response.sendRedirect(request.getContextPath().concat("/myList"));
     }
 }

@@ -1,5 +1,6 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.UtenteDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -27,11 +29,19 @@ import it.webproject2018.db.exceptions.DAOException;
  */
 public class ChangeUserPicServlet extends HttpServlet {
 
-    private JDBCUtenteDAO JDBCUtente;
+    private UtenteDAO utenteDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCUtente = new JDBCUtenteDAO(super.getServletContext());
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			utenteDao = daoFactory.getDAO(UtenteDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
+        }
     }
 
     @Override
@@ -67,10 +77,9 @@ public class ChangeUserPicServlet extends HttpServlet {
             }
 
             user.setPicture(img);
-            user = JDBCUtente.update(user);
+            user = utenteDao.update(user);
             Boolean ok = user != null;
 
-            JDBCUtente.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/profile" : "/profile"));
         } catch (DAOException e) {
             w.println(e.getMessage());

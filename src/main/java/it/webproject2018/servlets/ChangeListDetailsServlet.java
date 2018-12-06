@@ -1,5 +1,7 @@
 package it.webproject2018.servlets;
 
+import it.webproject2018.db.daos.CategoriaListeDAO;
+import it.webproject2018.db.daos.ListaDAO;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,10 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.exceptions.DAOException;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -26,13 +28,21 @@ import it.webproject2018.db.exceptions.DAOException;
  */
 public class ChangeListDetailsServlet extends HttpServlet {
 
-    private JDBCListaDAO JDBCLista;
-    private JDBCCategoriaListeDAO JDBCCategoriaListe;
+    private ListaDAO listaDao;
+    private CategoriaListeDAO categoriaListeDao;
 
     @Override
     public void init() throws ServletException {
-        JDBCLista = new JDBCListaDAO(super.getServletContext());
-        JDBCCategoriaListe = new JDBCCategoriaListeDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+			categoriaListeDao = daoFactory.getDAO(CategoriaListeDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista and categoria liste storage system", ex);
+        }
     }
 
     @Override
@@ -61,18 +71,16 @@ public class ChangeListDetailsServlet extends HttpServlet {
                 Path pathToFile = Paths.get(getServletContext().getRealPath(File.separator) + img);
                 Files.copy(fileContent, pathToFile);
             }
-            Lista list = JDBCLista.getByPrimaryKey(idList);
+            Lista list = listaDao.getByPrimaryKey(idList);
             list.setNome(name);
             list.setDescrizione(description);
             if (filePart.getSize() != 0) {
                 list.setImmagine(img);
             }
 
-            list = JDBCLista.update(list);
+            list = listaDao.update(list);
             Boolean ok = list != null;
 
-            JDBCLista.Close();
-            JDBCCategoriaListe.Close();
             response.sendRedirect(request.getContextPath() + (!ok ? "/myList" : "/myList"));
         } catch (DAOException e) {
             w.println(e.getMessage());

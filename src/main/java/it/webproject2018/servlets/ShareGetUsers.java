@@ -7,9 +7,11 @@ package it.webproject2018.servlets;
 
 import com.google.gson.Gson;
 import de.scravy.pair.Pair;
-import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
+import it.webproject2018.db.daos.ListaPermessiDAO;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,11 +27,19 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ShareGetUsers extends HttpServlet {
 
-    private JDBCListaPermessiDAO JdbcListaPermessiDao;
+    private ListaPermessiDAO listaPermessiDao;
 
     @Override
     public void init() throws ServletException {
-        JdbcListaPermessiDao = new JDBCListaPermessiDAO(super.getServletContext());
+		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaPermessiDao = daoFactory.getDAO(ListaPermessiDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista permessi storage system", ex);
+        }
     }
 
     @Override
@@ -45,8 +55,7 @@ public class ShareGetUsers extends HttpServlet {
         }
         
         try {
-            List<Pair<Utente, ListaPermessi>> liste = JdbcListaPermessiDao.getShareUserList(user, qry, idLista);
-            JdbcListaPermessiDao.Close();
+            List<Pair<Utente, ListaPermessi>> liste = listaPermessiDao.getShareUserList(user, qry, idLista);
             ArrayList<UtentePermesso> resp_list = new ArrayList<>();
             
             for(Pair<Utente, ListaPermessi> el : liste){
