@@ -46,7 +46,7 @@ public class Utente {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof ListaPermessi)) {
+        if (!(other instanceof Utente)) {
             return false;
         }
         
