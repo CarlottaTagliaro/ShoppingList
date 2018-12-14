@@ -6,9 +6,11 @@
 package it.webproject2018.servlets;
 
 import com.google.gson.Gson;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.daos.ListaDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import it.webproject2018.maps.SearchPlaces;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,6 +27,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GeolocationServlet extends HttpServlet {
 
+	private ListaDAO listaDao;
+	
+	@Override
+    public void init() throws ServletException {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista storage system", ex);
+        }
+    }
+	
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utente user = (Utente) request.getSession().getAttribute("User");
@@ -41,7 +58,6 @@ public class GeolocationServlet extends HttpServlet {
         ArrayList<GeoResponse> resp = new ArrayList<>();
 
         try {
-            JDBCListaDAO listaDao = new JDBCListaDAO(super.getServletContext());
             ArrayList<Lista> liste = listaDao.getUserLists(user.getEmail());
 
             listaDao.Close();
