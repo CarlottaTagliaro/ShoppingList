@@ -6,7 +6,6 @@
 package it.webproject2018.servlets.pages;
 
 import it.webproject2018.db.daos.UtenteDAO;
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.exceptions.DAOException;
 import it.webproject2018.db.exceptions.DAOFactoryException;
@@ -27,7 +26,22 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "EmailConfirmationServlet", urlPatterns = {"/EmailConfirmationServlet.jsp"})
 public class EmailConfirmationServlet extends HttpServlet {
     
-  
+	private UtenteDAO userDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			userDao = daoFactory.getDAO(UtenteDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for user storage system", ex);
+        }
+    }
+	
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, DAOFactoryException {
         String hashStr = request.getParameter("verify");
@@ -63,23 +77,9 @@ public class EmailConfirmationServlet extends HttpServlet {
     }
     
     protected boolean handleVerifyString(String verifyString) throws ServletException {
-        UtenteDAO jdbcUserDao;
-        DAOFactory daoFactory;
-        
-        daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
-        
-        if (null == daoFactory) {
-            throw new ServletException("unable to check verify string, daoFactory is null");
-        }
-        
+		
         try {
-            jdbcUserDao = daoFactory.getDAO(UtenteDAO.class);
-        } catch (DAOFactoryException ex) {
-            throw new ServletException("Unable to check verify string, daoFactory could not get UtenteDAO", ex);
-        }
-        
-        try {
-            Utente user = jdbcUserDao.getUserByConfString(verifyString);
+            Utente user = userDao.getUserByConfString(verifyString);
             
             /* case where the user was not found */
             if (null == user) {
@@ -89,7 +89,7 @@ public class EmailConfirmationServlet extends HttpServlet {
             /* TODO[alberto]: check if null is a proper value */
             user.setConfString(null);
             
-            jdbcUserDao.update(user);
+            userDao.update(user);
             
             return true;
         }

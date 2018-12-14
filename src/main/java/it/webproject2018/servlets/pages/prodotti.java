@@ -5,8 +5,10 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +21,23 @@ import javax.servlet.http.HttpServletResponse;
  * @author davide
  */
 public class prodotti extends HttpServlet {
-    private Integer numElem = 10;
+    
+	private Integer numElem = 10;
+	private ProdottoDAO prodottoDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,9 +64,8 @@ public class prodotti extends HttpServlet {
             Integer start = numElem * pageN;
             Long count = 0L;
             
-            JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(super.getServletContext());
-            List<Prodotto> products = JdbcProdottoDao.getAllProductsByCategory(catName, qry, numElem, start);
-            count = JdbcProdottoDao.getAllProductsByCategoryCount(catName, qry);
+            List<Prodotto> products = prodottoDao.getAllProductsByCategory(catName, qry, numElem, start);
+            count = prodottoDao.getAllProductsByCategoryCount(catName, qry);
 
             count = (long)Math.ceil((double)count / numElem);
 
@@ -58,7 +75,6 @@ public class prodotti extends HttpServlet {
             request.setAttribute("page", pageN);
             request.setAttribute("count", count);
 
-            JdbcProdottoDao.Close();
             getServletContext().getRequestDispatcher("/prodotti.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

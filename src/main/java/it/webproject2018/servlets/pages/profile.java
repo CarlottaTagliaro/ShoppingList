@@ -5,7 +5,6 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
 import it.webproject2018.db.entities.Utente;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author davide
  */
 public class profile extends HttpServlet {
-
+	
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,12 +30,10 @@ public class profile extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
 
             request.setAttribute("user", user);
             
-            JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/profile.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

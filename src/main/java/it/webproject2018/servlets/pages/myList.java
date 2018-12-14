@@ -6,10 +6,12 @@
 package it.webproject2018.servlets.pages;
 
 import de.scravy.pair.Pair;
-import it.webproject2018.db.daos.jdbc.JDBCListaDAO;
+import it.webproject2018.db.daos.ListaDAO;
 import it.webproject2018.db.entities.Utente;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Prodotto;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class myList extends HttpServlet {
 
+	private ListaDAO listaDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			listaDao = daoFactory.getDAO(ListaDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista storage system", ex);
+        }
+    }
+	
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,12 +54,11 @@ public class myList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Boolean showNewList = true;
-            JDBCListaDAO JdbcListaDao = new JDBCListaDAO(super.getServletContext());
             Utente user = (Utente) request.getSession().getAttribute("User");
             List<Lista> userLists;
             ArrayList<Pair<Prodotto, Integer>> defaultList = null;
             if (user != null) {
-                userLists = JdbcListaDao.getUserLists(user.getEmail());
+                userLists = listaDao.getUserLists(user.getEmail());
             } else {
                 userLists = new ArrayList<>();
                 
@@ -68,7 +85,6 @@ public class myList extends HttpServlet {
             request.setAttribute("showNewList", showNewList);
             request.setAttribute("listQuantities", defaultList);
             
-            JdbcListaDao.Close();
             getServletContext().getRequestDispatcher("/myList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

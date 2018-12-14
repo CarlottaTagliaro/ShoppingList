@@ -5,7 +5,9 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaProdottiDAO;
+import it.webproject2018.db.daos.CategoriaProdottiDAO;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,6 +22,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class newProduct extends HttpServlet {
 
+	private CategoriaProdottiDAO categoriaProdottiDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			categoriaProdottiDao = daoFactory.getDAO(CategoriaProdottiDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for categoria prodotti storage system", ex);
+        }
+    }
+	
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,12 +49,10 @@ public class newProduct extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {            
-            JDBCCategoriaProdottiDAO JdbcCategoriaProdottiDao = new JDBCCategoriaProdottiDAO(super.getServletContext());
-            List<String> categories = JdbcCategoriaProdottiDao.getAllNames();
+            List<String> categories = categoriaProdottiDao.getAllNames();
 
             request.setAttribute("CatProductList", categories);
             
-            JdbcCategoriaProdottiDao.Close();
             getServletContext().getRequestDispatcher("/newProduct.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

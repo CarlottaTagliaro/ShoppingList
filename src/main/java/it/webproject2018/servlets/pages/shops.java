@@ -5,8 +5,10 @@
  */
 package it.webproject2018.servlets.pages;
 
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
+import it.webproject2018.db.daos.CategoriaListeDAO;
 import it.webproject2018.db.entities.CategoriaListe;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,6 +25,22 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "shops", urlPatterns = {"/shops"})
 public class shops extends HttpServlet {
 
+	private CategoriaListeDAO categoriaListeDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			categoriaListeDao = daoFactory.getDAO(CategoriaListeDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for categoria liste storage system", ex);
+        }
+    }
+	
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,12 +52,10 @@ public class shops extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            JDBCCategoriaListeDAO JdbcCategoriaListeDao = new JDBCCategoriaListeDAO(super.getServletContext());
-            List<CategoriaListe> shops = JdbcCategoriaListeDao.getAll();
+            List<CategoriaListe> shops = categoriaListeDao.getAll();
 
             request.setAttribute("shops", shops);
             
-            JdbcCategoriaListeDao.Close();
             getServletContext().getRequestDispatcher("/shops.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -5,15 +5,15 @@
  */
 package it.webproject2018.servlets.pages;
 
+import it.webproject2018.db.daos.CategoriaListeDAO;
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 
 /**
  *
@@ -21,6 +21,22 @@ import it.webproject2018.db.daos.jdbc.JDBCCategoriaListeDAO;
  */
 public class newList extends HttpServlet {
 
+	private CategoriaListeDAO categoriaListeDao;
+	
+    @Override
+    public void init() throws ServletException {
+		
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+		if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+		try {
+			categoriaListeDao = daoFactory.getDAO(CategoriaListeDAO.class);
+		} catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for categoria liste storage system", ex);
+        }
+    }
+	
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,12 +48,10 @@ public class newList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {            
-            JDBCCategoriaListeDAO JDBCCategoriaListeDAO = new JDBCCategoriaListeDAO(super.getServletContext());
-            List<String> categories = JDBCCategoriaListeDAO.getAllNames();
+            List<String> categories = categoriaListeDao.getAllNames();
 
             request.setAttribute("categories", categories);
             
-            JDBCCategoriaListeDAO.Close();
             getServletContext().getRequestDispatcher("/newList.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();
