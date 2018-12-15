@@ -17,22 +17,17 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
  * The JDBC implementation of the {@link MessaggioChatDAO} interface.
- * 
+ *
  * @author Max
  */
 public class JDBCMessaggioChatDAO extends JDBCDAO<MessaggioChat, Triple<String, Integer, Timestamp>> implements MessaggioChatDAO {
 
     public JDBCMessaggioChatDAO(Connection con) {
         super(con);
-    }
-
-    public JDBCMessaggioChatDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override

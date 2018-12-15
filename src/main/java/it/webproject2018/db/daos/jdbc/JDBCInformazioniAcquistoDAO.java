@@ -16,22 +16,17 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.Statement;
 import java.util.List;
-import javax.servlet.ServletContext;
 import org.glassfish.gmbal.generic.Triple;
 
 /**
  * The JDBC implementation of the {@link InformazioniAcquistoDAO} interface.
- * 
+ *
  * @author davide
  */
 public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, Triple<Integer, Integer, Date>> implements InfomazioniAcquistoDAO {
 
     public JDBCInformazioniAcquistoDAO(Connection conn) {
         super(conn);
-    }
-
-    public JDBCInformazioniAcquistoDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override
@@ -133,7 +128,7 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
         if (entity == null) {
             throw new DAOException("InformazioniAcquisto parameter is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, ?, ?);")){
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Liste_Prodotti_Acquistati (ID_lista, ID_prodotto, Data_acquisto, Quantita) VALUES (?, ?, ?, ?);")) {
             stm.setInt(1, entity.getId_lista());
             stm.setInt(2, entity.getId_prodotto());
             stm.setDate(3, entity.getData());
@@ -172,7 +167,7 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
             throw new DAOException("Impossible to update the InformazioniAcquisto", ex);
         }
     }
-	
+
     @Override
     public Boolean delete(Triple<Integer, Integer, Date> primarykey) throws DAOException {
         if (primarykey == null) {
@@ -183,10 +178,10 @@ public class JDBCInformazioniAcquistoDAO extends JDBCDAO<InformazioniAcquisto, T
             stm.setInt(2, primarykey.second());
             stm.setDate(3, primarykey.third());
             int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
+            if (res >= 1) {
+                return true;
+            }
+            return false;
         } catch (SQLException ex) {
             throw new DAOException("Impossible to delete the passed primary key", ex);
         }

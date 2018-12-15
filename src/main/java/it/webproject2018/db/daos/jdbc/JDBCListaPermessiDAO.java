@@ -18,21 +18,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 /**
  * The JDBC implementation of the {@link ListaPermessiDAO} interface.
- * 
+ *
  * @author davide
  */
 public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, Integer>> implements ListaPermessiDAO {
 
     public JDBCListaPermessiDAO(Connection conn) {
         super(conn);
-    }
-
-    public JDBCListaPermessiDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override
@@ -64,7 +59,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         if (primaryKey == null) {
             throw new DAOException("lista ID is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Utenti_Liste where Email = ? AND ID = ? ")) {
             stm.setString(1, primaryKey.getFirst());
             stm.setInt(2, primaryKey.getSecond());
@@ -113,7 +108,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         return liste;
     }
 
-	@Override
+    @Override
     public ArrayList<ListaPermessi> getAllByList(Integer idList, String emailUser) throws DAOException {
         ArrayList<ListaPermessi> liste = new ArrayList<>();
 
@@ -137,7 +132,7 @@ public class JDBCListaPermessiDAO extends JDBCDAO<ListaPermessi, Pair<String, In
         return liste;
     }
 
-	@Override
+    @Override
     public List<Pair<Utente, ListaPermessi>> getShareUserList(Utente user, String qry, Integer idLista) throws DAOException {
         ArrayList<Pair<Utente, ListaPermessi>> liste = new ArrayList<>();
         JDBCUtenteDAO UtenteDao = new JDBCUtenteDAO(CON);

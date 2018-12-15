@@ -18,7 +18,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 /**
  * The JDBC implementation of the {@link NotificaDAO} interface.
@@ -29,10 +28,6 @@ public class JDBCNotificaDAO extends JDBCDAO<Notifica, Integer> implements Notif
 
     public JDBCNotificaDAO(Connection conn) {
         super(conn);
-    }
-
-    public JDBCNotificaDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override

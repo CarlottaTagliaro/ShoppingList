@@ -5,12 +5,11 @@
  */
 package it.webproject2018.filters;
 
-import it.webproject2018.db.daos.jdbc.JDBCUtenteDAO;
+import it.webproject2018.db.daos.UtenteDAO;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -27,6 +26,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AutoLoginFilter implements Filter {
 
+    private UtenteDAO utenteDao;
+
+    /**
+     * Init method for this filter
+     */
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+        DAOFactory daoFactory = (DAOFactory) config.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+        try {
+            utenteDao = daoFactory.getDAO(UtenteDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for utente storage system", ex);
+        }
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
@@ -42,13 +59,9 @@ public class AutoLoginFilter implements Filter {
                             //do automatic login
                             System.out.println("user automatic logged in");
                             String token = c.getValue();
-                        
-                            JDBCUtenteDAO JdbcUtenteDao = new JDBCUtenteDAO(request.getServletContext());
-                        
-                            Utente user = JdbcUtenteDao.getUserByRememberMeID(token);
+
+                            Utente user = utenteDao.getUserByRememberMeID(token);
                             req.getSession().setAttribute("User", user);
-                        
-                            JdbcUtenteDao.Close();
                         }
                     }
                 }
@@ -66,12 +79,5 @@ public class AutoLoginFilter implements Filter {
      */
     @Override
     public void destroy() {
-    }
-
-    /**
-     * Init method for this filter
-     */
-    @Override
-    public void init(FilterConfig filterConfig) {
     }
 }

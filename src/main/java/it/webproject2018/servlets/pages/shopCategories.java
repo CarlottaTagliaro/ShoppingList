@@ -23,22 +23,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class shopCategories extends HttpServlet {
 
-	private CategoriaProdottiDAO categoriaProdottiDao;
-	
+    private CategoriaProdottiDAO categoriaProdottiDao;
+
     @Override
     public void init() throws ServletException {
-		
+
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
-		if (daoFactory == null) {
+        if (daoFactory == null) {
             throw new ServletException("Impossible to get dao factory for storage system");
         }
-		try {
-			categoriaProdottiDao = daoFactory.getDAO(CategoriaProdottiDAO.class);
-		} catch (DAOFactoryException ex) {
+        try {
+            categoriaProdottiDao = daoFactory.getDAO(CategoriaProdottiDAO.class);
+        } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for categoria prodotti storage system", ex);
         }
     }
-	
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,12 +51,12 @@ public class shopCategories extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String catName = request.getParameter("catName");
-            
+
             List<CategoriaProdotti> categories = categoriaProdottiDao.getAllByShop(catName);
 
             request.setAttribute("categories", categories);
             request.setAttribute("titolo", catName);
-            
+
             getServletContext().getRequestDispatcher("/shopCategories.jsp").forward(request, response);
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.CategoriaProdotti;
 import it.webproject2018.db.entities.Lista;
@@ -32,10 +31,6 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
     public JDBCProdottoDAO(Connection con) {
         super(con);
-    }
-
-    public JDBCProdottoDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override
@@ -213,7 +208,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return prodotti;
     }
-    
+
     @Override
     public Long getAllProductsByCategoryCount(String catName, String qry) throws DAOException {
         try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti where Categoria = ? and Nome like ?")) {
@@ -254,7 +249,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         return prodotti;
     }
-    
+
     @Override
     public Long getUserProductsCount(String userEmail) throws DAOException {
         try (PreparedStatement stm = CON.prepareStatement("select COUNT(*) from Prodotti where Owner = ? ORDER BY Nome")) {
@@ -268,7 +263,7 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
         } catch (SQLException ex) {
             throw new DAOException("Error while getting all user Products", ex);
         }
-        
+
         return 0L;
     }
 

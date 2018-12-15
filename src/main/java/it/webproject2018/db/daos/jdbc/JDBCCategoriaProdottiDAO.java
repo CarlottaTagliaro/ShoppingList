@@ -16,34 +16,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 /**
  * The JDBC implementation of the {@link CategoriaProdottiDAO} interface.
- * 
+ *
  * @author davide
  */
-public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String> implements CategoriaProdottiDAO  {    
-    
-	public JDBCCategoriaProdottiDAO(Connection conn) {
+public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String> implements CategoriaProdottiDAO {
+
+    public JDBCCategoriaProdottiDAO(Connection conn) {
         super(conn);
-    }    
-    
-    public JDBCCategoriaProdottiDAO(ServletContext sc) {
-        super(sc);
-    }    
-    
+    }
+
     @Override
     public CategoriaProdotti getByPrimaryKey(String primaryKey) throws DAOException {
         if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("select * from Prodotti_categorie where Nome = ? ")) {
             stm.setString(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 
-                if(rs.next()){
+                if (rs.next()) {
 
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
@@ -51,7 +46,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
-                    CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);              
+                    CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);
 
                     return cat;
                 }
@@ -59,10 +54,10 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the Product category for the passed primary key", ex);
         }
-        
+
         return null;
     }
-	
+
     @Override
     public List<CategoriaProdotti> getAll() throws DAOException {
         List<CategoriaProdotti> lista = new ArrayList<>();
@@ -74,7 +69,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
                     String logo = rs.getString("Logo");
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
                     CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);
@@ -88,8 +83,8 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return lista;
     }
-	
-	@Override
+
+    @Override
     public List<CategoriaProdotti> getAllByShop(String catName) throws DAOException {
         List<CategoriaProdotti> lista = new ArrayList<>();
 
@@ -101,7 +96,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
                     String nome = rs.getString("Nome");
                     String descrizione = rs.getString("Descrizione");;
                     String logo = rs.getString("Logo");
-                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(SC);
+                    JDBCCategoriaListeDAO categoriaListeDao = new JDBCCategoriaListeDAO(CON);
                     CategoriaListe categoria = categoriaListeDao.getByPrimaryKey(rs.getString("Nome_liste_cat"));
 
                     CategoriaProdotti cat = new CategoriaProdotti(nome, descrizione, logo, categoria);
@@ -115,8 +110,8 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return lista;
     }
-	
-	@Override
+
+    @Override
     public List<String> getAllNames() throws DAOException {
         List<String> names = new ArrayList<>();
 
@@ -135,7 +130,7 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return names;
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -150,30 +145,31 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
 
         return 0L;
     }
-	
+
     @Override
-    public CategoriaProdotti insert(CategoriaProdotti entity) throws DAOException{
+    public CategoriaProdotti insert(CategoriaProdotti entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("CategoriaProdotti parameter is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_categorie (Nome, Descrizione, Logo, Nome_liste_cat) VALUES (?, ?, ?, ?);")){
+        try (PreparedStatement stm = CON.prepareStatement("INSERT INTO Prodotti_categorie (Nome, Descrizione, Logo, Nome_liste_cat) VALUES (?, ?, ?, ?);")) {
             stm.setString(1, entity.getNome());
             stm.setString(2, entity.getDescrizione());
             stm.setString(3, entity.getLogo());
             stm.setString(4, entity.getCategoriaLista().getNome());
             Integer rs = stm.executeUpdate();
-            
-            if (rs > 0)
+
+            if (rs > 0) {
                 return getByPrimaryKey(entity.getNome());
-            
+            }
+
             return null;
         } catch (Exception e) {
             return null;
         }
     }
-    
+
     @Override
-    public CategoriaProdotti update(CategoriaProdotti entity) throws DAOException{
+    public CategoriaProdotti update(CategoriaProdotti entity) throws DAOException {
         if (entity == null) {
             throw new DAOException("Parameter 'CategoriaProdotti' not valid for update",
                     new IllegalArgumentException("The passed CategoriaProdotti is null"));
@@ -194,21 +190,21 @@ public class JDBCCategoriaProdottiDAO extends JDBCDAO<CategoriaProdotti, String>
             throw new DAOException("Impossible to update the CategoriaProdotti", ex);
         }
     }
-	
-	@Override
-	public Boolean delete(String primaryKey) throws DAOException {
-		if (primaryKey == null) {
-			throw new DAOException("Categoria prodotti is null");
-		}
-		try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti_categorie WHERE Nome = ? ")) {
-			stm.setString(1, primaryKey);
-			int res = stm.executeUpdate();
-			if (res >= 1) {
-				return true;
-			}
-			return false;
-		} catch (SQLException ex) {
-			return false;
-		}
-	}
+
+    @Override
+    public Boolean delete(String primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("Categoria prodotti is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM Prodotti_categorie WHERE Nome = ? ")) {
+            stm.setString(1, primaryKey);
+            int res = stm.executeUpdate();
+            if (res >= 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 }

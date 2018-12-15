@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 /**
  * The JDBC implementation of the {@link NotificaWebDAO} interface.
@@ -26,10 +25,6 @@ public class JDBCNotificaWebDAO extends JDBCDAO<NotificaWeb, String> implements 
 
     public JDBCNotificaWebDAO(Connection conn) {
         super(conn);
-    }
-
-    public JDBCNotificaWebDAO(ServletContext sc) {
-        super(sc);
     }
 
 	@Override

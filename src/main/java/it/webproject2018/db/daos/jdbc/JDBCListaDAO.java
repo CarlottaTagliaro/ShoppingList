@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 import de.scravy.pair.Pairs;
 import it.webproject2018.db.daos.ListaDAO;
 import it.webproject2018.db.entities.CategoriaListe;
@@ -22,17 +21,13 @@ import it.webproject2018.db.exceptions.DAOException;
 
 /**
  * The JDBC implementation of the {@link ListaDAO} interface.
- * 
+ *
  * @author davide
  */
 public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
 
     public JDBCListaDAO(Connection conn) {
         super(conn);
-    }
-
-    public JDBCListaDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override
@@ -105,7 +100,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         return prodotti;
     }
 
-	@Override
+    @Override
     public Boolean insertListProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
         if (listID == null) {
             throw new DAOException("listID is null");
@@ -123,7 +118,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         }
     }
 
-	@Override
+    @Override
     public Integer getProductQuantity(Integer listID, Integer prodID, Integer amount) throws DAOException {
         if (listID == null) {
             throw new DAOException("listID is null");
@@ -148,7 +143,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         }
     }
 
-	@Override
+    @Override
     public Boolean buyProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
         if (listID == null) {
             throw new DAOException("listID is null");
@@ -167,7 +162,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         }
     }
 
-	@Override
+    @Override
     public Boolean updateListProductToBuy(Integer listID, Integer prodID, Integer amount, Integer quantity) throws DAOException {
         if (listID == null) {
             throw new DAOException("listID is null");
@@ -198,7 +193,7 @@ public class JDBCListaDAO extends JDBCDAO<Lista, Integer> implements ListaDAO {
         }
     }
 
-	@Override
+    @Override
     public Boolean updateListProduct(Integer listID, Integer prodID, Integer amount) throws DAOException {
         if (listID == null) {
             throw new DAOException("listID is null");

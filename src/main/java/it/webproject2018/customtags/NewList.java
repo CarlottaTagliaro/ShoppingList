@@ -7,15 +7,18 @@ package it.webproject2018.customtags;
 
 import de.scravy.pair.Pair;
 import de.scravy.pair.Pairs;
-import it.webproject2018.db.daos.jdbc.JDBCListaPermessiDAO;
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.daos.ListaPermessiDAO;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.ListaPermessi;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,20 +36,44 @@ public class NewList extends SimpleTagSupport {
     //only for not registered users
     private ArrayList<Pair<Prodotto, Integer>> listQuantities;
 
-    public NewList() {
+    private ListaPermessiDAO listaPermessiDao;
+    private ProdottoDAO prodottoDao;
 
+    private HttpServletRequest request;
+
+    public NewList(){}
+    
+    private void init() throws ServletException {
+        PageContext pageContext = (PageContext) getJspContext();
+        request = (HttpServletRequest) pageContext.getRequest();
+        HttpSession session = request.getSession();
+        ServletContext servletContext = session.getServletContext();
+
+        DAOFactory daoFactory = (DAOFactory) servletContext.getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+        try {
+            listaPermessiDao = daoFactory.getDAO(ListaPermessiDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for lista permessi storage system", ex);
+        }
+        try {
+            prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     @Override
     public void doTag() throws JspException, IOException {
-
-        PageContext pageContext = (PageContext) getJspContext();
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-        HttpSession session = request.getSession();
-        ServletContext servletContext = session.getServletContext();
-        JDBCListaPermessiDAO JdbcListaPermessiDao = new JDBCListaPermessiDAO(servletContext);
-        JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(servletContext);
-
+        try {
+            init();
+        }
+        catch(ServletException e){
+            throw new JspException(e.getMessage());
+        }
+        
         Utente user = (Utente) request.getSession().getAttribute("User");
         ListaPermessi perm;
 
@@ -58,7 +85,7 @@ public class NewList extends SimpleTagSupport {
             Pair<String, Integer> primaryKey = Pairs.from(user.getEmail(), lista.getId());
             perm = new ListaPermessi(user.getEmail(), lista.getId());
             try {
-                perm = JdbcListaPermessiDao.getByPrimaryKey(primaryKey);
+                perm = listaPermessiDao.getByPrimaryKey(primaryKey);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -71,7 +98,6 @@ public class NewList extends SimpleTagSupport {
             canShare = false;
             canBuy = false;
         }
-        JdbcListaPermessiDao.Close();
 
         String listaHtml = "";
 
@@ -79,7 +105,7 @@ public class NewList extends SimpleTagSupport {
             Integer amount = 0;
             try {
                 if (user != null) {
-                    amount = JdbcProdottoDao.getProductOfListAmount(lista.get(i), lista);
+                    amount = prodottoDao.getProductOfListAmount(lista.get(i), lista);
                 } else {
                     for (int el = 0; el < listQuantities.size(); el++) {
                         if (listQuantities.get(el).getFirst().getId().equals(lista.get(i).getId())) {
@@ -141,8 +167,6 @@ public class NewList extends SimpleTagSupport {
                     + "                     </li>\n");
         }
 
-        JdbcProdottoDao.Close();
-
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
                 + "                    <div class=\"row row-lista\">\n"
                 + "                        <div class=\"img_wrapper\">\n"
@@ -173,18 +197,18 @@ public class NewList extends SimpleTagSupport {
                 + "                                                     <div class=\"input-group\">\n"
                 + "                                                         <div class=\"row cambia-dati\">\n"
                 + "                                                             <label class=\"search\">Name:</label> \n"
-                + "                                                             <input type=\"text\" value=\""+lista.getNome()+"\" name=\"name\" class=\"form-control inserisci\" aria-label=\"...\">\n"
+                + "                                                             <input type=\"text\" value=\"" + lista.getNome() + "\" name=\"name\" class=\"form-control inserisci\" aria-label=\"...\">\n"
                 + "                                                         </div>\n"
                 + "                                                     </div>"
                 + "                                                     <div class=\"row cambia-dati\">\n"
                 + "                                                         <label class=\"search\">Description:</label> \n"
-                + "                                                             <textarea id=\"description\" name=\"description\" cols=\"40\" rows=\"5\" class=\"form-control descrizione\">"+lista.getDescrizione()+"</textarea>\n"
+                + "                                                             <textarea id=\"description\" name=\"description\" cols=\"40\" rows=\"5\" class=\"form-control descrizione\">" + lista.getDescrizione() + "</textarea>\n"
                 + "                                                     </div>\n"
                 + "                                                     <div class=\"row cambia-dati\">\n"
                 + "                                                         <div class=\"row\">\n"
                 + "                                                         <label class=\"search\">Immagine:</label> \n"
                 + "                                                         </div>\n"
-                + "                                                             <input type=\"file\"  value=\""+lista.getImmagine()+"\" name=\"file\" id=\"file_" + lista.getId() + "\" class=\"inputfile\">\n"
+                + "                                                             <input type=\"file\"  value=\"" + lista.getImmagine() + "\" name=\"file\" id=\"file_" + lista.getId() + "\" class=\"inputfile\">\n"
                 + "                                                             <label for=\"file_" + lista.getId() + "\" class=\"button1 myButton3 btn\" ><span class=\"glyphicon glyphicon-open\"></span> Choose file </label>\n"
                 + "                                                     </div>\n"
                 + "                                                 </div>\n"

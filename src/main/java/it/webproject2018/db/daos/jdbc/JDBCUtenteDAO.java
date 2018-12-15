@@ -15,21 +15,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletContext;
 
 /**
  * The JDBC implementation of the {@link UtenteDAO} interface.
- * 
+ *
  * @author davide
  */
 public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO {
 
     public JDBCUtenteDAO(Connection con) {
         super(con);
-    }
-
-    public JDBCUtenteDAO(ServletContext sc) {
-        super(sc);
     }
 
     @Override
@@ -122,15 +117,15 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
     @Override
     public Utente getUserByConfString(String confString) throws DAOException {
         Utente user = null;
-        
+
         if (confString == null) {
             throw new DAOException("confirmation string is null");
         }
-        
+
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM Utenti WHERE conf_string = ?")) {
             stm.setString(1, confString);
-            
-            try(ResultSet rs = stm.executeQuery()) {
+
+            try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     user = getUserByResultSet(rs);
                 }
@@ -138,10 +133,10 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         } catch (SQLException ex) {
             throw new DAOException("Error while getting User by confString", ex);
         }
-        
+
         return user;
     }
-    
+
     @Override
     public Long getCount() throws DAOException {
         try (Statement stmt = CON.createStatement()) {
@@ -184,8 +179,8 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
 
         try (PreparedStatement std = CON.prepareStatement("UPDATE Utenti "
-                + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ?, " +
-                "Ultima_visualizzazione = ?, conf_string = ? WHERE Email = ?")) {
+                + "SET Nome = ?, Cognome = ?, Immagine = ?, IsAdmin = ?, "
+                + "Ultima_visualizzazione = ?, conf_string = ? WHERE Email = ?")) {
             std.setString(1, user.getName());
             std.setString(2, user.getSurname());
             std.setString(3, user.getPicture());
@@ -203,7 +198,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
 
-	@Override
+    @Override
     public Utente updatePassword(Utente user, String password) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
@@ -223,7 +218,7 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
         }
     }
 
-	@Override
+    @Override
     public Boolean updateUserLastAccess(Utente user) throws DAOException {
         if (user == null) {
             throw new DAOException("Parameter 'user' not valid for update",
@@ -291,16 +286,16 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
             return false;
         }
     }
-    
+
     private Utente getUserByResultSet(ResultSet rs) throws SQLException {
         Utente user;
-        
+
         user = new Utente();
-                
+
         user.setName(rs.getString("Nome"));
-        user.setSurname(rs.getString("Cognome"));            
+        user.setSurname(rs.getString("Cognome"));
         user.setEmail(rs.getString("Email"));
-        user.setPicture(rs.getString("Immagine"));            
+        user.setPicture(rs.getString("Immagine"));
         user.setIsAdmin(rs.getBoolean("IsAdmin"));
         user.setConfString(rs.getString("conf_string"));
         user.setLastVisualization(rs.getTimestamp("Ultima_visualizzazione"));

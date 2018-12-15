@@ -6,14 +6,17 @@
 package it.webproject2018.customtags;
 
 import de.scravy.pair.Pair;
-import it.webproject2018.db.daos.jdbc.JDBCProdottoDAO;
+import it.webproject2018.db.daos.ProdottoDAO;
 import it.webproject2018.db.entities.Lista;
 import it.webproject2018.db.entities.Prodotto;
 import it.webproject2018.db.entities.Utente;
+import it.webproject2018.db.exceptions.DAOFactoryException;
+import it.webproject2018.db.factories.DAOFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -30,17 +33,39 @@ public class ProductCard extends SimpleTagSupport {
 
     private Prodotto product;
 
-    public ProductCard() {
+    private ProdottoDAO prodottoDao;
 
+    private HttpServletRequest request;
+
+    public ProductCard() {
+    }
+
+    private void init() throws ServletException {
+        PageContext pageContext = (PageContext) getJspContext();
+        request = (HttpServletRequest) pageContext.getRequest();
+        HttpSession session = request.getSession();
+        ServletContext servletContext = session.getServletContext();
+
+        DAOFactory daoFactory = (DAOFactory) servletContext.getAttribute("daoFactory");
+        if (daoFactory == null) {
+            throw new ServletException("Impossible to get dao factory for storage system");
+        }
+        try {
+            prodottoDao = daoFactory.getDAO(ProdottoDAO.class);
+        } catch (DAOFactoryException ex) {
+            throw new ServletException("Impossible to get dao factory for prodotto storage system", ex);
+        }
     }
 
     @Override
     public void doTag() throws JspException, IOException {
-        PageContext pageContext = (PageContext) getJspContext();
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-        HttpSession session = request.getSession();
-        ServletContext servletContext = session.getServletContext();
-        JDBCProdottoDAO JdbcProdottoDao = new JDBCProdottoDAO(servletContext);
+        try {
+            init();
+        }
+        catch(ServletException e){
+            throw new JspException(e.getMessage());
+        }
+
         Utente user = (Utente) request.getSession().getAttribute("User");
 
         Boolean isMine = false;
@@ -50,7 +75,7 @@ public class ProductCard extends SimpleTagSupport {
             if (user != null) {
                 isMine = product.getOwner().equals(user.getEmail());
 
-                List<Triple<Integer, String, Integer>> lista = JdbcProdottoDao.getProductListAmount(product, user);
+                List<Triple<Integer, String, Integer>> lista = prodottoDao.getProductListAmount(product, user);
 
                 for (int i = 0; i < lista.size(); i++) {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", lista.get(i).first(), lista.get(i).third(), lista.get(i).second());
@@ -73,7 +98,6 @@ public class ProductCard extends SimpleTagSupport {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", l.getId(), amount, l.getNome());
                 }
             }
-            JdbcProdottoDao.Close();
         } catch (Exception e) {
             e.printStackTrace();
         }
