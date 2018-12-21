@@ -19,6 +19,7 @@
     <body>
         <jsp:include page="menu.jsp"/>
 
+        <script src="JS/jquery.bootstrap-touchspin.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 selectMenuEl("shops");
