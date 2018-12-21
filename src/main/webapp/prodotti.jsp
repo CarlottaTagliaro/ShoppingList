@@ -12,6 +12,7 @@
         <link href="css/home_css.css" rel="stylesheet" type="text/css"/>
         <title>Shopping List - Shops</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+        <link href="css/jquery.bootstrap-touchspin.css" rel="stylesheet" type="text/css"/>
 
         <%@ taglib uri="/tlds/productCard" prefix="productCard"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
