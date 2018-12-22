@@ -80,6 +80,10 @@ public class Utente {
     }
 
     public String getPicture() {
+        //return default picture
+        if(immagine == null || immagine.equals(""))
+            return "images/carrello.png";
+        
         return immagine;
     }
 
