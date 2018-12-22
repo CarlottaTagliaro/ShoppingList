@@ -25,8 +25,7 @@
 
                     <c:if test="${not empty sessionScope.User}">
                         <input type="file" id="file" name="file" class="inputfile" required>
-                        <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose
-                            file </label>
+                        <label for="file" class="button1 button2 btn"><span class="glyphicon glyphicon-open"></span> Choose an image</label>
                     </c:if>
                     <div class="form-group elemento">
                         <label> Name: </label>

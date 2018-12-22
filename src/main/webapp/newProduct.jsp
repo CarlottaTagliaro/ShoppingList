@@ -24,7 +24,7 @@
             <div class="card">
                 <form action="CreateProductServlet" enctype="multipart/form-data" method="POST">
                     <input type="file" name="file" id="file" class="inputfile" data-multiple-caption="{count} files selected" multiple required>
-                    <label for="file" class="button1 button2 btn" ><span class="glyphicon glyphicon-open"></span> Choose files </label>
+                    <label for="file" class="button1 button2 btn" ><span class="glyphicon glyphicon-open"></span> Choose an image </label>
                     <div class="form-group elemento">
                         <label> Name: </label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter product name"
