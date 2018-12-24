@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group elemento spacing">
                         <label> Email: </label>
-                        <input type="email" id="username" name="username" class="form-control" placeholder="Enter new username"
+                        <input type="email" id="username" name="username" class="form-control" placeholder="Enter email"
                                required autofocus>
                     </div>
                     <div class="form-group elemento spacing">
