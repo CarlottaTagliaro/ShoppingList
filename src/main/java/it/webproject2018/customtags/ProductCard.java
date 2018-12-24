@@ -111,7 +111,7 @@ public class ProductCard extends SimpleTagSupport {
                 + "                </div>\n"
                 + "                <div class=\"col-xs-6\">\n"
                 + "                    <h4> <b> " + getProduct().getNome() + " </b></h4>\n"
-                + "                    <h6> " + getProduct().getCategoria().getNome() + " </h6>\n"
+                + "                    <h6><b> " + getProduct().getCategoria().getNome() + "</b>  ("+ getProduct().getCategoria().getCategoriaLista().getNome() + ") </h6>\n"
                 + "                    <p> " + getProduct().getNote() + " </p>\n"
                 + "                </div>\n"
                 + "\n"
