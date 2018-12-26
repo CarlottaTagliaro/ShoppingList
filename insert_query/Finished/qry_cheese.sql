@@ -22,3 +22,9 @@ INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES((SELECT Max(ID) FROM cucci
 
 INSERT INTO Prodotti (Nome, Note, Logo, Categoria, Owner) VALUES("Dairy Crest UHT Semi-Skimmed Milk 500 ml", "Delicious semi-skimmed milk with just 2% fat for a guilt-free cup of tea or coffee. Supplied in a pack of twelve 500ml cartons, UHT milk is long life and can be stored at ambient temperature when unopened.", "", "Milk Products", "g.s@agg.it");
 INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES((SELECT Max(ID) FROM cucciolo.Prodotti), 'imagesUpload/51vPnoen9RL._AC_US218_.jpg');
+
+INSERT INTO Prodotti (Nome, Note, Logo, Categoria, Owner) VALUES("Golden Acre Thick and Creamy Yogurts", "Mixed cases of Golden Acre thick and creamy yoghurts in the following flavours: Strawberry, Apricot & Mango and Cherry.", "", "Milk Products", "g.s@agg.it");
+INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES((SELECT Max(ID) FROM cucciolo.Prodotti), 'imagesUpload/51GArRE5BDL._AC_US218_.jpg');
+
+INSERT INTO Prodotti (Nome, Note, Logo, Categoria, Owner) VALUES("Box of 100 Lurpak Butter Portions", "Carton of easy open Lurpak Butter Portions. Lurpak portions are a fresh product and are manufactured with a maximum best before date of 10 weeks.", "", "Milk Products", "g.s@agg.it");
+INSERT INTO Prodotti_immagini (ID, Fotografia) VALUES((SELECT Max(ID) FROM cucciolo.Prodotti), 'imagesUpload/41zyv9ZSgUL._AC_US218_.jpg');
