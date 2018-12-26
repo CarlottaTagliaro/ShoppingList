@@ -268,7 +268,6 @@
         <url-pattern>/logout</url-pattern>
         <url-pattern>/newShop.jsp</url-pattern>
         <url-pattern>/newShop</url-pattern>
-        <url-pattern>/GetWebNotifications</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>AutoLoginFilter</filter-name>

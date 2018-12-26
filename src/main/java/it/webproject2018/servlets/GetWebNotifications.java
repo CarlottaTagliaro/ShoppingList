@@ -31,14 +31,14 @@ public class GetWebNotifications extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
-		if (daoFactory == null) {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
             throw new ServletException("Impossible to get dao factory for storage system");
         }
-		try {
-			notificaWebDao = daoFactory.getDAO(NotificaWebDAO.class);
-			utenteDao = daoFactory.getDAO(UtenteDAO.class);
-		} catch (DAOFactoryException ex) {
+        try {
+            notificaWebDao = daoFactory.getDAO(NotificaWebDAO.class);
+            utenteDao = daoFactory.getDAO(UtenteDAO.class);
+        } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for notifica and utente storage system", ex);
         }
     }
@@ -49,14 +49,14 @@ public class GetWebNotifications extends HttpServlet {
 
         Utente user = (Utente) request.getSession().getAttribute("User");
 
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+
         if (user != null) {
             try {
                 List<NotificaWeb> notifiche = notificaWebDao.getAllUserNotifications(user.getEmail());
 
                 String onlyNews = request.getParameter("onlyNews");
-
-                response.setContentType("application/json");
-                PrintWriter out = response.getWriter();
 
                 if (onlyNews == null) {
                     Gson gson = new Gson();
@@ -75,6 +75,8 @@ public class GetWebNotifications extends HttpServlet {
                 e.printStackTrace();
             }
 
+        } else {
+            out.print("[]");
         }
     }
 
