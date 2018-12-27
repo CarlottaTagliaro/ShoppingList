@@ -74,7 +74,7 @@ function getNotifications(){
             if(data[i].tipo === "chat")
                 tipo = "New chat message!";
             else if(data[i].tipo === "list_share"){
-                tipo = "List shared with you!";
+                tipo = "List shared with you! (Click to accept)";
                 $("#idLista_modal").val(data[i].idElemento);
                 $("#list_name_modal").val(data[i].testo);
             }
