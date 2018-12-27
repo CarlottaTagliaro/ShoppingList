@@ -14,31 +14,33 @@ import it.webproject2018.db.factories.DAOFactory;
 import it.webproject2018.job_scheduler.MailSender;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
+
 /**
  *
  * @author Stefano
  */
 public class RegisterServlet extends HttpServlet {
-    
-	private UtenteDAO utenteDao;
+
+    private UtenteDAO utenteDao;
 
     @Override
     public void init() throws ServletException {
-		DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
-		if (daoFactory == null) {
+        DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
+        if (daoFactory == null) {
             throw new ServletException("Impossible to get dao factory for storage system");
         }
-		try {
-			utenteDao = daoFactory.getDAO(UtenteDAO.class);
-		} catch (DAOFactoryException ex) {
+        try {
+            utenteDao = daoFactory.getDAO(UtenteDAO.class);
+        } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         registerUser(request, response);
     }
-    
+
     protected void registerUser(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter w = response.getWriter();
@@ -49,31 +51,31 @@ public class RegisterServlet extends HttpServlet {
             String password = request.getParameter("password");
             String confirmString = generateConfirmString();
             Boolean ok = utenteDao.registerUser(name, surname, username, password, confirmString);
-        
+
+            HttpSession session = request.getSession(false);
             if (!ok) {
-                HttpSession session = request.getSession(false);
                 String error = "Username already exists, choose another one.";
-                
+
                 session.setAttribute("error_message", error);
                 response.sendRedirect(request.getContextPath() + "/register.jsp");
-            }
-            else {
-                String link = request.getRequestURL().toString().replaceFirst("RegisterServlet","EmailConfirmationServlet?verify=" + confirmString);
-                MailSender.sendDefault(username, "Registration Confirm", 
-                                       "Click on the following link: " + link);
-                    
-                
+            } else {
+                String link = request.getRequestURL().toString().replaceFirst("RegisterServlet", "EmailConfirmationServlet?verify=" + confirmString);
+                MailSender.sendDefault(username, "Registration Confirm",
+                        "Click on the following link: " + link);
+
+                String info = "A verification link has been sent to your email account.";
+                session.setAttribute("info_message", info);
                 response.sendRedirect(request.getContextPath() + "/login.jsp");
             }
         } catch (Exception e) {
             w.println(e.getMessage());
         }
     }
-    
+
     private String generateConfirmString() {
         String confString;
         confString = UUID.randomUUID().toString().replace("-", "");
-        
+
         return confString;
     }
 }

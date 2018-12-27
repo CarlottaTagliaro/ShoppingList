@@ -43,6 +43,19 @@
             </script>
             <c:set var="error_message" value="" scope="session" />
         </c:if>
+            
+        <c:if test="${not empty info_message}">
+
+            <script>
+                swal({
+                    type: 'info',
+                    title: 'Registered!',
+                    text: '${info_message}',
+                    confirmButtonColor: '#222'
+                })
+            </script>
+            <c:set var="info_message" value="" scope="session" />
+        </c:if>
         <div class="main">
             <div class="card">
                 <form action="LoginServlet" method="POST">
