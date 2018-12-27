@@ -166,6 +166,10 @@ public class NewList extends SimpleTagSupport {
                     + "                             </div>\n" + "                         </div>\n"
                     + "                     </li>\n");
         }
+        
+        if(lista.isEmpty()) { //empty list
+            listaHtml = "<b>No items</b>";
+        }
 
         String html = String.format("<div class=\"col-xs-12  col-sm-6 col-md-4 liste liste\">\n"
                 + "                    <div class=\"row row-lista\">\n"
