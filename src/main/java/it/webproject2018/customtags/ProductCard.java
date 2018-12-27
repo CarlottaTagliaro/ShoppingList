@@ -98,6 +98,10 @@ public class ProductCard extends SimpleTagSupport {
                     listeHtml += String.format("<option value=\"%d\" amount=\"%d\">%s</option>", l.getId(), amount, l.getNome());
                 }
             }
+            
+            if(listeHtml.isEmpty()) { //no lists for this product
+                listeHtml = "<option disabled>No compatible lists, create new one</option>";
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
