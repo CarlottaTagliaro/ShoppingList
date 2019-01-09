@@ -59,7 +59,6 @@ public class ShareProductInsertUser extends HttpServlet {
 
                 if (!optional.isPresent()) {
                     //insert
-                    //TODO: send email notifications
                     prodottoDao.shareProduct(idProdotto, s);
                 }
                 else{

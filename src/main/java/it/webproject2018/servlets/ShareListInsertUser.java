@@ -75,7 +75,6 @@ public class ShareListInsertUser extends HttpServlet {
                 }
                 else{
                     //insert
-                    //TODO: send email
                     listaPermessiDao.insert(l);
                 }
                 
