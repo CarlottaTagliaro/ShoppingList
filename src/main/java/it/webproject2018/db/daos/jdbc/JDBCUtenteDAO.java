@@ -266,7 +266,6 @@ public class JDBCUtenteDAO extends JDBCDAO<Utente, String> implements UtenteDAO 
 
     @Override
     public Utente insert(Utente entity) throws DAOException {
-        //TODO: pensare come sistemarlo
         return null;
     }
 

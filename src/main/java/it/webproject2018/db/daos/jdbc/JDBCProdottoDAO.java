@@ -336,8 +336,6 @@ public class JDBCProdottoDAO extends JDBCDAO<Prodotto, Integer> implements Prodo
 
         ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-        //TODO: da sistemare orderby e like
-        //prendo solo prodotti creati da admin
         try (PreparedStatement stm = CON.prepareStatement("Select * from ((select Prodotti.* from Prodotti JOIN Utenti ON Owner = Email WHERE IsAdmin = true or Owner = ?)"
                 + "UNION"
                 + "(SELECT Prodotti.* FROM Utenti_Prodotti JOIN Prodotti ON ID_prodotto = ID Where Email = ?)) as a WHERE Nome LIKE ? ORDER BY " + orderBy + " LIMIT ?, ?")) {
