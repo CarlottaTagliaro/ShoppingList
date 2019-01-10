@@ -26,7 +26,7 @@ public class JobScheduler implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         try {
             scheduler = Executors.newSingleThreadScheduledExecutor();
-            scheduler.scheduleAtFixedRate(new AdviceSender("", "", sce.getServletContext()), 0, 10000, TimeUnit.DAYS);
+            scheduler.scheduleAtFixedRate(new AdviceSender("shoppinglistprogweb@gmail.com", "vadoaprendereillatte", sce.getServletContext()), 0, 5, TimeUnit.MINUTES);
             // scheduler.scheduleAtFixedRate(new AdviceSender(), 0, 1, TimeUnit.SECONDS);
         } catch (ServletException e) {
             e.printStackTrace();
